@@ -1,7 +1,7 @@
 function timer(){
     var dzisiaj = new Date();
     var dzien = dzisiaj.getDate();
-    var miesiac = dzisiaj.getMonth();
+    var miesiac = dzisiaj.getMonth() + 1;
     var rok = dzisiaj.getFullYear();
 
     var godzina = dzisiaj.getHours();

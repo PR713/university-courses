@@ -206,10 +206,10 @@ a {
 
 
 #emailform {
-    margin-left: 4vw;
+    margin-left: 5vw;
     margin-right: 0vw;
-    margin-bottom: 24vh;
-    max-width: 350px;}
+    margin-bottom: 3vh;
+    max-width: 320px;}
 
 label {
     margin-top: 4px;
@@ -217,8 +217,8 @@ label {
     margin-bottom: 8px;
     font-weight: bold;
     width: 90%;
-    color: #49669b;
-    font-size: 17px;}
+    font-size: 17px;
+    color: #49669b;}
 
 
 input[type="email"] {
@@ -226,7 +226,7 @@ input[type="email"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    width: 230px;}
+    width: 200px;}
 
 
 input[type="email"]:invalid {
@@ -263,22 +263,19 @@ button:hover {
 
 
 #message {
-    min-width: 90%;
     max-width: 90%;
     min-height: 15vh;
     max-height: 15vh;
-    font-size: 15px;}
+    font-size: 16px;}
 
 
 #subject {
     margin-top: 10px;
     margin-bottom: 5px;
-    font-size: 18px}
-
+    font-size: 17px;}
 
 @media (max-width: 500px){
     #message {
-        min-width: 240px;
         max-width: 240px;
         min-height: 15vh;
         max-height: 15vh;
@@ -289,7 +286,7 @@ button:hover {
         padding: 8px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        font-size: 16px;
+        font-size: 15px;
         width: 150px;}
 
 
@@ -303,21 +300,44 @@ button:hover {
         color: #49669b;
         font-size: 17px}
 
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;}
+
     label {
         margin-top: 4px;
         display: block;
         margin-bottom: 8px;
         font-weight: bold;
         width: 90%;
-        color: #49669b;
-        font-size: 15px;}
+        font-size: 15px;
+        color: #49669b;}
 
 
     #subject {
         margin-top: 10px;
         margin-bottom: 5px;
-        font-size: 15px}
+        font-size: 15px;}
 
+    #email-error-message {
+        margin-bottom: 2vh;
+        height: 14px;
+        color: red;
+        font-size: 13px;
+        display: none;}
+
+
+    #text-error-message {
+        margin-bottom: 2vh;
+        height: 14px;
+        color: red;
+        font-size: 13px;
+        display: none;}
 }
 
 
