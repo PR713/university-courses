@@ -270,6 +270,7 @@ button:hover {
 
 
 #message {
+    min-width: 90%;
     max-width: 90%;
     min-height: 15vh;
     max-height: 15vh;
@@ -283,6 +284,7 @@ button:hover {
 
 @media (max-width: 500px){
     #message {
+        min-width: 240px;
         max-width: 240px;
         min-height: 15vh;
         max-height: 15vh;
