@@ -206,10 +206,10 @@ a {
 
 
 #emailform {
-    margin-left: 5vw;
+    margin-left: 4vw;
     margin-right: 0vw;
-    margin-bottom: 3vh;
-    max-width: 320px;}
+    margin-bottom: 24vh;
+    max-width: 350px;}
 
 label {
     margin-top: 4px;
@@ -217,7 +217,8 @@ label {
     margin-bottom: 8px;
     font-weight: bold;
     width: 90%;
-    color: #49669b;}
+    color: #49669b;
+    font-size: 17px;}
 
 
 input[type="email"] {
@@ -225,7 +226,7 @@ input[type="email"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    width: 200px;}
+    width: 230px;}
 
 
 input[type="email"]:invalid {
@@ -262,16 +263,26 @@ button:hover {
 
 
 #message {
+    min-width: 90%;
     max-width: 90%;
     min-height: 15vh;
-    max-height: 15vh;}
+    max-height: 15vh;
+    font-size: 15px;}
+
+
+#subject {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 18px}
 
 
 @media (max-width: 500px){
     #message {
+        min-width: 240px;
         max-width: 240px;
         min-height: 15vh;
-        max-height: 15vh;}
+        max-height: 15vh;
+        font-size: 14px;}
 
 
     input[type="email"] {
@@ -290,12 +301,25 @@ button:hover {
 
     #formh2 {
         color: #49669b;
-        font-size: 18px}
+        font-size: 17px}
+
+    label {
+        margin-top: 4px;
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        width: 90%;
+        color: #49669b;
+        font-size: 15px;}
+
+
+    #subject {
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-size: 15px}
+
 }
 
-#subject {
-    margin-top: 10px;
-    margin-bottom: 5px;}
 
 #selecting {
     display: flex;
