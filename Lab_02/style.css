@@ -184,6 +184,7 @@ a {
     height: 600px;}
 
 
+
 .zegar {
     margin-top: 5px;
     margin-right: 10px;
@@ -192,6 +193,12 @@ a {
 
 
 @media (max-width: 500px) {
+    #map {
+        z-index: 1;
+        margin: 0 auto;
+        width: 90%; /*Szerokości kontenera*/
+        height: 600px;}
+
     .zegar {
         margin-top: 5px;
         margin-right: 10px;
