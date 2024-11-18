@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Lab_03/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab_03/stoper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab_03/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -24,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="githubpages" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,7 +45,7 @@
   &quot;keyToString&quot;: {
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lab2&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;lab3&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -101,6 +104,12 @@
       <workItem from="1731243937528" duration="1952000" />
       <workItem from="1731248823308" duration="147000" />
       <workItem from="1731249838365" duration="7000" />
+      <workItem from="1731268912327" duration="765000" />
+      <workItem from="1731272627791" duration="60000" />
+      <workItem from="1731324842787" duration="83000" />
+      <workItem from="1731512991744" duration="2428000" />
+      <workItem from="1731947026502" duration="65000" />
+      <workItem from="1731947206112" duration="1594000" />
     </task>
     <servers />
   </component>
