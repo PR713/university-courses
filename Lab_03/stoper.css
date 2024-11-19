@@ -2,7 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    color: #000000;
+    color: #323232;
     margin-top: 100px;
     background-color: #7391ab;
 }
@@ -22,26 +22,7 @@ body {
     gap: 20px;
 }
 
-#start {
-    min-width: 65px;
-    max-width: 65px;
-    min-height: 30px;
-    max-height: 30px;
-    text-align: center;
-    font-size: 18px;
-}
-
-#reset {
-    min-width: 65px;
-    max-width: 65px;
-    min-height: 30px;
-    max-height: 30px;
-    text-align: center;
-    font-size: 18px;
-}
-
-
-#stop {
+.buttons_style {
     min-width: 65px;
     max-width: 65px;
     min-height: 30px;

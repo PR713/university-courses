@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #323232;
+    margin-top: 100px;
+    background-color: #7299d4;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+button {
+    padding: 6px 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    max-width: 150px;
+    cursor: pointer;
+    border-radius: 2px;
+    border: #7299d4;
+
+}
+
+input[type="number"] {
+    padding: 8px;
+    margin: 5px;
+    width: 200px;
+    border-radius: 5px;
+    border: #7299d4;
+}
+
+#h2_info {
+    margin-top: 30px;
+}
+
+#generatedPassword {
+    width: 250px;
+    margin-top: 10px;
+    padding: 10px;
+    border: #7299d4;
+    border-radius: 5px;
+
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="generator-haseł.css" type="text/css">
+    <title>Generator haseł</title>
+</head>
+<body>
+    <h1>Generator haseł</h1>
+    <div id ="container">
+        <label for="minLength">Minimalna długość:</label>
+        <input type="number" id="minLength" placeholder="Minimalna długość" min="1" required>
+
+
+        <label for="maxLength">Maksymalna długość:</label>
+        <input type="number" id="maxLength" placeholder="Maksymalna długość" min="1" required>
+
+
+        <button id="generateButton">Generuj Hasło</button>
+
+
+        <h3 id="h2_info">Wygenerowane hasło:</h3>
+        <input type="text" id="generatedPassword" readonly>
+    </div>
+    <script src ="generator-haseł.js"></script>
+</body>
+</html>
