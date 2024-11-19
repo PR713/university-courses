@@ -1,0 +1,969 @@
+
+declare @id int
+set @id = (select CategoryID from Categories where CategoryName = 'Meat/Poultry')
+
+select ProductName,UnitPrice
+from Products
+where categoryid = (select categoryid from categories where CategoryName = 'Meat/Poultry')
+--lub = @id
+
+
+
+
+
+---------------------------------str 9
+--1
+select QuantityPerUnit
+from Products
+where QuantityPerUnit like '%bottle%'
+
+--2
+--Wyszukaj informacje o stanowisku pracowników,
+--których nazwiska zaczynają się na literę z zakresu od B do L
+select LastName, Title
+from Employees
+where LastName like '[B-L]%'
+
+
+--3
+--Wyszukaj informacje o stanowisku pracowników,
+--których nazwiska zaczynają się na literę  B lub L
+select LastName, Title
+from Employees
+where LastName like '[BL]%'
+
+-- bez użycia like
+
+select LastName, Title
+from Employees --lub left(LastName,1) >= 'B' and <= 'L'
+where LastName >= 'B' and LastName < 'M' -- <= 'L' nie bo może być nazwisko 'LI....' > 'L'
+
+
+----------------------str17
+
+--2
+select OrderID,OrderDate
+from Orders
+where OrderDate >= '1997-01-01' and OrderDate < '1998-01-01'
+--<= '1997-12-31' nie zadziała bo dalej może być godzina > 00:00...
+-- lub można YEAR(1997)
+
+
+
+------------------20
+
+SELECT OrderID, OrderDate, CustomerID, ShippedDate, ShipCountry
+FROM Orders
+WHERE ShipCountry IN ('Argentina') AND ShippedDate IS NULL;
+
+--a gdy np pojutrze ma być od dzisiaj .... and ( ShippedDate IS NULL or GETDATE()
+
+
+--stringi, nazwy kolumn
+select FirstName, LastName as Nazwiska, 'pracownik' kto
+from Employees
+
+select UnitPrice, UnitPrice * 1.05 as NewUnitPrice,
+       UnitPrice*1.05 - UnitPrice as Diff--tu nie można wprost
+--użyc aliasu UnitPrice - New..., as opcjonalnie
+from [Order Details]
+
+
+select concat(FirstName,' ', LastName) as imie_nazwisko
+-- lub FirstName + ' ' +  LastName as imie_nawzisko
+from Employees
+
+---------str33
+--1
+select OrderID, round((UnitPrice*Quantity*(1-Discount)), 2) as Price
+from [Order Details]
+where OrderID = '10250'
+--lub cast(UnitPrice...(1-Discount) as money)
+
+
+--2
+--Napisz polecenie które dla każdego dostawcy (supplier) pokaże pojedynczą
+--kolumnę zawierającą nr telefonu i nr faksu w formacie (numer telefonu
+--i faksu mają być oddzielone przecinkiem)
+select CompanyName, SupplierID, concat(Phone, ', ', Fax) as abc
+from Suppliers
+
+select CompanyName, ContactName, IIF(Fax is not NULL, CONCAT(Phone, ', ', Fax), Phone)
+from Suppliers;
+
+select CompanyName, CONCAT(Phone, ', ' + Fax) from Suppliers
+-- jeśli Phone = Null to bez przecinka
+
+-------------------------------
+--------------------------------
+---------------------------------
+----------------------------------
+
+select top 5 with ties orderid, productid, quantity
+from [order details]
+order by quantity desc
+
+
+---
+
+select count (*) -- wszystkie wiersze
+from Employees
+
+select count (ReportsTo) -- bez null jeśli argument
+from Employees
+
+select count ('ala ma kota') -- ale takiej kolumny nie ma
+from Employees
+
+select *
+from Employees
+
+
+
+------
+------ str 7
+--Podaj sumę/wartość zamówienia o numerze 10250
+select sum(Quantity * UnitPrice * (1 - Discount)) as TotalPrice
+from [Order Details]
+where OrderID = '10250'
+
+
+------
+select max(UnitPrice)
+from Products
+where UnitPrice < 20
+
+select top 1 with ties UnitPrice, ProductName --Można nazwę dodatkowo
+--jeśli kilka miałoby takie samo max
+from Products
+where UnitPrice < 20
+order by UnitPrice desc
+
+select max(UnitPrice) max, min(UnitPrice) min, avg(UnitPrice) average
+from Products
+where QuantityPerUnit like '%bottle%'
+
+
+select * from Products
+where UnitPrice > (select avg(UnitPrice) from Products)
+
+---
+
+select *
+from orderhist
+
+select ProductID, sum(quantity) as total_quantity, min(quantity)
+from orderhist
+group by ProductID
+
+select OrderID, sum(quantity*UnitPrice*(1-Discount)) as total_price
+from [Order Details]
+where OrderID < 10250
+group by OrderID
+order by OrderID desc -- lub total_price
+
+--12,16 str + group ćwiczenia
+
+-------str 12
+--1 Podaj maksymalną cenę zamawianego produktu dla każdego zamówienia
+select OrderID, max(UnitPrice) as MaxPricePerOrder
+from [Order Details]
+group by OrderID
+
+--2 Posortuj zamówienia wg maksymalnej ceny produktu
+select OrderID, max(UnitPrice) as MaxPricePerOrder
+from [Order Details]
+group by OrderID
+order by OrderID
+
+--3 Podaj maksymalną i minimalną cenę zamawianego produktu dla każdego zamówienia
+select OrderID, min(UnitPrice) MinPricePerOrder, max(UnitPrice) MaxPricePerOrder
+from [Order Details]
+group by OrderID
+
+--4 Podaj liczbę zamówień dostarczanych przez poszczególnych spedytorów (przewoźników)
+
+select COUNT(ShipVia)
+from Orders
+group by ShipVia
+
+--5 Który ze spedytorów był najaktywniejszy w 1997 roku
+select top 1 ShipVia as ShipperID_, COUNT(ShipVia) as Quantity
+from Orders
+where OrderDate >= '1997-01-01' and OrderDate < '1998-01-01'
+group by ShipVia
+order by Quantity desc
+
+
+
+---------str 16
+
+--1 Wyświetl zamówienia dla których liczba pozycji zamówienia jest większa niż 5
+
+select OrderID, sum(Quantity)
+from [Order Details]
+group by OrderID
+having sum(Quantity) > 5
+
+
+--2 Wyświetl  klientów dla których w 1998 roku zrealizowano więcej niż 8 zamówień
+-- (wyniki posortuj malejąco wg  łącznej kwoty za dostarczenie zamówień dla każdego z klientów)
+
+select CustomerID, COUNT(OrderID) as QuantityOfOrders, sum(Freight) as PriceOfFreight
+from Orders
+where ShippedDate >= '1998-01-01' and OrderDate < '1999-01-01'
+group by CustomerID
+having COUNT(OrderID) > 8
+order by PriceOfFreight desc
+--można używać np dodatkowo jakiejś kolumny w select ale trzeba ją dodać
+--do group by bo np jeśli grupujemy po Nazwie produktu a mają różne ID
+--to nie wie co ma zrobić z ID (któro wstawić do wyniku zapytania dla
+--danego wiersza w którym zgrupowano nazwę produktu :) i wtedy robi unikalne
+--pary między elementami - tu łatwiej, ale np Region/Województwo -> Miasta)
+
+
+
+------------------------
+---------- ćwiczenie 1 group by
+
+----------str 1
+-- 1.Dla każdego zamówienia podaj jego wartość. Posortuj wynik wg wartości
+--zamówień (w malejęcej kolejności)
+
+select OrderID, sum(Quantity*UnitPrice) as TotalPrice
+from [Order Details]
+group by OrderID
+order by TotalPrice desc
+
+-- 2. Zmodyfikuj zapytanie z poprzedniego punktu,
+-- tak aby zwracało tylko pierwszych 10 wierszy
+select top 10 OrderID, sum(Quantity*UnitPrice) as TotalPrice
+from [Order Details]
+group by OrderID
+order by TotalPrice desc
+
+
+-- 3. Podaj  nr zamówienia oraz wartość  zamówienia, dla zamówień,
+-- dla których łączna liczba zamawianych jednostek produktów jest większa niż 250
+
+select OrderID, sum(Quantity*UnitPrice) as TotalPrice, sum(Quantity) as TotalQuantity
+from [Order Details]
+group by OrderID
+having sum(Quantity) > 250
+order by TotalPrice desc
+
+-- 4. Podaj liczbę zamówionych jednostek produktów dla  produktów,
+-- dla których productid jest mniejszy niż 3
+
+select ProductID, sum(Quantity) as QuantityOfProduct
+from [Order Details]
+where ProductID < 3
+group by ProductID
+
+
+---------- str 4
+-- 1. Dla każdego pracownika podaj liczbę obsługiwanych przez niego zamówień w 1997r
+select EmployeeID, COUNT(OrderID)
+from Orders
+where OrderDate >= '1997-01-01' and OrderDate < '1998-01-01'
+group by EmployeeID
+
+-- 2.  Dla każdego pracownika podaj ilu klientów (różnych klientów) obsługiwał
+--ten pracownik w 1997r
+
+select EmployeeID, COUNT( DISTINCT CustomerID) as LiczbaRóżnychKlientów
+from Orders
+where OrderDate >= '1997-01-01' and OrderDate < '1998-01-01'
+group by EmployeeID -- z CustomerID tu unikalne pary i bez DISTINCT widzimy który
+-- pracownik ile razy obsługiwał tego samego klienta, z CustomerID w select
+--kogo dokładnie wiele razy
+
+
+-- 3. Dla każdego spedytora/przewoźnika podaj łączną wartość "opłat za przesyłkę"
+-- dla przewożonych przez niego zamówień
+select ShipVia, sum(Freight) as ŁącznaOpłata --count(OrderID) as LiczbaZamówień
+from Orders
+group by ShipVia --dodatkowo OrderID możliwe unikalne pary
+
+
+-- 4. Dla każdego spedytora/przewoźnika podaj łączną wartość "opłat za przesyłkę"
+-- przewożonych przez niego zamówień w latach od 1996 do 1997
+select ShipVia, sum(Freight) as ŁącznaOpłata -- count(OrderID) --> liczba zamówień dla każdego
+from Orders
+where OrderDate >= '1996-01-01' and OrderDate < '1998-01-01'
+group by ShipVia --OrderID
+
+
+------------str 5
+-- 1. Dla każdego pracownika podaj liczbę obsługiwanych przez
+-- niego zamówień z podziałem na lata
+
+select EmployeeID, YEAR(OrderDate) as YEAR, COUNT(OrderID) as TotalAmountOfOrders
+from Orders
+group by EmployeeID, YEAR(OrderDate)
+order by EmployeeID, YEAR
+
+-- 2. Dla każdego pracownika podaj liczbę obsługiwanych przez
+-- niego zamówień z podziałem na lata i miesiące
+
+select EmployeeID, YEAR(OrderDate) as YEAR, MONTH(OrderDate) as MONTH, COUNT(OrderID) as TotalAmountOfOrders
+from Orders
+group by EmployeeID, YEAR(OrderDate), MONTH(OrderDate)
+order by EmployeeID, YEAR, MONTH
+
+
+
+
+
+-----------------------------------------------------
+------------------------------------------------------
+-------------------------------------------------------
+---------------------INNER JOIN kolejność bez znaczenia
+
+select productname, companyname
+from products
+         inner join suppliers
+                    on products.supplierid = suppliers.supplierid
+
+
+select p.productid, productname, companyname, s.SupplierID
+from products p
+         inner join suppliers s
+                    on p.supplierid = s.supplierid
+
+--Napisz polecenie zwracające jako wynik nazwy klientów,
+--którzy złożyli zamówienia po 01 marca 1998 (baza northwind)
+
+select distinct customers.CustomerID, companyname
+from orders
+         inner join customers -- inner join = join
+                    on orders.customerid = customers.customerid
+where orderdate > '1998-03-01'
+
+
+select distinct customers.CustomerID, companyname -- to samo co wyżej
+from Orders, Customers
+where orderdate > '1998-03-01' and orders.CustomerID = customers.CustomerID
+-- też inner join ale inny zapis!!!
+
+
+
+--------------------- OUTER JOIN
+--kolejność outer joinów ma znaczenie a inner nie
+
+select companyname, customers.customerid, orderdate
+from customers -- jest po lewej a nie ma po prawej
+         left outer join orders
+                         on customers.customerid = orders.customerid
+where OrderID is null -- nie shipped date bo mogło być wysłane albo nie a i tak mieć null
+
+
+
+
+------------str 17
+--1. Wybierz nazwy i ceny produktów (baza northwind) o cenie jednostkowej pomiędzy
+--20.00 a 30.00, dla każdego produktu podaj dane adresowe dostawcy
+
+select ProductName, UnitPrice
+from Products p inner join Suppliers s on s.SupplierID = p.SupplierID
+where UnitPrice > 20.00 and UnitPrice < 30.00
+
+--2. Wybierz nazwy produktów oraz inf. o stanie magazynu dla
+-- produktów dostarczanych przez firmę ‘Tokyo Traders’
+
+select ProductName, UnitsInStock
+from Products p inner join Suppliers s on p.SupplierID = s.SupplierID
+where CompanyName = 'Tokyo Traders'
+
+
+--3. Czy są jacyś klienci którzy nie złożyli żadnego zamówienia w 1997 roku,
+-- jeśli tak to pokaż ich dane adresowe
+
+select c.CustomerID, Address, City -- left outer join = left join
+from Customers c left outer join Orders o on c.CustomerID = o.CustomerID
+                and YEAR(o.OrderDate) = 1997 -- już ma znaczenie że warunek jest tutaj
+--bo pokazuje tych co zamówili w 1997 albo nie zamówili w 1997 (ale mogli zamówić w innym roku)
+--a niżej odrzucamy tych co faktycznie zamówili w 1997 i wykorzystujemy to że left join takie
+--coś nam daje dodatkowo, tutaj w where nie bo da 0, chcemy zamówienie && null ... bez sensu
+where o.OrderID is null
+
+
+--4. Wybierz nazwy i numery telefonów dostawców, dostarczających produkty,
+-- których aktualnie nie ma w magazynie.
+
+select CompanyName, s.Phone
+from Suppliers s join Products p on s.SupplierID = p.SupplierID
+    and UnitsInStock = 0
+
+
+-- 5. Wybierz zamówienia złożone w marcu 1997. Dla każdego takiego zamówienia wyświetl jego numer,
+-- datę złożenia zamówienia oraz nazwę i numer telefonu klienta
+
+select o.OrderID, o.OrderDate, c.CompanyName, c.Phone
+from Orders o join Customers c on c.CustomerID = o.CustomerID
+where o.OrderDate >= '1997-03-01' and o.OrderDate < '1997-04-01'
+
+-----------
+--Napisz polecenie zwracające listę produktów zamawianych w dniu 1996-07-08
+select distinct ProductName
+from [Order Details] od join Products p
+                                on p.ProductID = od.ProductID
+                        join Orders o
+                                on o.OrderID = od.OrderID
+where OrderDate = '1996-07-08'
+--lub from Orders... bez znaczenia w join
+
+
+-----------------------str23
+----1. Wybierz nazwy i ceny produktów (baza northwind) o cenie jednostkowej pomiędzy 20.00 a 30.00,
+-- dla każdego produktu podaj dane adresowe dostawcy, interesują nas tylko produkty
+-- z kategorii ‘Meat/Poultry’
+
+select ProductName, p.UnitPrice, Address
+from Products p join Suppliers s on p.SupplierID = s.SupplierID
+where p.UnitPrice between 20.00 and 30.00
+-- jeśli dodamy join Order Details on ProductID to wyjdzie więcej,
+--jeśli where od.UnitPrice to ceny tam dla różnych zamówień określonego
+--produktu były inne niż w Products + discount
+
+
+--2. Wybierz nazwy i ceny produktów z kategorii ‘Confections’ dla każdego produktu podaj nazwę dostawcy.
+
+select ProductName, UnitPrice, CompanyName
+from Products p join Suppliers s on p.SupplierID = s.SupplierID
+                join Categories c on c.CategoryID = p.CategoryID
+where c.CategoryName like '%Confections%'
+
+
+--3. Dla każdego klienta podaj liczbę złożonych przez niego zamówień. Zbiór wynikowy
+-- powinien zawierać nazwę klienta, oraz liczbę zamówień
+select c.CompanyName, COUNT(OrderID) as LiczbaZamówień
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+group by c.CompanyName
+
+--4. Dla każdego klienta podaj liczbę złożonych przez niego zamówień w marcu 1997r
+
+select c.CompanyName, COUNT(OrderID) as LiczbaZamówień
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+where OrderDate > '1997-03-01' and OrderDate < '1997-04-01'
+group by c.CompanyName
+
+
+
+---------------str24
+--1.Który ze spedytorów był najaktywniejszy w 1997 roku, podaj nazwę tego spedytora
+select top 1 CompanyName, COUNT(OrderID)
+from Shippers s join Orders o on ShipperID = o.ShipVia
+group by CompanyName
+order by 2 desc
+
+
+--2. Dla każdego zamówienia podaj wartość zamówionych produktów. Zbiór wynikowy powinien
+--zawierać nr zamówienia, datę zamówienia, nazwę klienta oraz wartość zamówionych produktów
+select o.OrderID, OrderDate, CompanyName, (Quantity*UnitPrice*(1-Discount)) as TotalPrice
+from [Order Details] od join Orders o on od.OrderID = o.OrderID
+                        join Customers c on o.CustomerID = c.CustomerID
+
+
+--3. Dla każdego zamówienia podaj jego pełną wartość (wliczając opłatę za przesyłkę).
+-- Zbiór wynikowy powinien zawierać nr zamówienia, datę zamówienia, nazwę klienta oraz pełną
+-- wartość zamówienia
+
+select o.OrderID, OrderDate, CompanyName, (sum(Quantity*UnitPrice*(1-Discount)) + Freight) as TotalPrice
+from Orders o join Customers c on o.CustomerID = c.CustomerID
+              join [Order Details] od on o.OrderID = od.OrderID
+group by o.OrderID, OrderDate, CompanyName, Freight
+--relacja zamówienie jeśli jest, to przez 1 customera więc OrderDate miał taką samą,
+-- jakby to pojedyncze zamówienie i Freight też jedno bo to jedno zamówienie OK :)
+
+
+
+-------------str25
+
+--3. Wybierz nazwy i numery telefonów klientów, którzy kupowali produkty z kategorii ‘Confections’
+select distinct CompanyName, Phone
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+                join [Order Details] od on o.OrderID = od.OrderID
+                join Products p on od.ProductID = p.ProductID
+                join Categories cat on p.CategoryID = cat.CategoryID
+where CategoryName = 'Confections'
+
+
+
+--4. Wybierz nazwy i numery telefonów klientów, którzy nie kupowali produktów z kategorii ‘Confections’
+select distinct CompanyName, Phone --jeśli ma inne poza cuksami, albo wgl nie składał zamówień (2) to i tak jest ok (91)
+from Customers c left join Orders o on c.CustomerID = o.CustomerID
+                 left join [Order Details] od on o.OrderID = od.OrderID
+                 left join Products p on od.ProductID = p.ProductID
+                 left join Categories cat on p.CategoryID = cat.CategoryID and CategoryName = 'Confections'
+where CategoryName is null --tutaj jeśli ktoś miał cukierki a miał inne zamówienie to go i tak liczymy
+--tu jeśli damy zamiast distinct group by Comp.... to też 91 bo tu akurat zadziała tak samo jak distinct
+-- że odrzuci powtórzone wiersze w wyniku
+--left join daje tych co w ogóle nie złożyli, tych co złożyli w cuksach a te co złożyli w innych kategoriach
+--to one mają null bo and CategoryName = '...'
+
+
+SELECT c.CompanyName, c.Phone-------------------odrzuca jeśli nawet miał inne zamówienie poza cukierkami (11)
+FROM Customers c  ---bo używamy not in
+WHERE c.CustomerID NOT IN (
+        SELECT
+            o.CustomerID
+        FROM
+            Orders o JOIN [Order Details] od ON o.OrderID = od.OrderID
+                JOIN Products p ON od.ProductID = p.ProductID
+                JOIN Categories cat ON p.CategoryID = cat.CategoryID
+        WHERE
+            cat.CategoryName = 'Confections'
+    );
+
+
+SELECT c.CompanyName, c.Phone
+FROM Customers c
+         LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+         LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
+         LEFT JOIN Products p ON od.ProductID = p.ProductID
+         LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
+GROUP BY c.CompanyName, c.Phone  ---dotąd ma (91) group by jak distinct w 1. rozwiązaniu
+HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0 ---
+--Having tutaj sprawdza czy dany CustomerID miał jakiekolwiek zamówienie w cukierkach
+--jeśli tak to go wywala (przelatuje po wszystkich jego zamówieniach i ma być 0 zamówień z cuksami)
+-- czyli zlicza tylko tych co nie mają żadnego w cukierkach i też (11)
+--to jest ok bo mamy zwrócić tych co nie mają nic w cukierkach żadnego zamówienia
+--git bo 11+80 = 91
+
+
+
+
+--5. Wybierz nazwy i numery telefonów klientów, którzy w 1997r nie kupowali produktów
+-- z kategorii ‘Confections’
+
+select distinct CompanyName, Phone--, CategoryName
+from Customers c left join Orders o on c.CustomerID = o.CustomerID
+                 left join [Order Details] od on o.OrderID = od.OrderID
+                 left join Products p on od.ProductID = p.ProductID
+                 left join Categories cat on p.CategoryID = cat.CategoryID and CategoryName = 'Confections'
+where (CategoryName is null and YEAR(OrderDate) = 1997) -- w 1997 nie mieli cuksów
+    or (CategoryName = 'Confections' and YEAR(OrderDate) <> 1997)-- mieli cuksy w innych latach
+    or (CategoryName is null and OrderDate is null) -- wgl nie złożyli
+--left join daje tych co w ogóle nie złożyli, tych co złożyli w cuksach a te co złożyli w innych kategoriach
+--to one mają null bo and CategoryName = '...'
+-- ponownie zawiera tych którzy poza cukierkami mieli jakieś inne zamówienia w 1997 (90)
+--razem z or (CategoryName = 'Confections' and YEAR(OrderDate) = 1997) -- daje pełne pokrycie przypadków
+--(91) wtedy czyli jedna osoba jest co kupowała tylko same cukierki!!!!!!!!!
+
+
+
+SELECT c.CompanyName, c.Phone ---to poprawne bo tylko 1997
+FROM Customers c
+         LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+         LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
+         LEFT JOIN Products p ON od.ProductID = p.ProductID
+         LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
+WHERE YEAR(o.OrderDate) = 1997
+GROUP BY c.CustomerID, c.CompanyName, c.Phone -- nie trzeba c.CustomerID
+HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0;
+-- różnica jak wcześniej pod tym samym kątem (18)
+
+
+
+----------------------------------
+----------------------------------29
+
+
+--1. Napisz polecenie, które wyświetla pracowników oraz ich podwładnych (baza northwind)
+select ReportsTo, EmployeeID, FirstName + ' ' +  LastName as FLname
+from Employees
+where ReportsTo is not null
+order by 1 -- same ID szefów, FL podwładnych
+
+--up, dw down
+select up.EmployeeID, up.FirstName, up.LastName, dw.EmployeeID, dw.FirstName, dw.LastName
+from Employees as up inner join Employees as dw on up.EmployeeID = dw.ReportsTo
+order by up.FirstName -- mamy
+
+
+--2.Napisz polecenie, które wyświetla pracowników, którzy nie mają podwładnych (baza northwind)
+SELECT szef.EmployeeID,szef.LastName AS Name
+FROM Employees szef left join Employees pod on szef.EmployeeID = pod.ReportsTo
+where pod.EmployeeID is null -- jeśli nie miało dopasowania to wstawia tu null
+
+--3. Napisz polecenie, które wyświetla pracowników, którzy mają podwładnych (baza northwind)
+
+select a.EmployeeID, a.FirstName + ' ' + a.LastName as ImieNazwisko, COUNT(a.EmployeeID) as liczba_podwladnych
+from Employees as a left join Employees as b on a.EmployeeID = b.ReportsTo
+where b.EmployeeID is not null
+group by a.EmployeeID, a.FirstName + ' ' + a.LastName
+
+
+------------------------------------------Ćwiczenia Join
+---------str 1
+--1. Dla każdego zamówienia podaj łączną liczbę zamówionych jednostek towaru oraz nazwę klienta.
+select o.OrderID, CompanyName, sum(Quantity) as LiczbaJednostek
+from Orders o join [Order Details] od on o.OrderID = od.OrderID
+            join Customers c on c.CustomerID = o.CustomerID
+group by o.OrderID, CompanyName
+
+
+--2. Dla każdego zamówienia podaj łączną wartość zamówionych produktów (wartość zamówienia bez
+--opłaty za przesyłkę) oraz nazwę klienta.
+select o.OrderID, CompanyName, sum(UnitPrice*Quantity*(1-Discount)) as TotalPrice
+from Orders o join [Order Details] od on o.OrderID = od.OrderID
+              join Customers c on c.CustomerID = o.CustomerID
+group by o.OrderID, CompanyName
+
+--3. Dla każdego zamówienia podaj łączną wartość tego zamówienia (wartość zamówienia wraz z opłatą
+--za przesyłkę) oraz nazwę klienta.
+
+select o.OrderID, CompanyName, sum(UnitPrice*Quantity*(1-Discount)) + o.Freight as TotalPrice
+from Orders o join [Order Details] od on o.OrderID = od.OrderID
+              join Customers c on c.CustomerID = o.CustomerID
+group by o.OrderID, CompanyName, o.Freight
+
+
+--4. Zmodyfikuj poprzednie przykłady tak żeby dodać jeszcze imię i nazwisko pracownika obsługującego zamówień
+
+select o.OrderID, CompanyName, e.LastName, e.FirstName ,sum(UnitPrice*Quantity*(1-Discount)) + o.Freight as TotalPrice
+from Orders o join [Order Details] od on o.OrderID = od.OrderID
+              join Customers c on c.CustomerID = o.CustomerID
+                join Employees e on e.EmployeeID = o.EmployeeID
+group by o.OrderID, CompanyName, o.Freight, e.LastName, e.FirstName
+
+
+---------str2
+--1. Podaj nazwy przewoźników, którzy w marcu 1998 przewozili produkty z kategorii 'Meat/Poultry'
+select CompanyName, CategoryName
+from Shippers s join Orders o on s.ShipperID = o.ShipVia
+                join [Order Details] od on o.OrderID = od.OrderID
+                join Products p on od.ProductID = p.ProductID
+                join Categories c on p.CategoryID = c.CategoryID
+where OrderDate >= '1998-03-01' and OrderDate < '1998-04-01' and CategoryName = 'Meat/Poultry'
+group by CompanyName, CategoryName
+
+--2. Podaj nazwy przewoźników, którzy w marcu 1997r nie przewozili produktów z kategorii 'Meat/Poultry'
+select CompanyName
+from Shippers s  left join Orders o on s.ShipperID = o.ShipVia
+                 left join [Order Details] od on o.OrderID = od.OrderID
+                 left join Products p on od.ProductID = p.ProductID
+                 left join Categories c on p.CategoryID = c.CategoryID and CategoryName = 'Meat/Poultry'
+where OrderDate >= '1997-03-01' and OrderDate < '1997-04-01'
+group by CompanyName--, CategoryName tu nie może być bo inaczej wymieni wszytkich (3) bo
+--having nie będzie sprawdzało po grupie tylko pojedyncze wiersze
+having sum(case when c.CategoryName = 'Meat/Poultry' then 1 else 0 end) = 0;
+
+
+--3. Dla każdego przewoźnika podaj wartość produktów z kategorii 'Meat/Poultry' które ten przewoźnik
+-- przewiózł w marcu 1997
+select CompanyName, CategoryName, sum(od.Quantity*p.UnitPrice*(1-Discount)) as TotalPrice
+from Shippers s join Orders o on s.ShipperID = o.ShipVia
+                join [Order Details] od on o.OrderID = od.OrderID
+                join Products p on od.ProductID = p.ProductID
+                join Categories c on p.CategoryID = c.CategoryID
+where OrderDate >= '1997-03-01' and OrderDate < '1997-04-01' and CategoryName = 'Meat/Poultry'
+group by CompanyName, CategoryName
+
+
+
+
+------------------str3
+
+--1. Dla każdej kategorii produktu (nazwa), podaj łączną liczbę zamówionych przez klientów jednostek
+-- towarów z tej kategorii.
+select cat.CategoryName, c.CompanyName, sum(od.Quantity) as ŁącznaLiczbaJednostek
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+                join [Order Details] od on o.OrderID = od.OrderID
+                join Products p on od.ProductID = p.ProductID
+                join Categories cat on p.CategoryID = cat.CategoryID
+group by cat.CategoryName, c.CompanyName
+
+--2. Dla każdej kategorii produktu (nazwa), podaj łączną liczbę zamówionych w 1997r jednostek towarów
+-- z tej kategorii.
+select cat.CategoryName, sum(od.Quantity) as ŁącznaLiczbaJednostek
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+                 join [Order Details] od on o.OrderID = od.OrderID
+                 join Products p on od.ProductID = p.ProductID
+                 join Categories cat on p.CategoryID = cat.CategoryID
+where YEAR(OrderDate) = 1997
+group by cat.CategoryName
+
+
+--z UnitsOnOrder z Products NIEPOPRAWNE bo to liczba zamówionych od dostawców
+--ale na magazynie mogło już być, chodzi o Quantity zamówionych
+select cat.CategoryName, sum(UnitsOnOrder) as ŁącznaLiczbaJednostek
+from Products p join Categories cat on p.CategoryID = cat.CategoryID
+                join [Order Details] od on p.ProductID = od.ProductID
+                join Orders o on od.OrderID = o.OrderID
+where YEAR(OrderDate) = 1997
+group by cat.CategoryName
+
+
+--3. Dla każdej kategorii produktu (nazwa), podaj łączną wartość zamówionych towarów z tej kategorii.
+
+select cat.CategoryName, sum(od.Quantity*od.UnitPrice*(1-Discount)) as ŁącznaWartość
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+                 join [Order Details] od on o.OrderID = od.OrderID
+                 join Products p on od.ProductID = p.ProductID
+                 join Categories cat on p.CategoryID = cat.CategoryID
+group by cat.CategoryName
+
+
+--------------str4
+
+--1. Dla każdego przewoźnika (nazwa) podaj liczbę zamówień które przewieźli w 1997r
+select s.CompanyName, COUNT(CompanyName) LiczbaZamówień
+from  Orders o join Shippers s on o.ShipVia = s.ShipperID
+where YEAR(OrderDate) = 1997
+group by CompanyName
+
+
+--2. Który z przewoźników był najaktywniejszy (przewiózł największą liczbę zamówień)
+-- w 1997r, podaj nazwę tego przewoźnika
+select top 1 s.CompanyName, COUNT(CompanyName) LiczbaZamówień
+from  Orders o join Shippers s on o.ShipVia = s.ShipperID
+where YEAR(OrderDate) = 1997
+group by CompanyName
+order by 1 desc
+
+
+--3. Dla każdego przewoźnika podaj łączną wartość "opłat za przesyłkę" przewożonych przez
+--niego zamówień od '1998-05-03' do '1998-05-29'
+select s.CompanyName, sum(Freight)
+from Suppliers s join Orders o on ShipVia = SupplierID
+where OrderDate between '1998-05-03' and '1998-05-29'
+group by s.CompanyName
+
+--4. Dla każdego pracownika (imię i nazwisko) podaj łączną wartość zamówień obsłużonych
+--przez tego pracownika w maju 1996
+select e.LastName, e.FirstName, sum(Quantity*UnitPrice*(1-Discount)) as TotalPrice
+from Employees e join Orders o on e.EmployeeID = o.EmployeeID
+                    join [Order Details] od on o.OrderID = od.OrderID
+where OrderDate between '1997-05-01' and '1997-05-31'
+group by e.LastName, e.FirstName
+
+
+--5. Który z pracowników obsłużył największą liczbę zamówień w 1996r, podaj imię i nazwisko
+-- takiego pracownika
+select top 1 e.LastName, e.FirstName, COUNT(OrderDate) as TotalPrice
+from Employees e join Orders o on e.EmployeeID = o.EmployeeID
+                 join [Order Details] od on o.OrderID = od.OrderID
+where YEAR(OrderDate) = 1996
+group by e.LastName, e.FirstName
+order by 3 desc
+
+
+--6. Który z pracowników był najaktywniejszy (obsłużył zamówienia o największej wartości)
+-- w 1996r, podaj imię i nazwisko takiego pracownika
+select top 1 e.LastName, e.FirstName, sum(Quantity*UnitPrice*(1-Discount)) as TotalPrice
+from Employees e join Orders o on e.EmployeeID = o.EmployeeID
+                 join [Order Details] od on o.OrderID = od.OrderID
+where YEAR(OrderDate) = 1996
+group by e.LastName, e.FirstName
+order by 3 desc
+
+
+
+
+---------------------str 5
+
+--1. Dla każdego pracownika (imię i nazwisko) podaj łączną wartość zamówień obsłużonych przez
+--tego pracownika. Ogranicz wynik tylko do pracowników
+--a) którzy mają podwładnych
+--b) którzy nie mają podwładnych
+
+
+
+
+
+--2. Napisz polecenie, które wyświetla klientów z Francji którzy w 1998r złożyli więcej
+--niż dwa zamówienia oraz klientów z Niemiec którzy w 1997r złożyli więcej niż trzy zamówienia
+
+select CompanyName, COUNT(OrderID) as LiczbaZamówień
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+where Country = 'France' and YEAR(OrderDate) = 1998
+group by CompanyName
+having COUNT(OrderID) > 2
+UNION
+select CompanyName, COUNT(OrderID) as LiczbaZamówień
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+where Country = 'Germany' and YEAR(OrderDate) = 1997
+group by CompanyName
+having COUNT(OrderID) > 3
+
+
+--------------
+select firstname + ' ' + LastName as name, city, PostalCode, 'klient'
+from Employees
+UNION
+select CompanyName, city, PostalCode, 'pracownik'
+from Customers
+--ewentualnie union all i wtedy np ojca i syna tak samo nazwanych nie złączy (bez dania 'klient', 'pracownik')
+
+select cast(EmployeeID as varchar(100)), firstname + ' ' + LastName as name, city, PostalCode, 'klient'
+from Employees
+UNION all
+select CustomerID,CompanyName, city, PostalCode, 'pracownik'
+from Customers
+
+
+
+
+----------------------
+---------------------
+--------------------
+-------------------
+------------------
+-----------------
+----------------
+---------------
+--------------------Subquery
+
+select productname, unitprice
+     , (select avg(unitprice) from products) as average
+from products;
+
+select productname, unitprice
+     , (select avg(unitprice) from products) as average
+     , unitprice - (select avg(unitprice) from products) as diff
+from products;
+
+-- select productname, unitprice, avg(UnitPrice) as average
+--from Products
+--group by productname, unitprice--TO nie bo średnia wg danej nazwy
+--a chcemy avg wszystkich produktów
+
+
+select productname, unitprice
+     , (select avg(unitprice) from products) as average
+     , unitprice - (select avg(unitprice) from products) as diff
+from products
+where unitprice > (select avg(unitprice) from products)
+
+
+select *, unitPrice - average as diff
+from
+    (select productname, unitprice
+          , (select avg(unitprice) from products) as average
+     from products) t --(831-833) jako tablica t
+where unitPrice > average;
+
+
+-----skorelowane
+
+select *, UnitPrice - average as diff from
+    (select productname, categoryid, unitprice
+          ,(select avg(unitprice)
+            from products as p_in
+            where p_in.categoryid = p_out.categoryid ) as average
+     from products as p_out) t
+
+
+--with
+;with t as (
+    select productname, categoryid, unitprice
+         ,( select avg(unitprice)
+            from products as p_in
+            where p_in.categoryid = p_out.categoryid ) as average
+    from products as p_out
+)
+ select *, UnitPrice - average as diff from t
+
+
+--lub z join
+select p.ProductName, p.CategoryID, p.UnitPrice,
+       p.UnitPrice - av.avegage as diff
+from products p
+         join (select categoryid, avg(unitprice) avegage
+               from products
+               group by categoryid) av
+              on p.CategoryID = av.CategoryID
+
+
+
+
+----------------
+----------------
+---str 1 ćwiczenia
+--1. Podaj łączną wartość zamówienia o numerze 10250 (uwzględnij cenę za przesyłkę)
+select o.OrderID, sum(Quantity*UnitPrice*(1-Discount)) + Freight as Total
+from [Order Details] join Orders o on [Order Details].OrderID = o.OrderID
+where o.OrderID = 10250
+group by o.OrderID, Freight
+--relacja zamówienie jeśli jest, to przez 1 customera więc OrderDate miał taką samą,
+-- jakby to pojedyncze zamówienie i Freight też jedno bo to jedno zamówienie OK :)
+
+--LUB
+
+select o.OrderID, (select sum(Quantity*UnitPrice*(1-Discount))
+                    from [Order Details] od where o.OrderID = od.OrderID) + o.Freight
+from Orders o
+where OrderID = '10250'
+
+
+
+--2. Podaj łączną wartość każdego zamówienia (uwzględnij cenę za przesyłkę)
+select o.OrderID, (select sum(Quantity*UnitPrice*(1-Discount))
+                   from [Order Details] od where o.OrderID = od.OrderID) + o.Freight as Total
+from Orders o
+order by 1
+--lub
+select o.OrderID, sum(Quantity*UnitPrice*(1-Discount)) + Freight as Total
+from [Order Details] join Orders o on [Order Details].OrderID = o.OrderID
+group by o.OrderID, Freight
+order by 1
+
+
+
+--3. Dla każdego produktu podaj maksymalną wartość zakupu tego produktu
+select od.ProductID, max(UnitPrice*Quantity*(1-Discount)) as MaxOrderPrice
+from [Order Details] od
+group by od.ProductID
+order by 1
+
+--lub subquery
+select od.ProductID, (select max(UnitPrice*Quantity*(1-Discount))
+                      from [Order Details] odv where od.ProductID = odv.ProductID) as MaxOrderPrice
+from [Order Details] od
+group by od.ProductID
+order by 1
+
+
+
+--4. Dla każdego produktu podaj maksymalną wartość zakupu tego produktu w 1997r
+select od.ProductID, max(UnitPrice*Quantity*(1-Discount)) as MaxOrderPrice
+from [Order Details] od join Orders o on od.OrderID = o.OrderID
+where YEAR(OrderDate) = 1997
+group by od.ProductID
+order by 1
+
+
+
+----str 2 ćwiczenia
+--1. Dla każdego klienta podaj łączną wartość jego zamówień (bez opłaty za przesyłkę) z 1996r
+select CustomerID, sum(UnitPrice*Quantity*(1-Discount)) as CustomerTotalPrice
+from Orders o join [Order Details] od on o.OrderID = od.OrderID
+where YEAR(OrderDate) = 1996
+group by CustomerID
+
+
+--2. Dla każdego klienta podaj łączną wartość jego zamówień (uwzględnij opłatę za przesyłkę) z 1996r
+select CustomerID, sum(UnitPrice*Quantity*(1-Discount)) + sum(o.Freight) as CustomerTotalPrice
+from Orders o join [Order Details] od on o.OrderID = od.OrderID
+where YEAR(OrderDate) = 1996
+group by CustomerID
+order by 1
+
+
+--3. Dla każdego klienta podaj maksymalną wartość zamówienia złożonego przez tego klienta w 1997r
+select CustomerID, max(UnitPrice*Quantity*(1-Discount))
+from Orders o join [Order Details] od on o.OrderID = od.OrderID
+group by CustomerID -- oblicza tylko składowe zamówienia maksymalne
+order by 2 desc -- trzeba by max (sum ()) ale się nie da
+
+--zatem subquery trzeba
+select CustomerID, max(OrderValue)  as MaxOrderValue
+from (select o.CustomerID, o.OrderID, sum(Quantity*UnitPrice*(1-Discount)) as OrderValue
+        from Orders o join [Order Details] od on o.OrderID = od.OrderID
+        group by o.CustomerID, o.OrderID) as t
+group by CustomerID
+order by 2 desc
+
+
