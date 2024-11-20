@@ -267,3 +267,79 @@ group by state, ma.firstname, ma.lastname
 having (state = 'AZ' and COUNT(adult_member_no) > 2) or (state = 'CA' and COUNT(adult_member_no) > 3)
 
 
+
+
+
+-----------------------------subquery
+
+
+
+
+-----------str3
+--1. Dla każdego dorosłego członka biblioteki podaj jego imię, nazwisko oraz liczbę jego dzieci.
+select LastName, FirstName, (select COUNT(j.adult_member_no)
+                             from juvenile j where a.member_no = j.adult_member_no) as LiczbaDzieci
+from member m join adult a on m.member_no = a.member_no
+--adult i member są połączone OK
+
+
+
+--2. Dla każdego dorosłego członka biblioteki podaj jego imię, nazwisko, liczbę jego dzieci,
+-- liczbę zarezerwowanych książek oraz liczbę wypożyczonych książek.
+select LastName, FirstName, (select COUNT(j.adult_member_no)
+                             from juvenile j where a.member_no = j.adult_member_no) as LiczbaDzieci,
+                            (select COUNT(r.member_no)
+                             from reservation r where a.member_no = r.member_no) as LiczbaRezerwacji,
+                            (select COUNT(l.member_no)
+                            from loan l where a.member_no = l.member_no) as LiczbaWypożyczonych
+from member m join adult a on m.member_no = a.member_no
+
+--lub
+SELECT m.member_no, COUNT(DISTINCT j.member_no) AS LiczbaDzieci, COUNT(DISTINCT r.member_no) AS LiczbaRezerwacji,
+    COUNT(DISTINCT l.member_no) AS LiczbaWypożyczonych
+FROM member m JOIN adult a ON m.member_no = a.member_no
+    LEFT JOIN juvenile j ON a.member_no = j.adult_member_no
+    LEFT JOIN reservation r ON a.member_no = r.member_no
+    LEFT JOIN loan l ON a.member_no = l.member_no
+group by m.member_no
+order by 2 desc
+
+
+
+
+--3. Dla każdego dorosłego członka biblioteki podaj jego imię, nazwisko, liczbę jego dzieci,
+-- oraz liczbę książek zarezerwowanych i wypożyczonych przez niego i jego dzieci.
+--------------nie mam
+
+
+--4. Dla każdego tytułu książki podaj ile razy ten tytuł był wypożyczany w 2001r
+select title, sum(LiczbaWypożyczeń) as LiczbaWypożyczeń
+from (   select title, COUNT(l.title_no) as LiczbaWypożyczeń
+         from title t left join loan l on t.title_no = l.title_no
+         where YEAR(l.out_date) = 2001
+         group by title
+         UNION
+         select title, COUNT(lh.title_no) as LiczbaWypożyczeń
+         from title t left join loanhist lh on t.title_no = lh.title_no
+         where YEAR(lh.out_date) = 2001
+         group by title) as LiczbaWypożyczeń
+group by title
+
+--select title, COUNT(l.title_no) as LiczbaWypożyczeń
+--from title t left join loan l on t.title_no = l.title_no
+--left join loanhist lh on t.title_no = lh.title_no
+--where YEAR(l.out_date) = 2001 or YEAR(lh.out_date) = 2001
+--group by title NIEPOPRAWNE ŁĄCZENIE PEWNIE JAKOŚ
+
+--5. Dla każdego tytułu książki podaj ile razy ten tytuł był wypożyczany w 2002r
+select title, sum(LiczbaWypożyczeń) as LiczbaWypożyczeń
+from (   select title, COUNT(l.title_no) as LiczbaWypożyczeń
+         from title t left join loan l on t.title_no = l.title_no
+         where YEAR(l.out_date) = 2002
+         group by title
+         UNION
+         select title, COUNT(lh.title_no) as LiczbaWypożyczeń
+         from title t left join loanhist lh on t.title_no = lh.title_no
+         where YEAR(lh.out_date) = 2002
+         group by title) as LiczbaWypożyczeń
+group by title

@@ -491,6 +491,7 @@ where CategoryName = 'Confections'
 
 
 --4. Wybierz nazwy i numery telefonów klientów, którzy nie kupowali produktów z kategorii ‘Confections’
+
 select distinct CompanyName, Phone --jeśli ma inne poza cuksami, albo wgl nie składał zamówień (2) to i tak jest ok (91)
 from Customers c left join Orders o on c.CustomerID = o.CustomerID
                  left join [Order Details] od on o.OrderID = od.OrderID
@@ -503,7 +504,7 @@ where CategoryName is null --tutaj jeśli ktoś miał cukierki a miał inne zam�
 --to one mają null bo and CategoryName = '...'
 
 
-SELECT c.CompanyName, c.Phone-------------------odrzuca jeśli nawet miał inne zamówienie poza cukierkami (11)
+SELECT c.CompanyName, c.Phone-------------------odrzuca jeśli nawet miał inne zamówienie poza cukierkami (11) OK
 FROM Customers c  ---bo używamy not in
 WHERE c.CustomerID NOT IN (
         SELECT
@@ -528,7 +529,7 @@ HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0 ---
 --Having tutaj sprawdza czy dany CustomerID miał jakiekolwiek zamówienie w cukierkach
 --jeśli tak to go wywala (przelatuje po wszystkich jego zamówieniach i ma być 0 zamówień z cuksami)
 -- czyli zlicza tylko tych co nie mają żadnego w cukierkach i też (11)
---to jest ok bo mamy zwrócić tych co nie mają nic w cukierkach żadnego zamówienia
+--to jest ok bo mamy zwrócić tych co nie mają w cukierkach żadnego zamówienia
 --git bo 11+80 = 91
 
 
@@ -537,7 +538,7 @@ HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0 ---
 --5. Wybierz nazwy i numery telefonów klientów, którzy w 1997r nie kupowali produktów
 -- z kategorii ‘Confections’
 
-select distinct CompanyName, Phone--, CategoryName
+select distinct CompanyName, Phone--, CategoryName -- źle (91) ma być (18)
 from Customers c left join Orders o on c.CustomerID = o.CustomerID
                  left join [Order Details] od on o.OrderID = od.OrderID
                  left join Products p on od.ProductID = p.ProductID
@@ -555,14 +556,13 @@ where (CategoryName is null and YEAR(OrderDate) = 1997) -- w 1997 nie mieli cuks
 
 SELECT c.CompanyName, c.Phone ---to poprawne bo tylko 1997
 FROM Customers c
-         LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+         LEFT JOIN Orders o ON c.CustomerID = o.CustomerID and YEAR(o.OrderDate) = 1997
          LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
          LEFT JOIN Products p ON od.ProductID = p.ProductID
          LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
-WHERE YEAR(o.OrderDate) = 1997
-GROUP BY c.CustomerID, c.CompanyName, c.Phone -- nie trzeba c.CustomerID
+GROUP BY c.CompanyName, c.Phone -- nie trzeba c.CustomerID bo nazwy się nie powtarzają
 HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0;
--- różnica jak wcześniej pod tym samym kątem (18)
+-- różnica jak wcześniej pod tym samym kątem (23)
 
 
 
@@ -967,3 +967,162 @@ group by CustomerID
 order by 2 desc
 
 
+----------str4
+--1. Czy są jacyś klienci którzy nie złożyli żadnego zamówienia w 1997 roku, jeśli tak to pokaż ich dane adresowe
+select c.CustomerID, Address
+from Customers c left join Orders o on c.CustomerID = o.CustomerID and YEAR(OrderDate) = 1997
+where OrderID is null
+--lub
+select c.CustomerID, Address
+from Customers c
+where c.CustomerID not in (select o.CustomerID from Orders o
+                        where YEAR(OrderDate) = 1997)
+
+
+--2. Wybierz nazwy i numery telefonów klientów , którym w 1997 roku przesyłki dostarczała firma United Package.
+select DISTINCT c.CompanyName, c.Phone
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+                join Shippers s on o.ShipVia = s.ShipperID
+where YEAR(OrderDate) = 1997 and s.CompanyName = 'United Package'
+
+
+--lub
+select c.CompanyName, c.Phone
+from Customers c
+where c.CustomerID in (select o.CustomerID
+                       from Orders o join Shippers s on o.ShipVia = s.ShipperID
+                       where YEAR(OrderDate) = 1997 and s.CompanyName = 'United Package' )
+
+
+
+---jeśli np c.CompanyName jak i s.CompanyName mogą się powtarzać ale inne ID to można tak
+SELECT DISTINCT c.CompanyName, c.Phone
+FROM Customers c
+WHERE c.CustomerID IN (
+    SELECT o.CustomerID
+    FROM Orders o
+    WHERE YEAR(o.OrderDate) = 1997
+      AND o.ShipVia IN (
+        SELECT s.ShipperID
+        FROM Shippers s
+        WHERE s.CompanyName = 'United Package'
+    )
+);
+
+
+
+--3. Wybierz nazwy i numery telefonów klientów , którym w 1997 roku przesyłek nie dostarczała firma United Package.
+select DISTINCT c.CompanyName, c.Phone
+from Customers c left join Orders o on c.CustomerID = o.CustomerID
+                left join Shippers s on o.ShipVia = s.ShipperID and s.CompanyName = 'United Package'
+                                                                    and YEAR(ShippedDate) = 1997
+where s.CompanyName is null --źle bo w 1997 nie dostarczała ale w innych mogła...
+
+
+--POPRAWNE
+select c.CustomerID
+from Customers c
+where c.CustomerID not in ( select o.CustomerID
+                            from Orders o left join Shippers s on o.ShipVia = s.ShipperID
+                            where s.CompanyName = 'United Package' and YEAR(ShippedDate) = 1997)
+
+
+--lub
+select distinct c.CompanyName, c.Phone
+from Customers join Orders o on Customers.CustomerID = O.CustomerID
+            join Shippers S on o.ShipVia = S.ShipperID and year(ShippedDate) = 1997
+                            and S.CompanyName = 'United Package'--którzy mają zamówienia
+            right outer join Customers as c on c.CustomerID = Customers.CustomerID
+            --i do tego na KONIEC right join bierze dopełnienie razem z tymi co nie mają w ogóle
+where Customers.CustomerID is null;
+
+
+
+--4. Wybierz nazwy i numery telefonów klientów, którzy kupowali produkty z kategorii Confections.
+select DISTINCT c.CompanyName, c.Phone
+from Customers c join Orders o on c.CustomerID = o.CustomerID
+    join [Order Details] od on o.OrderID = od.OrderID
+    join Products p on od.ProductID = p.ProductID
+    join Categories cat on p.CategoryID = cat.CategoryID
+where CategoryName = 'Confections'
+
+--lub XD
+
+select distinct c.companyname, c.phone
+from customers as c
+where c.customerid in (
+    select o.customerid
+    from orders as o
+    where o.orderid in (
+        select od.orderid
+        from [order details] as od
+        where od.productid in (
+            select p.productid
+            from products as p
+            where p.categoryid in (
+                select cat.categoryid
+                from categories as cat
+                where cat.categoryname = 'confections'
+            )
+        )
+    )
+);
+
+
+--5. Wybierz nazwy i numery telefonów klientów, którzy nie kupowali produktów z kategorii Confections.
+SELECT c.CompanyName, c.Phone
+FROM Customers c
+WHERE c.CustomerID NOT IN (
+    SELECT
+        o.CustomerID
+    FROM
+        Orders o JOIN [Order Details] od ON o.OrderID = od.OrderID
+                 JOIN Products p ON od.ProductID = p.ProductID
+                 JOIN Categories cat ON p.CategoryID = cat.CategoryID
+    WHERE
+        cat.CategoryName = 'Confections'
+);
+
+--lub
+
+SELECT c.CompanyName, c.Phone
+FROM Customers c
+         LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+         LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
+         LEFT JOIN Products p ON od.ProductID = p.ProductID
+         LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
+GROUP BY c.CompanyName, c.Phone  ---dotąd ma (91) group by jak distinct w 1. rozwiązaniu
+HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0
+
+--lub
+select DISTINCT c.CompanyName, c.Phone
+from Customers join Orders o on Customers.CustomerID = o.CustomerID
+                join [Order Details] od on o.OrderID = od.OrderID
+                join Products p on od.ProductID = p.ProductID
+                join Categories cat on p.CategoryID = cat.CategoryID and cat.CategoryName = 'Confections'
+        right join Customers c on c.CustomerID = Customers.CustomerID -- dopełnienie tamtego ^
+where Customers.CustomerID is null
+
+
+
+
+--6. Wybierz nazwy i numery telefonów klientów, którzy w 1997r nie kupowali produktów z kategorii Confections.
+select c.CompanyName, c.Phone
+from Customers c
+where c.CustomerID not in ( select o.CustomerID from Orders o
+        where YEAR(o.OrderDate) = 1997 and o.OrderID in (select od.OrderID from [Order Details] od
+        where od.ProductID in (select p.ProductID from Products p
+        where p.CategoryID in (select cat.CategoryID from Categories cat
+        where CategoryName = 'Confections' ))))
+
+SELECT c.CompanyName, c.Phone ---to poprawne bo tylko 1997
+FROM Customers c
+         LEFT JOIN Orders o ON c.CustomerID = o.CustomerID and YEAR(o.OrderDate) = 1997
+         LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
+         LEFT JOIN Products p ON od.ProductID = p.ProductID
+         LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
+GROUP BY c.CompanyName, c.Phone
+HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0;
+--jeśli dalibyśmy poza left join warunek where YEAR(o.OrderDate) = 1997
+--to wtedy wymuszam że klient musiał mieć jakieś zamówienie w 1997
+--więc wynik (18) a nie musi mieć w ogóle w 1997 więc tak nie można i wynik poprawny (23)
