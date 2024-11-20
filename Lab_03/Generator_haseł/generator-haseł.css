@@ -7,19 +7,22 @@ body {
 }
 
 #container {
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
+    margin: auto;
 }
 
 button {
     padding: 6px 8px;
-    margin-top: 15px;
+    margin-top: 20px;
     margin-bottom: 15px;
     max-width: 150px;
     cursor: pointer;
     border-radius: 2px;
+    font-size: 16px;
     border: #7299d4;
 
 }
@@ -27,7 +30,8 @@ button {
 input[type="number"] {
     padding: 8px;
     margin: 5px;
-    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
     border-radius: 5px;
     border: #7299d4;
 }
@@ -37,10 +41,17 @@ input[type="number"] {
 }
 
 #generatedPassword {
-    width: 250px;
+    max-width: 250px;
+    min-width: 250px;
     margin-top: 10px;
     padding: 10px;
     border: #7299d4;
     border-radius: 5px;
 
+}
+
+.options {
+    width: 216px;
+    text-align: left;
+    margin-top: 5px;
 }

@@ -12,13 +12,21 @@ function generatePassword() {
         return;
     }
 
-
     const length = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
     const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const digits = '0123456789';
-    const specialChars = '!@#$%^&*()_+[]{}|;:,.<>?';
-    const allChars = lowercase + uppercase + digits + specialChars;
+    let allChars = lowercase + digits;
+
+    const includeUppercase = document.getElementById('includeUpper').checked;
+    const includeSpecial = document.getElementById('includeSpecial').checked;
+
+    if (includeUppercase) {
+        allChars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    }
+
+    if (includeSpecial) {
+        allChars += '!@#$%^&*()_+[]{}|;:,.<>?'
+    }
 
     let password = '';
     let array = Array(allChars.length).fill(0);
@@ -40,7 +48,6 @@ function generatePassword() {
     }
     document.getElementById('generatedPassword').value = password;
 }
-
 
 document.getElementById('generateButton').addEventListener('click', generatePassword);
 

@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lab_03/generator-haseł.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab_03/generator-haseł.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab_03/generator-haseł.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_03/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/stoper.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_03/stoper.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/stoper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_03/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/stoper.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_03/generator-haseł.css" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_03/generator-haseł.html" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_03/generator-haseł.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_03/stoper.css" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Stoper/stoper.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_03/stoper.html" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Stoper/stoper.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_03/stoper.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Stoper/stoper.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +60,12 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_03\Generator_haseł" />
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_03\Stoper" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -116,7 +122,8 @@
       <workItem from="1731947206112" duration="3836000" />
       <workItem from="1732024546384" duration="273000" />
       <workItem from="1732026700267" duration="2599000" />
-      <workItem from="1732038630759" duration="3442000" />
+      <workItem from="1732038630759" duration="4731000" />
+      <workItem from="1732099779796" duration="2243000" />
     </task>
     <servers />
   </component>

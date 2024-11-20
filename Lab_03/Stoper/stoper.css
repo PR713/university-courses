@@ -29,4 +29,11 @@ body {
     max-height: 30px;
     text-align: center;
     font-size: 18px;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    border: #7391ab;
+}
+
+.buttons_style:hover {
+    background-color: #DDDDDD;
 }
