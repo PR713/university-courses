@@ -848,8 +848,8 @@ where unitPrice > average;
 
 -----skorelowane
 
-select *, UnitPrice - average as diff from
-    (select productname, categoryid, unitprice
+select *, UnitPrice - average as diff
+from (select productname, categoryid, unitprice
           ,(select avg(unitprice)
             from products as p_in
             where p_in.categoryid = p_out.categoryid ) as average
@@ -943,13 +943,63 @@ from Orders o join [Order Details] od on o.OrderID = od.OrderID
 where YEAR(OrderDate) = 1996
 group by CustomerID
 
+--edycja dla każdego miesiąca w 1996
+select CustomerID, MONTH(OrderDate) as Month, sum(UnitPrice*Quantity*(1-Discount)) as CustomerTotalPrice
+from Orders o join [Order Details] od on o.OrderID = od.OrderID
+where YEAR(OrderDate) = 1996
+group by CustomerID, MONTH(OrderDate)
+
+
+SELECT
+    m.Month AS Month,
+    SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS CustomerTotalPrice
+FROM
+    (VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12)) AS m(Month)
+        LEFT JOIN Orders o ON MONTH(o.OrderDate) = m.Month AND YEAR(o.OrderDate) = 1996
+        LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
+GROUP BY m.Month
+ORDER BY m.Month
+
+
+
 
 --2. Dla każdego klienta podaj łączną wartość jego zamówień (uwzględnij opłatę za przesyłkę) z 1996r
-select CustomerID, sum(UnitPrice*Quantity*(1-Discount)) + sum(o.Freight) as CustomerTotalPrice
+select CustomerID, sum(UnitPrice*Quantity*(1-Discount)) + sum(DISTINCT o.Freight) as CustomerTotalPrice
 from Orders o join [Order Details] od on o.OrderID = od.OrderID
 where YEAR(OrderDate) = 1996
 group by CustomerID
-order by 1
+-----------------------------------ŹLE bo może być różne OrderID u tego samego CustomerID
+-- mające takie samo Freight i zliczy raz zamiast 2 razy!!!!!!!!!!!
+
+EXCEPT
+
+--zatem podzapytanie
+select t.CustomerID, TotalSumOfFreight + TotalSumWithoutFreight as TotalValue
+from (select o.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) as TotalSumWithoutFreight
+      from Orders o join [Order Details] od on o.OrderID = od.OrderID
+      where YEAR(OrderDate) = 1996
+      group by o.CustomerID) as t --dla danego CustomerID suma wartości zamówień
+      join
+      (select o.CustomerID, sum(o.Freight) as TotalSumOfFreight from Orders o
+      where YEAR(OrderDate) = 1996 --dla danego CustomerID suma wartości freight
+      group by o.CustomerID) as y on t.CustomerID = y.CustomerID
+
+--OBA TAKI SAM WYNIK ALE Z DOKŁADNOŚCIĄ DO UNIKALNYCH FREIGHT!!!
+--lub
+EXCEPT
+select CustomerID, sum(TotalSumWithoutFreight) + sum(FreightTotal) as TotalValue
+from (select o.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) as TotalSumWithoutFreight,
+             o.Freight as FreightTotal
+             from Orders o join [Order Details] od on o.OrderID = od.OrderID
+             where YEAR(OrderDate) = 1996
+             group by o.CustomerID, o.OrderID, o.Freight) t -- najpiew klient kilka zamówień
+--ale już unikalne OrderID i do nich jednorazowo freight, a potem dopiero sumujemy całość :)
+--group by OrderID warto bo możemy stracić informację jeśli różne OrderID a takie same Freight
+--dla tego samego CustomerID i za mało razy zliczymy Freight
+group by CustomerID
+
+
+
 
 
 --3. Dla każdego klienta podaj maksymalną wartość zamówienia złożonego przez tego klienta w 1997r
@@ -1126,3 +1176,124 @@ HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0;
 --jeśli dalibyśmy poza left join warunek where YEAR(o.OrderDate) = 1997
 --to wtedy wymuszam że klient musiał mieć jakieś zamówienie w 1997
 --więc wynik (18) a nie musi mieć w ogóle w 1997 więc tak nie można i wynik poprawny (23)
+
+
+
+---------------------------------- str 5
+--1. Podaj wszystkie produkty których cena jest mniejsza niż średnia cena produktu
+select  ProductID, ProductName, UnitPrice, (select avg(p.UnitPrice) from Products p) as Average
+from Products
+where Products.UnitPrice < (select avg(p.UnitPrice) from Products p)
+
+--lub
+select t.ProductID, t.ProductName, t.UnitPrice, Average
+from (select ProductID, ProductName, UnitPrice,
+             (select avg(p.UnitPrice) from Products p) as Average from Products) t
+where UnitPrice < Average
+
+
+--2. Podaj wszystkie produkty których cena jest mniejsza niż średnia cena produktu danej kategorii
+select t.ProductName, t.CategoryID, UnitPrice, average
+from (select p.ProductName, p.CategoryID, UnitPrice,
+             (select avg(UnitPrice) from Products po where p.CategoryID = po.CategoryID) as average from Products p ) t
+where t.UnitPrice < average
+
+
+--3. Dla każdego produktu podaj jego nazwę, cenę, średnią cenę wszystkich produktów
+-- oraz różnicę między ceną produktu a średnią ceną wszystkich produktów
+select t.ProductName, t.UnitPrice, average, t.UnitPrice - average as TotalDiff
+from (select ProductName, UnitPrice, (select avg(p.UnitPrice) from Products p) as average from Products) t
+
+
+--4. Dla każdego produktu podaj jego nazwę kategorii, nazwę produktu, cenę, średnią cenę wszystkich
+-- produktów danej kategorii oraz różnicę między ceną produktu a średnią ceną wszystkich produktów danej kategorii
+select t.ProductName, t.UnitPrice, CatAverage, t.UnitPrice - CatAverage as CatDiff
+from (select p.ProductName, p.UnitPrice, CategoryID, (select avg(UnitPrice) from Products po
+                where p.CategoryID = po.CategoryID ) as CatAverage from Products p) t
+         join Categories c on t.CategoryID = c.CategoryID
+Order by t.ProductName
+
+
+SELECT p.ProductName, c.CategoryName, p.UnitPrice, AVG(p2.UnitPrice) AS CatAverage,
+    p.UnitPrice - AVG(p2.UnitPrice) AS CatDiff
+FROM Products p join Categories c ON p.CategoryID = c.CategoryID
+    JOIN Products p2 ON p.CategoryID = p2.CategoryID --łączymy te same na podstawie CategoryID
+GROUP BY p.ProductName, c.CategoryName, p.UnitPrice
+ORDER BY c.CategoryName, p.ProductName; -- trzeba na innej tablicy bo na tej AVG(p.UnitPrice)
+--będzie liczyło z jednego produktu i CatDiff = 0..., podobnie jak kiedyś z a.employee i b.employee
+
+
+
+
+
+------------- str6
+--1. Podaj produkty kupowane przez więcej niż jednego klienta
+select t.ProductID, COUNT(DISTINCT t.CustomerID) as IluKlientówKupowało
+from (select c.CustomerID, p.ProductID from Customers c join Orders o on c.CustomerID = o.CustomerID
+                                          join [Order Details] od on o.OrderID = od.OrderID
+                                          join Products p on od.ProductID = p.ProductID) t
+group by t.ProductID
+having COUNT(DISTINCT t.CustomerID) > 1
+ORDER BY 1
+
+SELECT p.ProductID, p.ProductName, COUNT(DISTINCT o.CustomerID) AS NumberOfCustomers
+FROM Products p JOIN [Order Details] od ON p.ProductID = od.ProductID
+                JOIN Orders o ON od.OrderID = o.OrderID
+GROUP BY p.ProductID, p.ProductName
+HAVING COUNT(DISTINCT o.CustomerID) > 1;
+
+
+--2. Podaj produkty kupowane w 1997r przez więcej niż jednego klienta
+select t.ProductID, COUNT(DISTINCT t.CustomerID) as IluKlientówKupowało
+from (select c.CustomerID, p.ProductID from Customers c join Orders o on c.CustomerID = o.CustomerID and YEAR(OrderDate) = 1997
+                                                        join [Order Details] od on o.OrderID = od.OrderID
+                                                        join Products p on od.ProductID = p.ProductID) t
+group by t.ProductID
+having COUNT(DISTINCT t.CustomerID) > 1
+ORDER BY 1
+
+
+--3. Podaj nazwy klientów którzy w 1997r kupili co najmniej dwa różne produkty z kategorii 'Confections'
+select t.CompanyName
+from (select c.CompanyName from Customers c join Orders o on c.CustomerID = o.CustomerID
+                           join [Order Details] od on o.OrderID = od.OrderID
+                           join Products p on od.ProductID = p.ProductID
+                           join Categories cat on p.CategoryID = cat.CategoryID
+                           where CategoryName = 'Confections' and YEAR(OrderDate) = 1997
+                           group by c.CompanyName
+                           having COUNT(DISTINCT p.ProductID) > 1) t
+
+--ten zapis wyżej trochę sztuczny
+
+select c.CompanyName
+from Customers c join Orders o on c.CustomerID = o.CustomerID and YEAR(OrderDate) = 1997
+                 join [Order Details] od on o.OrderID = od.OrderID
+                 join Products p on od.ProductID = p.ProductID
+                 join Categories cat on p.CategoryID = cat.CategoryID
+where YEAR(OrderDate) = 1997 and cat.CategoryName = 'Confections'
+group by c.CompanyName
+having COUNT(DISTINCT p.ProductID) > 1
+
+
+
+
+--------------------str 7
+--1. Dla każdego pracownika (imię i nazwisko) podaj łączną wartość zamówień obsłużonych
+-- przez tego pracownika, przy obliczaniu wartości zamówień uwzględnij cenę za przesyłkę
+select FirstName, LastName, sum(PriceDividedOnEmployees) as TotalPrice
+from ( select e.EmployeeID, FirstName, LastName, sum(UnitPrice*Quantity*(1-Discount)) + o.Freight as PriceDividedOnEmployees
+                    from Employees e join Orders o on e.EmployeeID = o.EmployeeID
+                                     join [Order Details] od on o.OrderID = od.OrderID
+                    group by e.EmployeeID, FirstName, LastName, o.Freight, o.OrderID ) as t
+group by EmployeeID, FirstName, LastName
+-------ŹLE ZA DUŻO ZLICZA PROBLEM Z FREIGHT
+
+-- OK :):):)
+select FirstName, LastName, sum(ValueOfFreight) + sum(ValueWithoutFreight) as TotalValue
+from (  select e.EmployeeID, FirstName, LastName, sum(UnitPrice*Quantity*(1-Discount)) as ValueWithoutFreight,
+               o.Freight ValueOfFreight
+        from Employees e join Orders o on e.EmployeeID = o.EmployeeID
+                         join [Order Details] od on o.OrderID = od.OrderID
+        group by e.EmployeeID, FirstName, LastName, o.Freight ) t
+group by EmployeeID, FirstName, LastName
+
