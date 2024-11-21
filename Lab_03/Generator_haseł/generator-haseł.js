@@ -35,16 +35,18 @@ function generatePassword() {
         password += allChars[randomIndex];
         array[randomIndex] += 1;
     }
-    let flag = false;
-    for ( let j = 0; j <= allChars.length - 1; j++){
-        if (array[j] > (length - 1)/3) {
-            flag = true;
-            break;
+    if (length > 2) {
+        let flag = false;
+        for (let j = 0; j <= allChars.length - 1; j++) {
+            if (array[j] > (length - 1) / 3) {
+                flag = true;
+                break;
+            }
         }
-    }
-    if (flag === true) {
-        generatePassword(); //zabezpieczenie przed zbyt trywialnym hasłem
-        return;
+        if (flag === true) {
+            generatePassword(); //zabezpieczenie przed zbyt trywialnym hasłem
+            return;
+        }
     }
     document.getElementById('generatedPassword').value = password;
 }

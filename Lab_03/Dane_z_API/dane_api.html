@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produkty z API</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Produkty</h1>
+    <div id="filters">
+        <input type="text" id="filterInput" placeholder="Szukaj po nazwie" oninput="applyFilters()">
+        <select id="sortSelect" onchange="applyFilters()">
+            <option value="default">Oryginalna kolejność</option>
+            <option value="ascending">Rosnąco</option>
+            <option value="descending">Malejąco</option>
+        </select>
+    </div>
+    <div id="coś">Liczba produktów:&nbsp;<div id="cnt"></div></div>
+    <table id="products">
+        <thead>
+            <tr>
+                <th>Zdjęcie</th>
+                <th>Tytuł</th>
+                <th>Opis</th>
+            </tr>
+        </thead>
+        <tbody id="productsBody"></tbody>
+    </table>
+    <script src="pobieranie_danych.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    background-color: #f0f4f8;
+    color: #333;}
+
+h1 {
+    color: #515050;
+}
+
+#filters {
+    margin-bottom: 20px;}
+
+
+#filterInput, #sortSelect {
+    padding: 10px;
+    margin-right: 10px;
+    border: 2px solid #a1c4e8;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-size: 19px}
+
+
+#filterInput:focus, #sortSelect:focus {
+    outline: none;
+    border-color: #6ca0dc;}
+
+
+#filters input:hover , #filters select:hover{
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    border-color: #6ca0dc;}
+
+
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);}
+
+
+table, th, td {
+    border: 1px solid #d1e0e5;}
+
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    color: #4a4a4a;}
+
+
+th {
+    background-color: #92a3bb;
+    color: #ffffff;}
+
+
+td {
+    background-color: #f9f9f9;}
+
+
+td:hover {
+    background-color: #e0e8f0;}
+
+
+img {
+    max-width: 100px;
+    max-height: 100px;}
+
+#coś {
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    display: flex;
+    margin-left: 11%;
+    margin-bottom: 15px;
+    color: #515050;
+}
