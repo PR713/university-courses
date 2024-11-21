@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lab_03/Dane_z_API/dane_api.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab_03/Dane_z_API/pobieranie_danych.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab_03/Dane_z_API/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" afterDir="false" />
-    </list>
+    <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -124,7 +118,7 @@
       <workItem from="1732099779796" duration="2243000" />
       <workItem from="1732124215444" duration="838000" />
       <workItem from="1732173978544" duration="467000" />
-      <workItem from="1732220260604" duration="6834000" />
+      <workItem from="1732220260604" duration="7084000" />
     </task>
     <servers />
   </component>
