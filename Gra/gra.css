@@ -6,8 +6,7 @@ body {
     overflow: hidden}
 
 
-h1 {
-    margin-top: 20px;}
+h1 {margin-top: 20px;}
 
 
 #info {
@@ -29,6 +28,7 @@ h1 {
     height: 100vh;
     display: block;
     margin: 0;}
+
 
 #gameOver {
     position: absolute;
