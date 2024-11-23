@@ -168,6 +168,7 @@ canvas.addEventListener('click', (event) => {
 
 document.getElementById('restartButton').addEventListener('click', () => {
     document.getElementById('gameOver').style.display = 'none';
+    canvas.style.cursor = 'none';
     start();
 });
 
