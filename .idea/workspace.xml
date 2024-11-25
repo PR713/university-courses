@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gra/gra.js" beforeDir="false" afterPath="$PROJECT_DIR$/Gra/gra.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +130,11 @@
       <workItem from="1732386634705" duration="300000" />
       <workItem from="1732387683757" duration="63000" />
       <workItem from="1732403391196" duration="95000" />
+      <workItem from="1732406945976" duration="348000" />
+      <workItem from="1732551661692" duration="486000" />
+      <workItem from="1732552246726" duration="406000" />
+      <workItem from="1732553626399" duration="122000" />
+      <workItem from="1732553763524" duration="247000" />
     </task>
     <servers />
   </component>

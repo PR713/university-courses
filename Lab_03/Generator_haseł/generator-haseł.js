@@ -48,7 +48,8 @@ function generatePassword() {
             return;
         }
     }
-    document.getElementById('generatedPassword').value = password;
+    //document.getElementById('generatedPassword').value = password;
+    alert(password)
 }
 
 document.getElementById('generateButton').addEventListener('click', generatePassword);
