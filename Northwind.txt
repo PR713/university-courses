@@ -985,6 +985,7 @@ from (select o.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) as TotalSumWitho
       group by o.CustomerID) as y on t.CustomerID = y.CustomerID
 
 --OBA TAKI SAM WYNIK ALE Z DOKŁADNOŚCIĄ DO UNIKALNYCH FREIGHT!!!
+--jak damy o.OrderID w group by to za dużo rozdzieli na poziomie sumowania
 --lub
 EXCEPT
 select CustomerID, sum(TotalSumWithoutFreight) + sum(FreightTotal) as TotalValue
