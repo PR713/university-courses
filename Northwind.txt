@@ -11,9 +11,10 @@ where categoryid = (select categoryid from categories where CategoryName = 'Meat
 
 
 
----------------------------------str 9
+---------------------------------str 13
 --1
-select QuantityPerUnit
+--Szukamy informacji o produktach sprzedawanych w butelkach (‘bottle’)
+select ProductID, ProductName, QuantityPerUnit
 from Products
 where QuantityPerUnit like '%bottle%'
 
@@ -51,12 +52,15 @@ where OrderDate >= '1997-01-01' and OrderDate < '1998-01-01'
 
 
 ------------------20
-
+--Napisz instrukcję select tak aby wybrać numer zlecenia, datę zamówienia, numer klienta
+--dla wszystkich niezrealizowanych jeszcze zleceń, dla których krajem odbiorcy jest Argentyna
 SELECT OrderID, OrderDate, CustomerID, ShippedDate, ShipCountry
 FROM Orders
 WHERE ShipCountry IN ('Argentina') AND ShippedDate IS NULL;
 
---a gdy np pojutrze ma być od dzisiaj .... and ( ShippedDate IS NULL or GETDATE()
+--a gdy np pojutrze ma być od dzisiaj .... and ( ShippedDate IS NULL or GETDATE())
+SELECT CAST(GETDATE() AS DATE) AS CurrentDate; --typ DATE 2024-11-30
+SELECT GETDATE() AS CurrentDate; -- cała data 2024-11-30 19:23:02.140
 
 
 --stringi, nazwy kolumn
@@ -65,7 +69,7 @@ from Employees
 
 select UnitPrice, UnitPrice * 1.05 as NewUnitPrice,
        UnitPrice*1.05 - UnitPrice as Diff--tu nie można wprost
---użyc aliasu UnitPrice - New..., as opcjonalnie
+--użyc aliasu NewUnitPrice - Unit..., as opcjonalnie
 from [Order Details]
 
 
@@ -170,22 +174,25 @@ select OrderID, max(UnitPrice) as MaxPricePerOrder
 from [Order Details]
 group by OrderID
 
+
 --2 Posortuj zamówienia wg maksymalnej ceny produktu
 select OrderID, max(UnitPrice) as MaxPricePerOrder
 from [Order Details]
 group by OrderID
-order by OrderID
+order by MaxPricePerOrder
+
 
 --3 Podaj maksymalną i minimalną cenę zamawianego produktu dla każdego zamówienia
 select OrderID, min(UnitPrice) MinPricePerOrder, max(UnitPrice) MaxPricePerOrder
 from [Order Details]
 group by OrderID
 
---4 Podaj liczbę zamówień dostarczanych przez poszczególnych spedytorów (przewoźników)
 
+--4 Podaj liczbę zamówień dostarczanych przez poszczególnych spedytorów (przewoźników)
 select COUNT(ShipVia)
 from Orders
 group by ShipVia
+
 
 --5 Który ze spedytorów był najaktywniejszy w 1997 roku
 select top 1 ShipVia as ShipperID_, COUNT(ShipVia) as Quantity
@@ -207,7 +214,7 @@ having sum(Quantity) > 5
 
 
 --2 Wyświetl  klientów dla których w 1998 roku zrealizowano więcej niż 8 zamówień
--- (wyniki posortuj malejąco wg  łącznej kwoty za dostarczenie zamówień dla każdego z klientów)
+-- (wyniki posortuj malejąco wg łącznej kwoty za dostarczenie zamówień dla każdego z klientów)
 
 select CustomerID, COUNT(OrderID) as QuantityOfOrders, sum(Freight) as PriceOfFreight
 from Orders
@@ -221,6 +228,7 @@ order by PriceOfFreight desc
 --danego wiersza w którym zgrupowano nazwę produktu :) i wtedy robi unikalne
 --pary między elementami - tu łatwiej, ale np Region/Województwo -> Miasta)
 
+--na razie tylko Orders więc bez problemu Freight raz zliczane
 
 
 ------------------------
@@ -364,9 +372,10 @@ where OrderID is null -- nie shipped date bo mogło być wysłane albo nie a i t
 --1. Wybierz nazwy i ceny produktów (baza northwind) o cenie jednostkowej pomiędzy
 --20.00 a 30.00, dla każdego produktu podaj dane adresowe dostawcy
 
-select ProductName, UnitPrice
+select ProductName, UnitPrice, s.Address
 from Products p inner join Suppliers s on s.SupplierID = p.SupplierID
 where UnitPrice > 20.00 and UnitPrice < 30.00
+
 
 --2. Wybierz nazwy produktów oraz inf. o stanie magazynu dla
 -- produktów dostarczanych przez firmę ‘Tokyo Traders’
@@ -421,14 +430,14 @@ where OrderDate = '1996-07-08'
 
 select ProductName, p.UnitPrice, Address
 from Products p join Suppliers s on p.SupplierID = s.SupplierID
-where p.UnitPrice between 20.00 and 30.00
+                join Categories cat on p.CategoryID = cat.CategoryID
+where p.UnitPrice between 20.00 and 30.00 and CategoryName = 'Meat/Poultry'
 -- jeśli dodamy join Order Details on ProductID to wyjdzie więcej,
 --jeśli where od.UnitPrice to ceny tam dla różnych zamówień określonego
 --produktu były inne niż w Products + discount
 
 
 --2. Wybierz nazwy i ceny produktów z kategorii ‘Confections’ dla każdego produktu podaj nazwę dostawcy.
-
 select ProductName, UnitPrice, CompanyName
 from Products p join Suppliers s on p.SupplierID = s.SupplierID
                 join Categories c on c.CategoryID = p.CategoryID
@@ -438,41 +447,43 @@ where c.CategoryName like '%Confections%'
 --3. Dla każdego klienta podaj liczbę złożonych przez niego zamówień. Zbiór wynikowy
 -- powinien zawierać nazwę klienta, oraz liczbę zamówień
 select c.CompanyName, COUNT(OrderID) as LiczbaZamówień
-from Customers c join Orders o on c.CustomerID = o.CustomerID
-group by c.CompanyName
+from Customers c left join Orders o on c.CustomerID = o.CustomerID
+group by c.CustomerID, c.CompanyName
+-- ^^^^^ na wypadek gdyby taka sama nazwa firmy
+
 
 --4. Dla każdego klienta podaj liczbę złożonych przez niego zamówień w marcu 1997r
-
 select c.CompanyName, COUNT(OrderID) as LiczbaZamówień
-from Customers c join Orders o on c.CustomerID = o.CustomerID
-where OrderDate > '1997-03-01' and OrderDate < '1997-04-01'
-group by c.CompanyName
+from Customers c left join Orders o on c.CustomerID = o.CustomerID and
+                                       OrderDate > '1997-03-01' and OrderDate < '1997-04-01'
+group by c.CustomerID, c.CompanyName
 
 
 
 ---------------str24
 --1.Który ze spedytorów był najaktywniejszy w 1997 roku, podaj nazwę tego spedytora
-select top 1 CompanyName, COUNT(OrderID)
-from Shippers s join Orders o on ShipperID = o.ShipVia
-group by CompanyName
+select top 1 CompanyName, COUNT(OrderID) as LiczbaZamówień
+from Shippers s join Orders o on s.ShipperID = o.ShipVia
+group by s.ShipperID, CompanyName -- na wypadek takiego samego CompanyName
 order by 2 desc
 
 
 --2. Dla każdego zamówienia podaj wartość zamówionych produktów. Zbiór wynikowy powinien
 --zawierać nr zamówienia, datę zamówienia, nazwę klienta oraz wartość zamówionych produktów
-select o.OrderID, OrderDate, CompanyName, (Quantity*UnitPrice*(1-Discount)) as TotalPrice
+select o.OrderID, OrderDate, CompanyName, sum(Quantity*UnitPrice*(1-Discount)) as TotalPrice
 from [Order Details] od join Orders o on od.OrderID = o.OrderID
                         join Customers c on o.CustomerID = c.CustomerID
+group by o.OrderID, OrderDate, c.CustomerID, CompanyName
 
 
 --3. Dla każdego zamówienia podaj jego pełną wartość (wliczając opłatę za przesyłkę).
 -- Zbiór wynikowy powinien zawierać nr zamówienia, datę zamówienia, nazwę klienta oraz pełną
 -- wartość zamówienia
 
-select o.OrderID, OrderDate, CompanyName, (sum(Quantity*UnitPrice*(1-Discount)) + Freight) as TotalPrice
+select o.OrderID, OrderDate, CompanyName, sum(Quantity*UnitPrice*(1-Discount)) + Freight as TotalPrice
 from Orders o join Customers c on o.CustomerID = c.CustomerID
               join [Order Details] od on o.OrderID = od.OrderID
-group by o.OrderID, OrderDate, CompanyName, Freight
+group by o.OrderID, OrderDate, c.CustomerID, CompanyName, Freight
 --relacja zamówienie jeśli jest, to przez 1 customera więc OrderDate miał taką samą,
 -- jakby to pojedyncze zamówienie i Freight też jedno bo to jedno zamówienie OK :)
 
@@ -595,6 +606,7 @@ where b.EmployeeID is not null
 group by a.EmployeeID, a.FirstName + ' ' + a.LastName
 
 
+
 ------------------------------------------Ćwiczenia Join
 ---------str 1
 --1. Dla każdego zamówienia podaj łączną liczbę zamówionych jednostek towaru oraz nazwę klienta.
@@ -638,6 +650,7 @@ from Shippers s join Orders o on s.ShipperID = o.ShipVia
                 join Categories c on p.CategoryID = c.CategoryID
 where OrderDate >= '1998-03-01' and OrderDate < '1998-04-01' and CategoryName = 'Meat/Poultry'
 group by CompanyName, CategoryName
+
 
 --2. Podaj nazwy przewoźników, którzy w marcu 1997r nie przewozili produktów z kategorii 'Meat/Poultry'
 select CompanyName
@@ -998,6 +1011,36 @@ from (select o.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) as TotalSumWitho
 --group by OrderID warto bo możemy stracić informację jeśli różne OrderID a takie same Freight
 --dla tego samego CustomerID i za mało razy zliczymy Freight
 group by CustomerID
+
+select t.CustomerID, sum(t.TotalPriceButDividedInternally) as TotalPrice
+from  (select c.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) + Freight as TotalPriceButDividedInternally
+       from Orders o join Customers c on o.CustomerID = c.CustomerID
+                     join [Order Details] od on o.OrderID = od.OrderID
+       where YEAR(OrderDate) = 1996
+       group by c.CustomerID, CompanyName, Freight) t
+group by t.CustomerID
+
+
+--------TO ŹLE BO JEŚLI USUNIEMY GROUP BY OrderID i OrderDate w celu grupowania po klientach
+--to Freight w group by spowoduje podział klienta jeśli miał różne Freight więc trzeba by było
+--to obrać w selecta na zewnątrz i będzie git, a jeśli w group by usuniemy Freight to nie może on być
+--w select luźno bez agregacji i źle
+select o.OrderID, OrderDate, CompanyName, sum(Quantity*UnitPrice*(1-Discount)) + Freight as TotalPrice
+from Orders o join Customers c on o.CustomerID = c.CustomerID
+              join [Order Details] od on o.OrderID = od.OrderID
+where YEAR(OrderDate) = 1996
+group by o.OrderID, OrderDate, c.CustomerID, CompanyName, Freight
+
+
+--tak już ok naprawione to wyżej :):):)
+select t.CustomerID, sum(t.TotalPriceButDividedInternally) as TotalPrice
+from  (select c.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) + Freight as TotalPriceButDividedInternally
+    from Orders o join Customers c on o.CustomerID = c.CustomerID
+                  join [Order Details] od on o.OrderID = od.OrderID
+    where YEAR(OrderDate) = 1996
+    group by c.CustomerID, CompanyName, Freight) t
+group by t.CustomerID
+--różnica w EXCEPT bo zaokrągla np .49967 na .4997, jest dobrze <3
 
 
 
