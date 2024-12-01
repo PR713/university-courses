@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +16,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
+        <option value="TypeScript File" />
         <option value="HTML File" />
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -24,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="githubpages" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,7 +44,7 @@
   &quot;keyToString&quot;: {
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lab2&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;lab3&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -53,6 +55,13 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Gra" />
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_03\Generator_haseł" />
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_03\Stoper" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -101,6 +110,31 @@
       <workItem from="1731243937528" duration="1952000" />
       <workItem from="1731248823308" duration="147000" />
       <workItem from="1731249838365" duration="7000" />
+      <workItem from="1731268912327" duration="765000" />
+      <workItem from="1731272627791" duration="60000" />
+      <workItem from="1731324842787" duration="83000" />
+      <workItem from="1731512991744" duration="2428000" />
+      <workItem from="1731947026502" duration="65000" />
+      <workItem from="1731947206112" duration="3836000" />
+      <workItem from="1732024546384" duration="273000" />
+      <workItem from="1732026700267" duration="2599000" />
+      <workItem from="1732038630759" duration="4731000" />
+      <workItem from="1732099779796" duration="2243000" />
+      <workItem from="1732124215444" duration="838000" />
+      <workItem from="1732173978544" duration="467000" />
+      <workItem from="1732220260604" duration="7084000" />
+      <workItem from="1732229160596" duration="255000" />
+      <workItem from="1732306610817" duration="2971000" />
+      <workItem from="1732361892348" duration="5475000" />
+      <workItem from="1732382018560" duration="4554000" />
+      <workItem from="1732386634705" duration="300000" />
+      <workItem from="1732387683757" duration="63000" />
+      <workItem from="1732403391196" duration="95000" />
+      <workItem from="1732406945976" duration="348000" />
+      <workItem from="1732551661692" duration="486000" />
+      <workItem from="1732552246726" duration="406000" />
+      <workItem from="1732553626399" duration="122000" />
+      <workItem from="1732553763524" duration="247000" />
     </task>
     <servers />
   </component>

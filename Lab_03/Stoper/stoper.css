@@ -1,0 +1,39 @@
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #323232;
+    margin-top: 100px;
+    background-color: #7391ab;
+}
+
+
+#display {
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+
+#buttons {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+}
+
+.buttons_style {
+    min-width: 65px;
+    max-width: 65px;
+    min-height: 30px;
+    max-height: 30px;
+    text-align: center;
+    font-size: 18px;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    border: #7391ab;
+}
+
+.buttons_style:hover {
+    background-color: #DDDDDD;
+}
