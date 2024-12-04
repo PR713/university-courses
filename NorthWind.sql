@@ -391,7 +391,7 @@ where CompanyName = 'Tokyo Traders'
 
 select c.CustomerID, Address, City -- left outer join = left join
 from Customers c left outer join Orders o on c.CustomerID = o.CustomerID
-                and YEAR(o.OrderDate) = 1997 -- już ma znaczenie że warunek jest tutaj
+    and YEAR(o.OrderDate) = 1997 -- już ma znaczenie że warunek jest tutaj
 --bo pokazuje tych co zamówili w 1997 albo nie zamówili w 1997 (ale mogli zamówić w innym roku)
 --a niżej odrzucamy tych co faktycznie zamówili w 1997 i wykorzystujemy to że left join takie
 --coś nam daje dodatkowo, tutaj w where nie bo da 0, chcemy zamówienie && null ... bez sensu
@@ -417,9 +417,9 @@ where o.OrderDate >= '1997-03-01' and o.OrderDate < '1997-04-01'
 --Napisz polecenie zwracające listę produktów zamawianych w dniu 1996-07-08
 select distinct ProductName
 from [Order Details] od join Products p
-                                on p.ProductID = od.ProductID
-                        join Orders o
-                                on o.OrderID = od.OrderID
+on p.ProductID = od.ProductID
+    join Orders o
+    on o.OrderID = od.OrderID
 where OrderDate = '1996-07-08'
 --lub from Orders... bez znaczenia w join
 
@@ -473,7 +473,7 @@ order by 2 desc
 --zawierać nr zamówienia, datę zamówienia, nazwę klienta oraz wartość zamówionych produktów
 select o.OrderID, OrderDate, CompanyName, sum(Quantity*UnitPrice*(1-Discount)) as TotalPrice
 from [Order Details] od join Orders o on od.OrderID = o.OrderID
-                        join Customers c on o.CustomerID = c.CustomerID
+    join Customers c on o.CustomerID = c.CustomerID
 group by o.OrderID, OrderDate, c.CustomerID, CompanyName
 
 
@@ -495,9 +495,9 @@ group by o.OrderID, OrderDate, c.CustomerID, CompanyName, Freight
 --3. Wybierz nazwy i numery telefonów klientów, którzy kupowali produkty z kategorii ‘Confections’
 select distinct CompanyName, Phone
 from Customers c join Orders o on c.CustomerID = o.CustomerID
-                join [Order Details] od on o.OrderID = od.OrderID
-                join Products p on od.ProductID = p.ProductID
-                join Categories cat on p.CategoryID = cat.CategoryID
+                 join [Order Details] od on o.OrderID = od.OrderID
+    join Products p on od.ProductID = p.ProductID
+    join Categories cat on p.CategoryID = cat.CategoryID
 where CategoryName = 'Confections'
 
 
@@ -507,8 +507,8 @@ where CategoryName = 'Confections'
 select distinct CompanyName, Phone --to ŹLE, bo jeśli ma inne poza cuksami, albo wgl nie składał zamówień (2) to mamy (91)
 from Customers c left join Orders o on c.CustomerID = o.CustomerID
                  left join [Order Details] od on o.OrderID = od.OrderID
-                 left join Products p on od.ProductID = p.ProductID
-                 left join Categories cat on p.CategoryID = cat.CategoryID and CategoryName = 'Confections'
+    left join Products p on od.ProductID = p.ProductID
+    left join Categories cat on p.CategoryID = cat.CategoryID and CategoryName = 'Confections'
 where CategoryName is null --tutaj jeśli ktoś miał cukierki a miał inne zamówienie to go i tak liczymy
 --tu jeśli damy zamiast distinct group by Comp.... to też 91 bo tu akurat zadziała tak samo jak distinct
 -- że odrzuci powtórzone wiersze w wyniku
@@ -519,14 +519,14 @@ where CategoryName is null --tutaj jeśli ktoś miał cukierki a miał inne zam�
 SELECT c.CompanyName, c.Phone-------------------odrzuca jeśli nawet miał inne zamówienie poza cukierkami (11) OK
 FROM Customers c  ---bo używamy not in
 WHERE c.CustomerID NOT IN (
-        SELECT
-            o.CustomerID
-        FROM
-            Orders o JOIN [Order Details] od ON o.OrderID = od.OrderID
-                JOIN Products p ON od.ProductID = p.ProductID
-                JOIN Categories cat ON p.CategoryID = cat.CategoryID
-        WHERE
-            cat.CategoryName = 'Confections'
+    SELECT
+        o.CustomerID
+    FROM
+        Orders o JOIN [Order Details] od ON o.OrderID = od.OrderID
+    JOIN Products p ON od.ProductID = p.ProductID
+    JOIN Categories cat ON p.CategoryID = cat.CategoryID
+WHERE
+    cat.CategoryName = 'Confections'
     );
 
 
@@ -534,8 +534,8 @@ SELECT c.CompanyName, c.Phone
 FROM Customers c
          LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
          LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
-         LEFT JOIN Products p ON od.ProductID = p.ProductID
-         LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
+    LEFT JOIN Products p ON od.ProductID = p.ProductID
+    LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
 GROUP BY c.CustomerID, c.CompanyName, c.Phone  ---dotąd ma (91) group by jak distinct w 1. rozwiązaniu
 HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0 ---
 --Having tutaj sprawdza czy dany CustomerID miał jakiekolwiek zamówienie w cukierkach
@@ -553,11 +553,11 @@ HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0 ---
 select distinct CompanyName, Phone--, CategoryName -- źle (91) ma być (18)
 from Customers c left join Orders o on c.CustomerID = o.CustomerID
                  left join [Order Details] od on o.OrderID = od.OrderID
-                 left join Products p on od.ProductID = p.ProductID
-                 left join Categories cat on p.CategoryID = cat.CategoryID and CategoryName = 'Confections'
+    left join Products p on od.ProductID = p.ProductID
+    left join Categories cat on p.CategoryID = cat.CategoryID and CategoryName = 'Confections'
 where (CategoryName is null and YEAR(OrderDate) = 1997) -- w 1997 nie mieli cuksów
-    or (CategoryName = 'Confections' and YEAR(OrderDate) <> 1997)-- mieli cuksy w innych latach
-    or (CategoryName is null and OrderDate is null) -- wgl nie złożyli
+   or (CategoryName = 'Confections' and YEAR(OrderDate) <> 1997)-- mieli cuksy w innych latach
+   or (CategoryName is null and OrderDate is null) -- wgl nie złożyli
 --left join daje tych co w ogóle nie złożyli, tych co złożyli w cuksach a te co złożyli w innych kategoriach
 --to one mają null bo and CategoryName = '...'
 -- ponownie zawiera tych którzy poza cukierkami mieli jakieś inne zamówienia w 1997 (90)
@@ -569,9 +569,9 @@ where (CategoryName is null and YEAR(OrderDate) = 1997) -- w 1997 nie mieli cuks
 SELECT c.CompanyName, c.Phone ---to poprawne bo tylko 1997 (23 git bo musi być więcej niż 18)
 FROM Customers c
          LEFT JOIN Orders o ON c.CustomerID = o.CustomerID and YEAR(o.OrderDate) = 1997
-         LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
-         LEFT JOIN Products p ON od.ProductID = p.ProductID
-         LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
+    LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
+    LEFT JOIN Products p ON od.ProductID = p.ProductID
+    LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
 GROUP BY c.CustomerID, c.CompanyName, c.Phone -- nie trzeba teoretycznie c.CustomerID bo nazwy się nie powtarzają
 HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0; --czy dla danego CustomerID (bo tak grupujemy)
 --któraś krotka ma Confections ( może mieć tam inne, ale również null (jeśli inne lata) więc 0 daje tym przypadkom)
@@ -621,7 +621,7 @@ group by a.EmployeeID, a.FirstName + ' ' + a.LastName
 --1. Dla każdego zamówienia podaj łączną liczbę zamówionych jednostek towaru oraz nazwę klienta.
 select o.OrderID, CompanyName, sum(Quantity) as LiczbaJednostek
 from Orders o join [Order Details] od on o.OrderID = od.OrderID
-            join Customers c on c.CustomerID = o.CustomerID
+    join Customers c on c.CustomerID = o.CustomerID
 group by o.OrderID, c.CustomerID, CompanyName --CustomerID trzeba jeśli takie same nazwy firm by były
 --akurat OrderID^ jest mocniejsze bo zamówienie przez 0 lub 1 klienta no ale...
 
@@ -629,7 +629,7 @@ group by o.OrderID, c.CustomerID, CompanyName --CustomerID trzeba jeśli takie s
 --opłaty za przesyłkę) oraz nazwę klienta.
 select o.OrderID, CompanyName, sum(UnitPrice*Quantity*(1-Discount)) as TotalPrice
 from Orders o join [Order Details] od on o.OrderID = od.OrderID
-              join Customers c on c.CustomerID = o.CustomerID
+    join Customers c on c.CustomerID = o.CustomerID
 group by o.OrderID, c.CustomerID, CompanyName --CustomerID trzeba
 
 --3. Dla każdego zamówienia podaj łączną wartość tego zamówienia (wartość zamówienia wraz z opłatą
@@ -637,7 +637,7 @@ group by o.OrderID, c.CustomerID, CompanyName --CustomerID trzeba
 
 select o.OrderID, CompanyName, sum(UnitPrice*Quantity*(1-Discount)) + o.Freight as TotalPrice
 from Orders o join [Order Details] od on o.OrderID = od.OrderID
-              join Customers c on c.CustomerID = o.CustomerID
+    join Customers c on c.CustomerID = o.CustomerID
 group by o.OrderID, CompanyName, o.Freight
 
 
@@ -645,8 +645,8 @@ group by o.OrderID, CompanyName, o.Freight
 
 select o.OrderID, CompanyName, e.LastName, e.FirstName ,sum(UnitPrice*Quantity*(1-Discount)) + o.Freight as TotalPrice
 from Orders o join [Order Details] od on o.OrderID = od.OrderID
-              join Customers c on c.CustomerID = o.CustomerID
-                join Employees e on e.EmployeeID = o.EmployeeID
+    join Customers c on c.CustomerID = o.CustomerID
+    join Employees e on e.EmployeeID = o.EmployeeID
 group by o.OrderID, CompanyName, o.Freight, e.LastName, e.FirstName
 
 
@@ -655,8 +655,8 @@ group by o.OrderID, CompanyName, o.Freight, e.LastName, e.FirstName
 select CompanyName, CategoryName
 from Shippers s join Orders o on s.ShipperID = o.ShipVia
                 join [Order Details] od on o.OrderID = od.OrderID
-                join Products p on od.ProductID = p.ProductID
-                join Categories c on p.CategoryID = c.CategoryID
+    join Products p on od.ProductID = p.ProductID
+    join Categories c on p.CategoryID = c.CategoryID
 where OrderDate >= '1998-03-01' and OrderDate < '1998-04-01' and CategoryName = 'Meat/Poultry'
 group by ShipperID, CompanyName, CategoryName
 
@@ -665,8 +665,8 @@ group by ShipperID, CompanyName, CategoryName
 select CompanyName
 from Shippers s  left join Orders o on s.ShipperID = o.ShipVia
                  left join [Order Details] od on o.OrderID = od.OrderID
-                 left join Products p on od.ProductID = p.ProductID
-                 left join Categories c on p.CategoryID = c.CategoryID and CategoryName = 'Meat/Poultry'
+    left join Products p on od.ProductID = p.ProductID
+    left join Categories c on p.CategoryID = c.CategoryID and CategoryName = 'Meat/Poultry'
 where OrderDate >= '1997-03-01' and OrderDate < '1997-04-01'
 group by CompanyName--, CategoryName tu nie może być bo inaczej wymieni wszytkich (3) bo
 --having nie będzie sprawdzało po grupie tylko pojedyncze wiersze
@@ -678,8 +678,8 @@ having sum(case when c.CategoryName = 'Meat/Poultry' then 1 else 0 end) = 0; -- 
 select CompanyName, CategoryName, sum(od.Quantity*p.UnitPrice*(1-Discount)) as TotalPrice
 from Shippers s join Orders o on s.ShipperID = o.ShipVia
                 join [Order Details] od on o.OrderID = od.OrderID
-                join Products p on od.ProductID = p.ProductID
-                join Categories c on p.CategoryID = c.CategoryID
+    join Products p on od.ProductID = p.ProductID
+    join Categories c on p.CategoryID = c.CategoryID
 where OrderDate >= '1997-03-01' and OrderDate < '1997-04-01' and CategoryName = 'Meat/Poultry'
 group by CompanyName, CategoryName
 
@@ -692,9 +692,9 @@ group by CompanyName, CategoryName
 -- towarów z tej kategorii.
 select cat.CategoryName, c.CompanyName, sum(od.Quantity) as ŁącznaLiczbaJednostek
 from Customers c join Orders o on c.CustomerID = o.CustomerID
-                join [Order Details] od on o.OrderID = od.OrderID
-                join Products p on od.ProductID = p.ProductID
-                join Categories cat on p.CategoryID = cat.CategoryID
+                 join [Order Details] od on o.OrderID = od.OrderID
+    join Products p on od.ProductID = p.ProductID
+    join Categories cat on p.CategoryID = cat.CategoryID
 group by cat.CategoryName, c.CustomerID, c.CompanyName
 
 --2. Dla każdej kategorii produktu (nazwa), podaj łączną liczbę zamówionych w 1997r jednostek towarów
@@ -702,8 +702,8 @@ group by cat.CategoryName, c.CustomerID, c.CompanyName
 select cat.CategoryName, sum(od.Quantity) as ŁącznaLiczbaJednostek
 from Customers c join Orders o on c.CustomerID = o.CustomerID
                  join [Order Details] od on o.OrderID = od.OrderID
-                 join Products p on od.ProductID = p.ProductID
-                 join Categories cat on p.CategoryID = cat.CategoryID
+    join Products p on od.ProductID = p.ProductID
+    join Categories cat on p.CategoryID = cat.CategoryID
 where YEAR(OrderDate) = 1997
 group by cat.CategoryName
 
@@ -713,7 +713,7 @@ group by cat.CategoryName
 select cat.CategoryName, sum(UnitsOnOrder) as ŁącznaLiczbaJednostek
 from Products p join Categories cat on p.CategoryID = cat.CategoryID
                 join [Order Details] od on p.ProductID = od.ProductID
-                join Orders o on od.OrderID = o.OrderID
+    join Orders o on od.OrderID = o.OrderID
 where YEAR(OrderDate) = 1997
 group by cat.CategoryName
 
@@ -723,8 +723,8 @@ group by cat.CategoryName
 select cat.CategoryName, sum(od.Quantity*od.UnitPrice*(1-Discount)) as ŁącznaWartość
 from Customers c join Orders o on c.CustomerID = o.CustomerID
                  join [Order Details] od on o.OrderID = od.OrderID
-                 join Products p on od.ProductID = p.ProductID
-                 join Categories cat on p.CategoryID = cat.CategoryID
+    join Products p on od.ProductID = p.ProductID
+    join Categories cat on p.CategoryID = cat.CategoryID
 group by cat.CategoryName
 
 
@@ -759,7 +759,7 @@ group by s.CompanyName --ok wystarczy, nie patrzymy na detale czyli pojedynczo z
 --przez tego pracownika w maju 1996
 select e.LastName, e.FirstName, sum(Quantity*UnitPrice*(1-Discount)) as TotalPrice
 from Employees e join Orders o on e.EmployeeID = o.EmployeeID
-                    join [Order Details] od on o.OrderID = od.OrderID
+                 join [Order Details] od on o.OrderID = od.OrderID
 where OrderDate between '1997-05-01' and '1997-05-31'
 group by e.LastName, e.FirstName
 
@@ -799,11 +799,11 @@ from Employees a join Employees b on a.EmployeeID = b.ReportsTo --czy ktoś ma g
 
 select t.LastName, t.FirstName, sum(TotalSumWithoutFreight) + sum(Freight) as TotalSum
 from (select e.EmployeeID, e.LastName, e.FirstName, sum(UnitPrice*Quantity*(1-Discount)) as TotalSumWithoutFreight,
-                                            o.Freight as Freight
+             o.Freight as Freight
       from Employees e join Orders o on e.EmployeeID = o.EmployeeID
-                        join [Order Details] od on o.OrderID = od.OrderID
+                       join [Order Details] od on o.OrderID = od.OrderID
       where e.EmployeeID IN (select a.EmployeeID
-                      from Employees a join Employees b on a.EmployeeID = b.ReportsTo)
+          from Employees a join Employees b on a.EmployeeID = b.ReportsTo)
       group by e.EmployeeID, o.OrderID, o.Freight, e.LastName, e.FirstName) t
 group by t.EmployeeID, t.LastName, t.FirstName
 --trzeba group by OrderID!!! jeśli takie samo Freight to policzy za mało razy Freight tak jakby
@@ -817,7 +817,7 @@ from (select e.EmployeeID, e.LastName, e.FirstName, sum(UnitPrice*Quantity*(1-Di
       from Employees e join Orders o on e.EmployeeID = o.EmployeeID
                        join [Order Details] od on o.OrderID = od.OrderID
       where e.EmployeeID NOT IN (select a.EmployeeID
-                            from Employees a join Employees b on a.EmployeeID = b.ReportsTo)
+          from Employees a join Employees b on a.EmployeeID = b.ReportsTo)
       group by e.EmployeeID, o.OrderID, o.Freight, e.LastName, e.FirstName) t
 group by t.EmployeeID, t.LastName, t.FirstName
 
@@ -832,8 +832,8 @@ from (select e.EmployeeID, e.LastName, e.FirstName, sum(UnitPrice*Quantity*(1-Di
       from Employees e join Orders o on e.EmployeeID = o.EmployeeID
                        join [Order Details] od on o.OrderID = od.OrderID
       where e.EmployeeID IN (select a.EmployeeID
-                           from Employees a left join Employees b on a.EmployeeID = b.ReportsTo
-                           where b.EmployeeID is null)
+          from Employees a left join Employees b on a.EmployeeID = b.ReportsTo
+          where b.EmployeeID is null)
       group by e.EmployeeID, o.OrderID, o.Freight, e.LastName, e.FirstName) t
 group by t.EmployeeID, t.LastName, t.FirstName
 
@@ -916,10 +916,10 @@ where unitPrice > average;
 
 select *, UnitPrice - average as diff
 from (select productname, categoryid, unitprice
-          ,(select avg(unitprice)
-            from products as p_in
-            where p_in.categoryid = p_out.categoryid ) as average
-     from products as p_out) t
+           ,(select avg(unitprice)
+             from products as p_in
+             where p_in.categoryid = p_out.categoryid ) as average
+      from products as p_out) t
 
 
 --with
@@ -959,7 +959,7 @@ group by o.OrderID, Freight
 --LUB
 
 select o.OrderID, (select sum(Quantity*UnitPrice*(1-Discount))
-                    from [Order Details] od where o.OrderID = od.OrderID) + o.Freight as Total
+                   from [Order Details] od where o.OrderID = od.OrderID) + o.Freight as Total
 from Orders o
 where OrderID = '10250'
 
@@ -1021,8 +1021,8 @@ SELECT
     SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS CustomerTotalPrice
 FROM
     (VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10), (11), (12)) AS m(Month)
-        LEFT JOIN Orders o ON MONTH(o.OrderDate) = m.Month AND YEAR(o.OrderDate) = 1996
-        LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
+    LEFT JOIN Orders o ON MONTH(o.OrderDate) = m.Month AND YEAR(o.OrderDate) = 1996
+    LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
 GROUP BY m.Month
 ORDER BY m.Month
 
@@ -1045,8 +1045,8 @@ from (select o.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) as TotalSumWitho
       from Orders o join [Order Details] od on o.OrderID = od.OrderID
       where YEAR(OrderDate) = 1996
       group by o.CustomerID) as t --dla danego CustomerID suma wartości zamówień
-      join
-      (select o.CustomerID, sum(o.Freight) as TotalSumOfFreight from Orders o
+         join
+     (select o.CustomerID, sum(o.Freight) as TotalSumOfFreight from Orders o
       where YEAR(OrderDate) = 1996 --dla danego CustomerID suma wartości freight
       group by o.CustomerID) as y on t.CustomerID = y.CustomerID
 --OBA TAKI SAM WYNIK (to i niżej) ALE Z DOKŁADNOŚCIĄ DO UNIKALNYCH FREIGHT!!!
@@ -1059,9 +1059,9 @@ EXCEPT
 select CustomerID, sum(TotalSumWithoutFreight) + sum(FreightTotal) as TotalValue --lub sum( + )
 from (select o.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) as TotalSumWithoutFreight,
              o.Freight as FreightTotal
-             from Orders o join [Order Details] od on o.OrderID = od.OrderID
-             where YEAR(OrderDate) = 1996
-             group by o.CustomerID, o.OrderID, o.Freight) t -- najpiew klient kilka zamówień
+      from Orders o join [Order Details] od on o.OrderID = od.OrderID
+      where YEAR(OrderDate) = 1996
+      group by o.CustomerID, o.OrderID, o.Freight) t -- najpiew klient kilka zamówień
 --ale już unikalne OrderID i do nich jednorazowo freight, a potem dopiero sumujemy całość :)
 --group by OrderID warto bo możemy stracić informację jeśli różne OrderID a takie same Freight
 --dla tego samego CustomerID i za mało razy zliczymy Freight
@@ -1083,10 +1083,10 @@ group by o.OrderID, OrderDate, c.CustomerID, CompanyName, Freight
 --tak już ok naprawione to wyżej :):):)
 select t.CustomerID, sum(t.TotalPriceButDividedInternally) as TotalPrice
 from  (select c.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) + Freight as TotalPriceButDividedInternally
-    from Orders o join Customers c on o.CustomerID = c.CustomerID
-                  join [Order Details] od on o.OrderID = od.OrderID
-    where YEAR(OrderDate) = 1996
-    group by c.CustomerID, CompanyName, Freight) t
+       from Orders o join Customers c on o.CustomerID = c.CustomerID
+                     join [Order Details] od on o.OrderID = od.OrderID
+       where YEAR(OrderDate) = 1996
+       group by c.CustomerID, CompanyName, Freight) t
 group by t.CustomerID
 --różnica w EXCEPT bo zaokrągla np .49967 na .4997, jest dobrze <3
 
@@ -1103,8 +1103,8 @@ order by 2 desc -- trzeba by max (sum ()) ale się nie da
 --zatem subquery trzeba
 select CustomerID, max(OrderValue)  as MaxOrderValue
 from (select o.CustomerID, o.OrderID, sum(Quantity*UnitPrice*(1-Discount)) as OrderValue
-        from Orders o join [Order Details] od on o.OrderID = od.OrderID
-        group by o.CustomerID, o.OrderID) as t
+      from Orders o join [Order Details] od on o.OrderID = od.OrderID
+      group by o.CustomerID, o.OrderID) as t
 group by CustomerID
 order by 2 desc
 
@@ -1118,19 +1118,19 @@ where OrderID is null
 select c.CustomerID, Address
 from Customers c
 where c.CustomerID not in (select o.CustomerID from Orders o
-                        where YEAR(OrderDate) = 1997)
+                           where YEAR(OrderDate) = 1997)
 
 select c.CustomerID, Address
 from Customers c
 where not exists (select * from Orders o
-                           where c.CustomerID = o.CustomerID and YEAR(OrderDate) = 1997)
+                  where c.CustomerID = o.CustomerID and YEAR(OrderDate) = 1997)
 
 
 
 --2. Wybierz nazwy i numery telefonów klientów , którym w 1997 roku przesyłki dostarczała firma United Package.
 select DISTINCT c.CompanyName, c.Phone
 from Customers c join Orders o on c.CustomerID = o.CustomerID
-                join Shippers s on o.ShipVia = s.ShipperID
+                 join Shippers s on o.ShipVia = s.ShipperID
 where YEAR(OrderDate) = 1997 and s.CompanyName = 'United Package'
 group by c.CustomerID, c.CompanyName, c.Phone -- CustomerID gdyby takie samy nazwy były
 
@@ -1151,12 +1151,12 @@ WHERE c.CustomerID IN (
     SELECT o.CustomerID
     FROM Orders o
     WHERE YEAR(o.OrderDate) = 1997
-      AND o.ShipVia IN (
-        SELECT s.ShipperID
-        FROM Shippers s
-        WHERE s.CompanyName = 'United Package'
+  AND o.ShipVia IN (
+SELECT s.ShipperID
+FROM Shippers s
+WHERE s.CompanyName = 'United Package'
     )
-);
+    );
 
 
 
@@ -1164,8 +1164,8 @@ WHERE c.CustomerID IN (
 --ZAKŁADAM ŻE CHODZI O SHIPPEDDATE
 select DISTINCT c.CompanyName, c.Phone
 from Customers c left join Orders o on c.CustomerID = o.CustomerID
-                left join Shippers s on o.ShipVia = s.ShipperID and s.CompanyName = 'United Package'
-                                                                    and YEAR(ShippedDate) = 1997
+                 left join Shippers s on o.ShipVia = s.ShipperID and s.CompanyName = 'United Package'
+    and YEAR(ShippedDate) = 1997
 where s.CompanyName is null --źle bo w 1997 nie dostarczała ale w innych mogła...
 
 
@@ -1181,10 +1181,10 @@ EXCEPT
 --lub
 select c.CustomerID, c.CompanyName, c.Phone
 from Customers join Orders o on Customers.CustomerID = O.CustomerID
-            join Shippers S on o.ShipVia = S.ShipperID and year(ShippedDate) = 1997
-                            and S.CompanyName = 'United Package'--którzy mają zamówienia
-            right outer join Customers as c on c.CustomerID = Customers.CustomerID
-            --i do tego na KONIEC right join bierze dopełnienie razem z tymi co nie mają w ogóle
+               join Shippers S on o.ShipVia = S.ShipperID and year(ShippedDate) = 1997
+    and S.CompanyName = 'United Package'--którzy mają zamówienia
+    right outer join Customers as c on c.CustomerID = Customers.CustomerID
+--i do tego na KONIEC right join bierze dopełnienie razem z tymi co nie mają w ogóle
 --          i tych którym right join dał nulla) takie trochę NOT IN
 where Customers.CustomerID is null
 EXCEPT
@@ -1201,7 +1201,7 @@ having sum(CASE WHEN s.CompanyName = 'United Package' THEN 1 ELSE 0 END) = 0
 --4. Wybierz nazwy i numery telefonów klientów, którzy kupowali produkty z kategorii Confections.
 select DISTINCT c.CompanyName, c.Phone
 from Customers c join Orders o on c.CustomerID = o.CustomerID
-    join [Order Details] od on o.OrderID = od.OrderID
+                 join [Order Details] od on o.OrderID = od.OrderID
     join Products p on od.ProductID = p.ProductID
     join Categories cat on p.CategoryID = cat.CategoryID
 where CategoryName = 'Confections'
@@ -1216,17 +1216,17 @@ where c.customerid in (
     where o.orderid in (
         select od.orderid
         from [order details] as od
-        where od.productid in (
-            select p.productid
-            from products as p
-            where p.categoryid in (
-                select cat.categoryid
-                from categories as cat
-                where cat.categoryname = 'confections'
-            )
-        )
+where od.productid in (
+    select p.productid
+    from products as p
+    where p.categoryid in (
+    select cat.categoryid
+    from categories as cat
+    where cat.categoryname = 'confections'
     )
-);
+    )
+    )
+    );
 
 
 --5. Wybierz nazwy i numery telefonów klientów, którzy nie kupowali produktów z kategorii Confections.
@@ -1237,11 +1237,11 @@ WHERE c.CustomerID NOT IN (
         o.CustomerID
     FROM
         Orders o JOIN [Order Details] od ON o.OrderID = od.OrderID
-                 JOIN Products p ON od.ProductID = p.ProductID
-                 JOIN Categories cat ON p.CategoryID = cat.CategoryID
-    WHERE
-        cat.CategoryName = 'Confections'
-);
+    JOIN Products p ON od.ProductID = p.ProductID
+    JOIN Categories cat ON p.CategoryID = cat.CategoryID
+WHERE
+    cat.CategoryName = 'Confections'
+    );
 
 --lub
 
@@ -1249,18 +1249,18 @@ SELECT c.CompanyName, c.Phone
 FROM Customers c
          LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
          LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
-         LEFT JOIN Products p ON od.ProductID = p.ProductID
-         LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
+    LEFT JOIN Products p ON od.ProductID = p.ProductID
+    LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
 GROUP BY c.CompanyName, c.Phone  ---dotąd ma (91) group by jak distinct w 1. rozwiązaniu
 HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0
 
 --lub
 select DISTINCT c.CompanyName, c.Phone
 from Customers join Orders o on Customers.CustomerID = o.CustomerID
-                join [Order Details] od on o.OrderID = od.OrderID
-                join Products p on od.ProductID = p.ProductID
-                join Categories cat on p.CategoryID = cat.CategoryID and cat.CategoryName = 'Confections'
-        right join Customers c on c.CustomerID = Customers.CustomerID -- dopełnienie tamtego ^
+               join [Order Details] od on o.OrderID = od.OrderID
+    join Products p on od.ProductID = p.ProductID
+    join Categories cat on p.CategoryID = cat.CategoryID and cat.CategoryName = 'Confections'
+    right join Customers c on c.CustomerID = Customers.CustomerID -- dopełnienie tamtego ^
 where Customers.CustomerID is null
 
 
@@ -1270,17 +1270,17 @@ where Customers.CustomerID is null
 select c.CompanyName, c.Phone
 from Customers c
 where c.CustomerID not in ( select o.CustomerID from Orders o
-        where YEAR(o.OrderDate) = 1997 and o.OrderID in (select od.OrderID from [Order Details] od
-        where od.ProductID in (select p.ProductID from Products p
-        where p.CategoryID in (select cat.CategoryID from Categories cat
-        where CategoryName = 'Confections' ))))
+                            where YEAR(o.OrderDate) = 1997 and o.OrderID in (select od.OrderID from [Order Details] od
+where od.ProductID in (select p.ProductID from Products p
+    where p.CategoryID in (select cat.CategoryID from Categories cat
+    where CategoryName = 'Confections' ))))
 
 SELECT c.CompanyName, c.Phone ---to poprawne bo tylko 1997
 FROM Customers c
          LEFT JOIN Orders o ON c.CustomerID = o.CustomerID and YEAR(o.OrderDate) = 1997
-         LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
-         LEFT JOIN Products p ON od.ProductID = p.ProductID
-         LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
+    LEFT JOIN [Order Details] od ON o.OrderID = od.OrderID
+    LEFT JOIN Products p ON od.ProductID = p.ProductID
+    LEFT JOIN Categories cat ON p.CategoryID = cat.CategoryID
 GROUP BY c.CompanyName, c.Phone
 HAVING SUM(CASE WHEN cat.CategoryName = 'Confections' THEN 1 ELSE 0 END) = 0;
 --jeśli dalibyśmy poza left join warunek where YEAR(o.OrderDate) = 1997
@@ -1319,7 +1319,7 @@ from (select ProductName, UnitPrice, (select avg(p.UnitPrice) from Products p) a
 -- produktów danej kategorii oraz różnicę między ceną produktu a średnią ceną wszystkich produktów danej kategorii
 select t.ProductName, t.UnitPrice, CategoryName, CatAverage, t.UnitPrice - CatAverage as CatDiff
 from (select p.ProductName, p.UnitPrice, CategoryID, (select avg(UnitPrice) from Products po
-                where p.CategoryID = po.CategoryID ) as CatAverage from Products p) t
+                                                      where p.CategoryID = po.CategoryID ) as CatAverage from Products p) t
          join Categories c on t.CategoryID = c.CategoryID
 Order by t.ProductName
 
@@ -1331,9 +1331,9 @@ from (select pout.ProductID, pout.ProductName, pout.UnitPrice,
 
 
 SELECT p.ProductName, c.CategoryName, p.UnitPrice, AVG(p2.UnitPrice) AS CatAverage,
-    p.UnitPrice - AVG(p2.UnitPrice) AS CatDiff
+       p.UnitPrice - AVG(p2.UnitPrice) AS CatDiff
 FROM Products p join Categories c ON p.CategoryID = c.CategoryID
-    JOIN Products p2 ON p.CategoryID = p2.CategoryID --łączymy te same na podstawie CategoryID
+                JOIN Products p2 ON p.CategoryID = p2.CategoryID --łączymy te same na podstawie CategoryID
 GROUP BY p.CategoryID, p.ProductName, c.CategoryName, p.UnitPrice
 ORDER BY c.CategoryName, p.ProductName; -- trzeba na innej tablicy bo na tej AVG(p.UnitPrice)
 --będzie liczyło z jednego produktu i CatDiff = 0..., podobnie jak kiedyś z a.employee i b.employee
@@ -1346,15 +1346,15 @@ ORDER BY c.CategoryName, p.ProductName; -- trzeba na innej tablicy bo na tej AVG
 --1. Podaj produkty kupowane przez więcej niż jednego klienta
 select t.ProductID, COUNT(DISTINCT t.CustomerID) as IluKlientówKupowało
 from (select c.CustomerID, p.ProductID from Customers c join Orders o on c.CustomerID = o.CustomerID
-                                          join [Order Details] od on o.OrderID = od.OrderID
-                                          join Products p on od.ProductID = p.ProductID) t
+                                                        join [Order Details] od on o.OrderID = od.OrderID
+          join Products p on od.ProductID = p.ProductID) t
 group by t.ProductID
 having COUNT(DISTINCT t.CustomerID) > 1
 ORDER BY 1
 
 SELECT p.ProductID, p.ProductName, COUNT(DISTINCT o.CustomerID) AS NumberOfCustomers
 FROM Products p JOIN [Order Details] od ON p.ProductID = od.ProductID
-                JOIN Orders o ON od.OrderID = o.OrderID
+    JOIN Orders o ON od.OrderID = o.OrderID
 GROUP BY p.ProductID, p.ProductName
 HAVING COUNT(DISTINCT o.CustomerID) > 1;
 
@@ -1363,14 +1363,14 @@ HAVING COUNT(DISTINCT o.CustomerID) > 1;
 select t.ProductID, COUNT(DISTINCT t.CustomerID) as IluKlientówKupowało
 from (select c.CustomerID, p.ProductID from Customers c join Orders o on c.CustomerID = o.CustomerID and YEAR(OrderDate) = 1997
                                                         join [Order Details] od on o.OrderID = od.OrderID
-                                                        join Products p on od.ProductID = p.ProductID) t
+    join Products p on od.ProductID = p.ProductID) t
 group by t.ProductID
 having COUNT(DISTINCT t.CustomerID) > 1
 ORDER BY 1
 
 SELECT p.ProductID, p.ProductName, COUNT(DISTINCT o.CustomerID) AS NumberOfCustomers
 FROM Products p JOIN [Order Details] od ON p.ProductID = od.ProductID
-                JOIN Orders o ON od.OrderID = o.OrderID and YEAR(OrderDate) = 1997
+    JOIN Orders o ON od.OrderID = o.OrderID and YEAR(OrderDate) = 1997
 GROUP BY p.ProductID, p.ProductName
 HAVING COUNT(DISTINCT o.CustomerID) > 1;
 
@@ -1378,20 +1378,20 @@ HAVING COUNT(DISTINCT o.CustomerID) > 1;
 --3. Podaj nazwy klientów którzy w 1997r kupili co najmniej dwa różne produkty z kategorii 'Confections'
 select t.CompanyName
 from (select c.CompanyName from Customers c join Orders o on c.CustomerID = o.CustomerID
-                           join [Order Details] od on o.OrderID = od.OrderID
-                           join Products p on od.ProductID = p.ProductID
-                           join Categories cat on p.CategoryID = cat.CategoryID
-                           where CategoryName = 'Confections' and YEAR(OrderDate) = 1997
-                           group by c.CompanyName
-                           having COUNT(DISTINCT p.ProductID) > 1) t
+                                            join [Order Details] od on o.OrderID = od.OrderID
+          join Products p on od.ProductID = p.ProductID
+          join Categories cat on p.CategoryID = cat.CategoryID
+      where CategoryName = 'Confections' and YEAR(OrderDate) = 1997
+      group by c.CompanyName
+      having COUNT(DISTINCT p.ProductID) > 1) t
 
 --ten zapis wyżej trochę sztuczny
 
 select c.CompanyName
 from Customers c join Orders o on c.CustomerID = o.CustomerID and YEAR(OrderDate) = 1997
-                 join [Order Details] od on o.OrderID = od.OrderID
-                 join Products p on od.ProductID = p.ProductID
-                 join Categories cat on p.CategoryID = cat.CategoryID
+    join [Order Details] od on o.OrderID = od.OrderID
+    join Products p on od.ProductID = p.ProductID
+    join Categories cat on p.CategoryID = cat.CategoryID
 where YEAR(OrderDate) = 1997 and cat.CategoryName = 'Confections'
 group by c.CompanyName
 having COUNT(DISTINCT p.ProductID) > 1
@@ -1404,9 +1404,9 @@ having COUNT(DISTINCT p.ProductID) > 1
 -- przez tego pracownika, przy obliczaniu wartości zamówień uwzględnij cenę za przesyłkę
 select FirstName, LastName, sum(PriceDividedOnEmployees) as TotalPrice
 from ( select e.EmployeeID, FirstName, LastName, sum(UnitPrice*Quantity*(1-Discount)) + o.Freight as PriceDividedOnEmployees
-                    from Employees e join Orders o on e.EmployeeID = o.EmployeeID
-                                     join [Order Details] od on o.OrderID = od.OrderID
-                    group by e.EmployeeID, FirstName, LastName, o.Freight, o.OrderID ) as t
+       from Employees e join Orders o on e.EmployeeID = o.EmployeeID
+                        join [Order Details] od on o.OrderID = od.OrderID
+       group by e.EmployeeID, FirstName, LastName, o.Freight, o.OrderID ) as t
 group by EmployeeID, FirstName, LastName
 -------ŹLE ZA DUŻO ZLICZA PROBLEM Z FREIGHT
 
@@ -1427,13 +1427,13 @@ group by EmployeeID, FirstName, LastName
 --Wybierz nazwy i numery telefonów klientów , którym w 1997 roku przesyłki dostarczała tylko firma United Package.
 select c.CompanyName, c.Phone
 from Customers c join Orders o on c.CustomerID = o.CustomerID
-                join Shippers s on o.ShipVia = s.ShipperID and YEAR(OrderDate) = 1997
+                 join Shippers s on o.ShipVia = s.ShipperID and YEAR(OrderDate) = 1997
 group by c.CustomerID, c.CompanyName, c.Phone
 having sum(CASE WHEN s.CompanyName = 'United Package' then 0 else 1 end) = 0
 
 select c.CompanyName, ShipVia, YEAR(OrderDate)
 from Customers c join Orders o on c.CustomerID = o.CustomerID
-                join Shippers s on o.ShipVia = s.ShipperID
+    join Shippers s on o.ShipVia = s.ShipperID
 where c.CompanyName = 'Split Rail Beer & Ale' --sprawdzenie
 
 --jeśli we wszystkich latach tylko firma United Package to
@@ -1446,7 +1446,7 @@ having sum(CASE WHEN s.CompanyName = 'United Package' then 0 else 1 end) = 0
 
 select c.CompanyName, ShipVia, YEAR(OrderDate)
 from Customers c join Orders o on c.CustomerID = o.CustomerID
-                 join Shippers s on o.ShipVia = s.ShipperID
+    join Shippers s on o.ShipVia = s.ShipperID
 where c.CompanyName = 'Let''s Stop N Shop' --sprawdzenie, rzeczywiście <3
 
 
@@ -1467,7 +1467,7 @@ having sum(CASE WHEN s.CompanyName = 'United Package' THEN 1 ELSE 0 END) = 0
 select t.EmployeeID, sum(Total + Freight)
 from (select e.EmployeeID, sum(UnitPrice*od.Quantity*(1-Discount)) as Total, o.Freight as Freight
       from Employees e join Orders o on e.EmployeeID = o.EmployeeID
-      join [Order Details] od on o.OrderID = od.OrderID
+                       join [Order Details] od on o.OrderID = od.OrderID
       group by e.EmployeeID, o.OrderID, o.Freight) t
 group by t.EmployeeID
 
@@ -1487,11 +1487,27 @@ from (select e.EmployeeID, e.LastName, e.FirstName, sum(UnitPrice*Quantity*(1-Di
       from Employees e join Orders o on e.EmployeeID = o.EmployeeID
                        join [Order Details] od on o.OrderID = od.OrderID
       where e.EmployeeID IN ((select a.EmployeeID
-                           from Employees a join Employees b on a.EmployeeID = b.ReportsTo) --mają podwładnych
-                    INTERSECT
-                             (select b.EmployeeID
-                              from Employees a right join Employees b on a.EmployeeID = b.ReportsTo -- a są szefem b
-                              where a.EmployeeID is not null)) -- ma szefa
+          from Employees a join Employees b on a.EmployeeID = b.ReportsTo) --mają podwładnych
+          INTERSECT
+          (select b.EmployeeID
+          from Employees a right join Employees b on a.EmployeeID = b.ReportsTo -- a są szefem b
+          where a.EmployeeID is not null)) -- ma szefa
       group by e.EmployeeID, o.OrderID, o.Freight, e.LastName, e.FirstName) t
 group by t.EmployeeID, t.LastName, t.FirstName
+
+
+--kolos
+select t.CustomerID, sum(PriceWithoutFreight + AmountFreight) as WartośćZamówień, COUNT(t.CustomerID) as LiczbaZamówień
+from (select c.CompanyName, c.CustomerID, sum(Quantity*UnitPrice*(1-Discount)) as PriceWithoutFreight,
+             o.Freight as AmountFreight
+      from Customers c join Orders o on c.CustomerID = o.CustomerID
+                       join [Order Details] od on o.OrderID = od.OrderID
+          and YEAR(OrderDate) = 1997 and MONTH(OrderDate) = 2
+      group by c.CompanyName, c.CustomerID, o.OrderID, o.Freight ) t
+group by t.CustomerID
+UNION
+select cust.CompanyName , 0 as WartośćZamówień, 0 as LiczbaZamówień
+from Customers cust left join Orders o on cust.CustomerID = o.CustomerID
+    and YEAR(OrderDate) = 1997 and MONTH(OrderDate) = 2
+where o.CustomerID is null
 

@@ -178,7 +178,7 @@ where out_date >= '2001-05-01' and out_date < '2001-06-01'
 -- Interesuje nas imię, nazwisko i data urodzenia dziecka.
 select firstname, lastname, juvenile.birth_date
 from member inner join juvenile
-    on member.member_no = juvenile.member_no;
+                       on member.member_no = juvenile.member_no;
 
 
 --2.Napisz polecenie, które podaje tytuły aktualnie wypożyczonych książek
@@ -231,7 +231,7 @@ from juvenile
 -- więcej niż dwoje dzieci zapisanych do biblioteki
 select state, ma.firstname + ' ' + ma.lastname as FullName, COUNT(adult_member_no) as LiczbaDzieci
 from adult join member ma on adult.member_no = ma.member_no
-            join juvenile on adult.member_no = juvenile.adult_member_no
+           join juvenile on adult.member_no = juvenile.adult_member_no
 where state = 'AZ'
 group by state, ma.firstname, ma.lastname
 having COUNT(adult_member_no) > 2
@@ -281,6 +281,13 @@ select LastName, FirstName, (select COUNT(j.adult_member_no)
                              from juvenile j where a.member_no = j.adult_member_no) as LiczbaDzieci
 from member m join adult a on m.member_no = a.member_no
 --adult i member są połączone OK
+--!!!ALL rows inaczej pokaże różne liczby dzieci
+
+select a.member_no, m.FirstName, m.LastName, COUNT(j.adult_member_no) as LiczbaDzieci
+from adult a join member m on a.member_no = m.member_no
+             join juvenile j on a.member_no = j.adult_member_no
+group by a.member_no, m.FirstName, m.LastName
+order by a.member_no
 
 
 
@@ -288,19 +295,19 @@ from member m join adult a on m.member_no = a.member_no
 -- liczbę zarezerwowanych książek oraz liczbę wypożyczonych książek.
 select LastName, FirstName, (select COUNT(j.adult_member_no)
                              from juvenile j where a.member_no = j.adult_member_no) as LiczbaDzieci,
-                            (select COUNT(r.member_no)
-                             from reservation r where a.member_no = r.member_no) as LiczbaRezerwacji,
-                            (select COUNT(l.member_no)
-                            from loan l where a.member_no = l.member_no) as LiczbaWypożyczonych
+       (select COUNT(r.member_no)
+        from reservation r where a.member_no = r.member_no) as LiczbaRezerwacji,
+       (select COUNT(l.member_no)
+        from loan l where a.member_no = l.member_no) as LiczbaWypożyczonych
 from member m join adult a on m.member_no = a.member_no
 
 --lub
 SELECT m.member_no, COUNT(DISTINCT j.member_no) AS LiczbaDzieci, COUNT(DISTINCT r.member_no) AS LiczbaRezerwacji,
-    COUNT(DISTINCT l.member_no) AS LiczbaWypożyczonych
+       COUNT(DISTINCT l.member_no) AS LiczbaWypożyczonych
 FROM member m JOIN adult a ON m.member_no = a.member_no
-    LEFT JOIN juvenile j ON a.member_no = j.adult_member_no
-    LEFT JOIN reservation r ON a.member_no = r.member_no
-    LEFT JOIN loan l ON a.member_no = l.member_no
+              LEFT JOIN juvenile j ON a.member_no = j.adult_member_no
+              LEFT JOIN reservation r ON a.member_no = r.member_no
+              LEFT JOIN loan l ON a.member_no = l.member_no
 group by m.member_no
 order by 2 desc
 
@@ -343,3 +350,19 @@ from (   select title, COUNT(l.title_no) as LiczbaWypożyczeń
          where YEAR(lh.out_date) = 2002
          group by title) as LiczbaWypożyczeń
 group by title
+
+
+
+
+--kolos
+select firstname, lastname, (state + ', ' + city + ', ' + street + ', ' + zip) as FullAddress
+from juvenile j1 join member m on j1.member_no = m.member_no
+                 join adult a on j1.adult_member_no = a.member_no
+where j1.member_no NOT IN (
+    select j.member_no
+    from member m join juvenile j on m.member_no = j.member_no
+                  join loanhist lh on lh.member_no = j.member_no
+                  join title t on lh.title_no = t.title_no
+    where CAST(in_date as date) = '2001-12-14' and title = 'Walking'
+)
+group by j1.member_no, firstname, lastname, (state + ', ' + city + ', ' + street + ', ' + zip)
