@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_04/zad1 books/books.db" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad1 books/books.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_04/zad1 books/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad1 books/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_04/zad2 orders/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad2 orders/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_04/zad2 orders/orders.db" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad2 orders/orders.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_04/zad3 obsluga/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad3 obsluga/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_04/zad3 obsluga/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad3 obsluga/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_04/zad3 obsluga/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad3 obsluga/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_04/zad3 obsluga/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad3 obsluga/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +49,7 @@
     "Node.js.database.js (2).executor": "Run",
     "Node.js.database.js.executor": "Run",
     "Node.js.sequelize.js.executor": "Run",
+    "Node.js.server.js.executor": "Run",
     "Node.js.user.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "lab4",
@@ -190,6 +187,7 @@
       <workItem from="1733581113365" duration="114000" />
       <workItem from="1733581412698" duration="26000" />
       <workItem from="1733760573841" duration="989000" />
+      <workItem from="1733763099489" duration="1314000" />
     </task>
     <servers />
   </component>

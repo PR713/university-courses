@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize) => {
     const User = sequelize.define('User', {
+        //user id jest automatycznie generowane i inkrementowane
         email: {
             type: DataTypes.STRING,
             unique: true,

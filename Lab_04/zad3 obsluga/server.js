@@ -62,7 +62,8 @@ const authenticateJWT = (req, res, next) => {
         if (err) {
             return res.status(403).json({ error: 'Invalid token' });
         }
-        req.user = user;
+        req.user = user; //kluczowa linijka, stąd potem
+        //robiąc requesty mamy dostęp do danych użytkownika
         next();
     });
 };
@@ -75,7 +76,7 @@ app.get('/api/protected', authenticateJWT, (req, res) => {
 
 app.put('/api/update', authenticateJWT, async (req, res) => {
     const { email, password } = req.body;
-    const userId = req.user.id;
+    const userId = req.user.id; // wyjmowanie userid z obiektu user
 
     try {
         const user = await User.findByPk(userId);
