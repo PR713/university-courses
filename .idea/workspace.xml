@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_04/zad3 obsluga/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad3 obsluga/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_04/zad3 obsluga/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad3 obsluga/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +43,7 @@
   "keyToString": {
     "DefaultHtmlFileTemplate": "HTML File",
     "Node.js...js.executor": "Run",
+    "Node.js.App.jsx.executor": "Run",
     "Node.js.database.js (1).executor": "Run",
     "Node.js.database.js (2).executor": "Run",
     "Node.js.database.js.executor": "Run",
@@ -52,7 +51,7 @@
     "Node.js.server.js.executor": "Run",
     "Node.js.user.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "lab4",
+    "git-widget-placeholder": "lab5",
     "javascript.nodejs.core.library.configured.version": "23.3.0",
     "javascript.nodejs.core.library.typings.version": "22.10.1",
     "last_opened_file_path": "C:/Users/radsz/Desktop/WDAI_git/Aplikacje-Webowe/Lab_04/zad3 obsluga",
@@ -62,7 +61,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.nodejs",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.2.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -74,20 +73,14 @@
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app3\src" />
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app3\src\Button" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Gra" />
-      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_03\Generator_haseł" />
-      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_03\Stoper" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="database.js (1)" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Lab_04/zad2 orders/database.js" working-dir="$PROJECT_DIR$/Lab_04/zad2 orders">
-      <method v="2" />
-    </configuration>
-    <configuration name="database.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Lab_04/zad1 books/database.js" working-dir="$PROJECT_DIR$/Lab_04/zad1 books">
-      <method v="2" />
-    </configuration>
     <configuration name="server.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Lab_04/zad1 books/server.js" working-dir="$PROJECT_DIR$/Lab_04/zad1 books">
       <method v="2" />
     </configuration>
@@ -188,6 +181,8 @@
       <workItem from="1733581412698" duration="26000" />
       <workItem from="1733760573841" duration="989000" />
       <workItem from="1733763099489" duration="1314000" />
+      <workItem from="1734183776291" duration="3107000" />
+      <workItem from="1734187937627" duration="7221000" />
     </task>
     <servers />
   </component>
