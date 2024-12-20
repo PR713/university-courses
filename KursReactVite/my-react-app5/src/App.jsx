@@ -1,4 +1,4 @@
-//import MyComponent from "./MyComponent.jsx";
+//import MyComponent.jsx from "./MyComponent.jsx.jsx";
 //import Counter from "./Counter.jsx";
 //import MyComponent1 from "./MyComponent1.jsx";
 //import MyComponent2 from "./MyComponent2.jsx";
@@ -12,7 +12,7 @@ function App() {
 
     //return(<ColorPicker/>);
     //return(<Counter/>);
-    //return(<MyComponent/>);
+    //return(<MyComponent.jsx/>);
     //return(<MyComponent1/>);
     //return(<MyComponent2/>);
     //return(<MyComponent3/>);

@@ -890,12 +890,12 @@ var require_react_development = __commonJS({
             var moduleObject = payload._result;
             {
               if (moduleObject === void 0) {
-                error("lazy: Expected the result of a dynamic import() call. Instead received: %s\n\nYour code should look like: \n  const MyComponent = lazy(() => import('./MyComponent'))\n\nDid you accidentally put curly braces around the import?", moduleObject);
+                error("lazy: Expected the result of a dynamic import() call. Instead received: %s\n\nYour code should look like: \n  const MyComponent.jsx = lazy(() => import('./MyComponent.jsx'))\n\nDid you accidentally put curly braces around the import?", moduleObject);
               }
             }
             {
               if (!("default" in moduleObject)) {
-                error("lazy: Expected the result of a dynamic import() call. Instead received: %s\n\nYour code should look like: \n  const MyComponent = lazy(() => import('./MyComponent'))", moduleObject);
+                error("lazy: Expected the result of a dynamic import() call. Instead received: %s\n\nYour code should look like: \n  const MyComponent.jsx = lazy(() => import('./MyComponent.jsx'))", moduleObject);
               }
             }
             return moduleObject.default;

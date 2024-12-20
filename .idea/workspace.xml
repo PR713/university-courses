@@ -5,13 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/ColorPicker.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/Counter.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/MyComponent.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/MyComponent1.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/MyComponent2.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/MyComponent4.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app6/src/MyComponent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app6/src/MyComponent1.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/chunk-JCH2SJW3.js" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/chunk-JCH2SJW3.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/App.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +190,7 @@
       <workItem from="1734268371022" duration="1626000" />
       <workItem from="1734551697812" duration="5025000" />
       <workItem from="1734556857379" duration="275000" />
-      <workItem from="1734707163158" duration="9700000" />
+      <workItem from="1734707163158" duration="11305000" />
     </task>
     <servers />
   </component>
