@@ -5,27 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app/.vite/deps/_metadata.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app/.vite/deps/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app2/.vite/deps/_metadata.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app2/.vite/deps/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/_metadata.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/chunk-BUSYA2B4.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/chunk-BUSYA2B4.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/chunk-JCH2SJW3.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/chunk-JCH2SJW3.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/prop-types.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/prop-types.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/react-dom_client.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/react-dom_client.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/react.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/react.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/src/UserGreeting.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/ColorPicker.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/Counter.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/MyComponent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/MyComponent1.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/MyComponent2.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/MyComponent4.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app3/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app3/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,6 +192,7 @@
       <workItem from="1734268371022" duration="1626000" />
       <workItem from="1734551697812" duration="5025000" />
       <workItem from="1734556857379" duration="275000" />
+      <workItem from="1734707163158" duration="9700000" />
     </task>
     <servers />
   </component>
