@@ -1,0 +1,40 @@
+
+/*body {*/
+/*    background-image: url(assets/ai-generated-nature-landscapes-background-free-photo.jpg);*/
+/*    background-position: center;*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: cover;*/
+/*    background-attachment: fixed;*/
+/*    margin: 0;*/
+
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    min-height: 100vh;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.clock-container {*/
+/*    backdrop-filter: blur(5px);*/
+/*    width: 100vw;*/
+/*    padding: 10px 0;*/
+/*}*/
+
+/*.clock {*/
+/*    color: white;*/
+/*    font-size: 6rem;*/
+/*    font-weight: bold;*/
+/*    font-family: monospace;*/
+/*    text-shadow: 3px 3px 5px hsl(0, 0%, 0%, 0.75);*/
+/*    text-align: center;*/
+/*}*/
+
+
+
+
+
+
+
+.box{
+    border: 3px solid;
+    padding: 25px;
+}

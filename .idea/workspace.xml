@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app6/src/MyComponent.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app6/src/MyComponent1.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/ComponentA.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/ComponentB.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/ComponentC.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/ComponentD.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/DigitalClock.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/assets/ai-generated-nature-landscapes-background-free-photo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app8/src/MyComponent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app8/src/StopWatch.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/chunk-JCH2SJW3.js" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app3/.vite/deps/chunk-JCH2SJW3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app5/src/App.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,45 +47,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Node.js...js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.App.jsx.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js (1).executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js (2).executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.sequelize.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.user.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lab5&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;23.3.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.1&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/radsz/Desktop/WDAI_git/Aplikacje-Webowe/Lab_04/zad3 obsluga&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.2.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Node.js...js.executor": "Run",
+    "Node.js.App.jsx.executor": "Run",
+    "Node.js.database.js (1).executor": "Run",
+    "Node.js.database.js (2).executor": "Run",
+    "Node.js.database.js.executor": "Run",
+    "Node.js.sequelize.js.executor": "Run",
+    "Node.js.server.js.executor": "Run",
+    "Node.js.user.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "lab5",
+    "javascript.nodejs.core.library.configured.version": "23.3.0",
+    "javascript.nodejs.core.library.typings.version": "22.10.1",
+    "last_opened_file_path": "C:/Users/radsz/Desktop/WDAI_git/Aplikacje-Webowe/KursReactVite/my-react-app7/src",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.2.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app7\src" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad3 obsluga" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad2 orders" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app7\src\assets" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app3\src" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app3\src\Button" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
-      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Gra" />
     </key>
   </component>
   <component name="RunManager">
@@ -191,6 +196,7 @@
       <workItem from="1734551697812" duration="5025000" />
       <workItem from="1734556857379" duration="275000" />
       <workItem from="1734707163158" duration="11305000" />
+      <workItem from="1734783162279" duration="6751000" />
     </task>
     <servers />
   </component>
