@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_03/Generator_haseł/generator-haseł.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_04/zad3 obsluga/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad3 obsluga/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_04/zad3 obsluga/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_04/zad3 obsluga/user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,27 +41,69 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lab3&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Node.js...js.executor": "Run",
+    "Node.js.database.js (1).executor": "Run",
+    "Node.js.database.js (2).executor": "Run",
+    "Node.js.database.js.executor": "Run",
+    "Node.js.sequelize.js.executor": "Run",
+    "Node.js.server.js.executor": "Run",
+    "Node.js.user.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "lab4",
+    "javascript.nodejs.core.library.configured.version": "23.3.0",
+    "javascript.nodejs.core.library.typings.version": "22.10.1",
+    "last_opened_file_path": "C:/Users/radsz/Desktop/WDAI_git/Aplikacje-Webowe/Lab_04/zad3 obsluga",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.nodejs",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.2.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad3 obsluga" />
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad2 orders" />
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04" />
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Gra" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_03\Generator_haseł" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_03\Stoper" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="database.js (1)" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Lab_04/zad2 orders/database.js" working-dir="$PROJECT_DIR$/Lab_04/zad2 orders">
+      <method v="2" />
+    </configuration>
+    <configuration name="database.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Lab_04/zad1 books/database.js" working-dir="$PROJECT_DIR$/Lab_04/zad1 books">
+      <method v="2" />
+    </configuration>
+    <configuration name="server.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Lab_04/zad1 books/server.js" working-dir="$PROJECT_DIR$/Lab_04/zad1 books">
+      <method v="2" />
+    </configuration>
+    <configuration name="server.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Lab_04/zad2 orders/server.js" working-dir="$PROJECT_DIR$/Lab_04/zad2 orders">
+      <method v="2" />
+    </configuration>
+    <configuration name="server.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Lab_04/zad3 obsluga/server.js" working-dir="$PROJECT_DIR$/Lab_04/zad3 obsluga">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.server.js" />
+        <item itemvalue="Node.js.server.js" />
+        <item itemvalue="Node.js.server.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -135,6 +178,16 @@
       <workItem from="1732552246726" duration="406000" />
       <workItem from="1732553626399" duration="122000" />
       <workItem from="1732553763524" duration="247000" />
+      <workItem from="1732794842278" duration="59000" />
+      <workItem from="1733426064381" duration="668000" />
+      <workItem from="1733428493049" duration="724000" />
+      <workItem from="1733510359016" duration="1559000" />
+      <workItem from="1733568701800" duration="2927000" />
+      <workItem from="1733571671036" duration="7489000" />
+      <workItem from="1733581113365" duration="114000" />
+      <workItem from="1733581412698" duration="26000" />
+      <workItem from="1733760573841" duration="989000" />
+      <workItem from="1733763099489" duration="1314000" />
     </task>
     <servers />
   </component>
