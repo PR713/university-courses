@@ -5,15 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/ComponentA.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/ComponentB.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/ComponentC.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/ComponentD.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/DigitalClock.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app7/src/assets/ai-generated-nature-landscapes-background-free-photo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app8/src/MyComponent.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KursReactVite/my-react-app8/src/StopWatch.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/KursTypeScript/hello-world/src/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/src/reportWebVitals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/my-app/src/setupTests.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +66,7 @@
     "Node.js.database.js (1).executor": "Run",
     "Node.js.database.js (2).executor": "Run",
     "Node.js.database.js.executor": "Run",
+    "Node.js.index.ts.executor": "Run",
     "Node.js.sequelize.js.executor": "Run",
     "Node.js.server.js.executor": "Run",
     "Node.js.user.js.executor": "Run",
@@ -69,7 +81,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "terminal",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.2.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -82,11 +94,11 @@
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursTypeScript\hello-world\src" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app7\src\assets" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app3\src" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app3\src\Button" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04" />
-      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
     </key>
   </component>
   <component name="RunManager">
@@ -197,6 +209,10 @@
       <workItem from="1734556857379" duration="275000" />
       <workItem from="1734707163158" duration="11305000" />
       <workItem from="1734783162279" duration="6751000" />
+      <workItem from="1734792027389" duration="862000" />
+      <workItem from="1734794902712" duration="198000" />
+      <workItem from="1734795108949" duration="1223000" />
+      <workItem from="1734873109829" duration="4231000" />
     </task>
     <servers />
   </component>
