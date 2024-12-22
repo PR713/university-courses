@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/formularze/Logowanie.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/formularze/Logowanie.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/koszyk/Koszyk.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/koszyk/Koszyk.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/koszyk/NowyKoszyk.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/koszyk/NowyKoszyk.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/koszyk/Produkt.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/koszyk/Produkt.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +22,8 @@
       <list>
         <option value="TypeScript File" />
         <option value="HTML File" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -77,11 +82,11 @@
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad1 books" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_05\Zadania_lab5\src\components\studenci" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_05\Zadania_lab5\src\components" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_05\Zadania_lab5\src\components\Koszyk" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursTypeScript\hello-world\src" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app7\src\assets" />
-      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app3\src" />
     </key>
   </component>
   <component name="RunManager">
@@ -197,7 +202,7 @@
       <workItem from="1734795108949" duration="1223000" />
       <workItem from="1734873109829" duration="4231000" />
       <workItem from="1734877551913" duration="4629000" />
-      <workItem from="1734897284799" duration="402000" />
+      <workItem from="1734897284799" duration="7642000" />
     </task>
     <servers />
   </component>

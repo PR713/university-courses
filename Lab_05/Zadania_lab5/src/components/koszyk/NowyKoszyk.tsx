@@ -1,5 +1,4 @@
 import Produkt from "./Produkt.tsx";
-import React from "react";
 
 function NowyKoszyk(){
 

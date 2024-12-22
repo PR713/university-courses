@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface KoszykProps {
     children: ReactNode;
@@ -7,7 +7,7 @@ interface KoszykProps {
 function Koszyk({ children }: KoszykProps) {
     return (
         <div>
-            <h1>Koszyk</h1>
+            <p>Koszyk</p>
             {children}
         </div>
     )

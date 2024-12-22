@@ -3,7 +3,7 @@
 function Produkt(props : {name: string}) {
     return (
         <div>
-            <h1>{props.name}</h1>
+            <p>{props.name}</p>
         </div>
     );
 }
