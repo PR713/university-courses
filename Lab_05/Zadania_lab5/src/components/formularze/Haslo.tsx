@@ -30,7 +30,7 @@ function Haslo(){
             <label>Powtórz Hasło</label>
             <input type="text" name="Powtórz Hasło" value={confirmPassword}
                    onChange={handleConfirmPasswordChange} />
-            
+            <br/><br/>
             <div>{message}</div>
         </div>
     );

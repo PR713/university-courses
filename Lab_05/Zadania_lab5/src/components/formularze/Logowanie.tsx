@@ -46,11 +46,11 @@ function Logowanie() {
             <label>Nazwa Użytkownika</label>
             <input type="text" id="username" name="Username" value={nazwaUzytkownika}
                    onChange={handleUsernameChange}/>
-            <br/>
+            <br/><br/>
             <label>Hasło</label>
             <input type="text" id="password" name="Hasło" value={password}
                    onChange={handlePasswordChange}/>
-            <br/>
+            <br/><br/>
 
             <label>Powtórz Hasło</label>
             <input type="text" id="repeatpassword" name="Powtórz Hasło" value={confirmPassword}

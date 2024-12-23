@@ -35,13 +35,13 @@ function Dodawanie({addStudent}: DodawanieProps) {
     return (<>
         <label>Imię:</label>
         <input type="text" id="imie" value={imie} onChange={(e) => setImie(e.target.value)}/>
-        <br/>
+        <br/><br/>
         <label>Nazwisko:</label>
         <input type="text" id="nazwisko" value={nazwisko} onChange={(e) => setNazwisko(e.target.value)}/>
-        <br/>
+        <br/><br/>
         <label>Rocznik:</label>
         <input type="text" id="rocznik" value={rocznik} onChange={(e) => setRocznik(e.target.value)}/>
-        <br/>
+        <br/><br/>
         <button onClick={handleClickButton}>Dodaj</button>
     </>);
 }
