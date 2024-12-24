@@ -15,7 +15,7 @@ function StopWatch() {
         }
 
         return () => {// that function will be called when the component is unmounted
-            //or when the isRunning changes to false
+            //or when the isRunning changes
             clearInterval(intervalIdRef.current);
         }
     }, [isRunning]); //zawsze jak zmieni się isRunning to useEffect się wywoła
