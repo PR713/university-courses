@@ -19,7 +19,7 @@ function StopWatch() {
             clearInterval(intervalIdRef.current);
         }
     }, [isRunning]); //zawsze jak zmieni się isRunning to useEffect się wywoła
-
+//ale nie trzeba tutaj dawać elapsedTime bo funkcja setInterval już działa cały czas po pierwszym wywołaniu i git jest
     function start(){
         setIsRunning(true);
         startTimeRef.current = Date.now() - elapsedTime;
