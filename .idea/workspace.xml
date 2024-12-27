@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/efekty/Licznik6.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/efekty/Odliczanie.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/efekty/Tytul.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/produkty/komentarz.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/efekty/Odliczanie2.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/efekty/Odliczanie3-bezRef.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/produkty/Komentarze.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/formularze/Haslo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/formularze/Haslo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/formularze/Logowanie.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/formularze/Logowanie.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/studenci/Dodawanie.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/studenci/Dodawanie.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,38 +43,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Node.js...js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.App.jsx.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js (1).executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js (2).executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.index.ts.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.sequelize.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.user.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lab5&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;23.3.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.1&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/radsz/Desktop/WDAI_git/Aplikacje-Webowe/KursReactVite/my-react-app7/src&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\radsz\\Desktop\\WDAI_git\\Aplikacje-Webowe\\Lab_05\\Zadania_lab5\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Node.js...js.executor": "Run",
+    "Node.js.App.jsx.executor": "Run",
+    "Node.js.database.js (1).executor": "Run",
+    "Node.js.database.js (2).executor": "Run",
+    "Node.js.database.js.executor": "Run",
+    "Node.js.index.ts.executor": "Run",
+    "Node.js.sequelize.js.executor": "Run",
+    "Node.js.server.js.executor": "Run",
+    "Node.js.user.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "lab5",
+    "javascript.nodejs.core.library.configured.version": "23.3.0",
+    "javascript.nodejs.core.library.typings.version": "22.10.1",
+    "last_opened_file_path": "C:/Users/radsz/Desktop/WDAI_git/Aplikacje-Webowe/Lab_05/Zadania_lab5/src/components/efekty",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "C:\\Users\\radsz\\Desktop\\WDAI_git\\Aplikacje-Webowe\\Lab_05\\Zadania_lab5\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_05\Zadania_lab5\src\components\efekty" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\KursReactVite\my-react-app7\src" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad3 obsluga" />
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_04\zad2 orders" />
@@ -209,6 +206,8 @@
       <workItem from="1734967946461" duration="4956000" />
       <workItem from="1734985356410" duration="535000" />
       <workItem from="1734985906283" duration="6455000" />
+      <workItem from="1735218361747" duration="121000" />
+      <workItem from="1735308106149" duration="5810000" />
     </task>
     <servers />
   </component>

@@ -21,6 +21,9 @@ import Licznik6 from "./components/efekty/Licznik6.tsx"
 import Tytul from "./components/efekty/Tytul.tsx";
 import Odliczanie from "./components/efekty/Odliczanie.tsx";
 import Komentarz from "./components/produkty/Komentarz.tsx";
+import Odliczanie2 from "./components/efekty/Odliczanie2.tsx";
+import Odliczanie3 from "./components/efekty/Odliczanie3-bezRef.tsx";
+import Odliczanie3BezRef from "./components/efekty/Odliczanie3-bezRef.tsx";
 
 function App() {
     return (
@@ -77,6 +80,8 @@ function App() {
             <br/><br/><br/>
             {/*6.3*/}
             <Odliczanie/>
+            <Odliczanie2/>
+            <Odliczanie3BezRef/>
             <br/><br/><br/>
             {/*7.1*/}
             <Komentarz id={10} body={'Film zaskakuje wciągającą fabułą i znakomitą grą aktorską, która trzyma w napięciu od początku do końca. Mimo kilku przewidywalnych momentów, całość pozostawia pozytywne wrażenie dzięki świetnemu obrazowi i emocjonalnej głębi.'}
