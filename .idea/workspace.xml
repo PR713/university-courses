@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="" />
+    <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/Licznik.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/produkty/Komentarze.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadania_lab5/src/components/produkty/Komentarze.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,7 +68,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "terminal",
-    "ts.external.directory.path": "C:\\Users\\radsz\\Desktop\\WDAI_git\\Aplikacje-Webowe\\Lab_05\\Zadania_lab5\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\radsz\\Desktop\\WDAI_git\\Aplikacje-Webowe\\Lab_05\\Zadanie_8\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -201,7 +206,8 @@
       <workItem from="1734985356410" duration="535000" />
       <workItem from="1734985906283" duration="6455000" />
       <workItem from="1735218361747" duration="121000" />
-      <workItem from="1735308106149" duration="6217000" />
+      <workItem from="1735308106149" duration="6421000" />
+      <workItem from="1735391816635" duration="3135000" />
     </task>
     <servers />
   </component>
