@@ -37,15 +37,17 @@ function AddArticle() {
     return (
         <div>
             <h1>Dodaj artykuł</h1>
-            <form onSubmit={handleAddArticle}>
+            <form id="form" onSubmit={handleAddArticle}>
                 <div>
                     <label>Tytuł:</label>
+                    <br/>
                     <input type="text" value={title} name="title" onChange={handleTitleChange} required/>
                 </div>
                 <div>
                     <label>Treść:</label>
+                    <br/>
                     <textarea value={content} name="content" onChange={handleContentChange} required/>
-                </div>
+                </div>{/*event jest automatycznie przekazywany w onChange ^*/}
                 <button type="submit">Dodaj</button>
             </form>
         </div>

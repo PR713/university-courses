@@ -11,7 +11,7 @@ function Article() {
     const {id} = useParams<{ id: string }>(); //pobranie id z url
     const storedArticles = localStorage.getItem("articles");
     const articles: Article[] = storedArticles ? JSON.parse(storedArticles) : [];
-    const article: Article | undefined = articles.find((a) => a.id === Number(id));
+    const article: Article | undefined = articles.find((a: Article) => a.id === Number(id));
 
     return (<div>
             {article ? (
