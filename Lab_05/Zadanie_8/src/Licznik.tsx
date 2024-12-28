@@ -15,7 +15,7 @@ function Licznik() {
         localStorage.setItem('count', `${count}`);
     }, [count]);
 
-    return (<div>
+    return (<div style={{marginLeft: '20px'}}>
         <p> Licznik: {count} </p>
         <button onClick={handleIncrement}>Dodaj</button>
     </div>);

@@ -20,12 +20,15 @@ function Button(){
     //
     // return(<button onClick={() => handleClick("Radek")}>Clik me</button>);
 
+    //nie można onClick(handleClick("Radek")) bo wtedy wywołuje się od razu a nie po kliknięciu
+    // tylko podczas pierwszego renderowania komponentu
+
 
 
     const handleClick = (e) => e.target.textContent = "OUCH!";
 
     return(<button onDoubleClick={(e) => handleClick(e)}>Click me</button>);
-
+    //nie trzeba przekazywać (e) bo jest i tak przekazywane automatycznie
 }
 
 export default Button
