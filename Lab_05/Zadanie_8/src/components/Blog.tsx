@@ -25,7 +25,7 @@ function Blog() {
                 {articles.map((article) => (
                     <li key={article.id}>
                         <Link to={`/article/${article.id}`}>{article.title}</Link>
-                    </li>
+                    </li> //linki do artykułów na których potem robimy useParams
                 ))}
             </ul>
         ) : ( <p>Brak artykułów</p>)}

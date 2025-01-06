@@ -27,7 +27,7 @@ function App() {
             </div>
         </BrowserRouter>
     </>);
-}
+}//zasługa LocalStorage jak to wszystko śmiga z article i ich id
 
 
 export default App

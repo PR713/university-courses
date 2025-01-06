@@ -7,10 +7,7 @@
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/AddArticle.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/AddArticle.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/Article.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/Article.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/Blog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/Blog.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +57,7 @@
     &quot;git-widget-placeholder&quot;: &quot;lab5&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;23.3.0&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.1&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/radsz/Desktop/WDAI_git/Aplikacje-Webowe/Lab_05/Zadania_lab5/src/components/efekty&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/radsz/Desktop/Projekt_WDAI&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
@@ -111,7 +108,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23339.15" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.24807.6" />
       </set>
     </attachedChunks>
   </component>
@@ -211,7 +208,28 @@
       <workItem from="1735308106149" duration="6421000" />
       <workItem from="1735391816635" duration="5801000" />
       <workItem from="1735401571803" duration="75000" />
-      <workItem from="1735407261114" duration="8591000" />
+      <workItem from="1735407261114" duration="10048000" />
+      <workItem from="1735418132057" duration="66000" />
+      <workItem from="1735418224929" duration="60000" />
+      <workItem from="1735418309629" duration="259000" />
+      <workItem from="1735846081886" duration="28000" />
+      <workItem from="1735927719318" duration="401000" />
+      <workItem from="1736000725084" duration="222000" />
+      <workItem from="1736001433078" duration="45000" />
+      <workItem from="1736001549890" duration="27000" />
+      <workItem from="1736001716996" duration="422000" />
+      <workItem from="1736002508801" duration="9000" />
+      <workItem from="1736002703498" duration="7000" />
+      <workItem from="1736003372267" duration="25000" />
+      <workItem from="1736004285599" duration="38000" />
+      <workItem from="1736187841501" duration="55000" />
+      <workItem from="1736188054577" duration="44000" />
+      <workItem from="1736188714807" duration="53000" />
+      <workItem from="1736188945641" duration="7000" />
+      <workItem from="1736189792238" duration="122000" />
+      <workItem from="1736190089859" duration="206000" />
+      <workItem from="1736191477881" duration="93000" />
+      <workItem from="1736191922645" duration="213000" />
     </task>
     <servers />
   </component>
