@@ -1,0 +1,84 @@
+#komentarz-container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 10px;
+    border: 1px solid #bbb;
+    border-radius: 12px;
+    background-color: #f7f7f7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 100px;
+    width: 300px;
+}
+
+#userinfo {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.pinfo {
+    margin-right: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: #2962cd;
+    font-size: 16px;
+}
+
+#likesinfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#amount-likes {
+    font-size: 18.5px;
+    margin: 10px;
+    padding: 2px 8px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #e7e7e7;
+    color: #333;
+    font-weight: 500;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#amount-likes:hover {
+    background-color: #c6e2ff;
+}
+
+.like {
+    margin: 10px;
+    padding: 2px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.like:hover {
+    background-color: #c6e2ff;
+    transform: scale(1.05);
+}
+
+.like:active {
+    transform: scale(1);
+}
+
+.pcasual {
+    margin-top: 0;
+    font-family: Bahnschrift, sans-serif;
+    font-size: 15px;
+    color: #333;
+    margin-left: 10px;
+}
+
