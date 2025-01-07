@@ -58,6 +58,7 @@ function List() {
     //wszystko git, jeśli dodamy/usuniemy to list (stan) się aktualizuje więc
     //ponownie się komponent renderuje i dzięki temu też filteredList się aktualizuje,
     // a useEffect na zmianę [list] aktualizuje localStorage
+
     // ale co jeśli zmienimy filter? filteredList się zmienia, ale useEffect nie zadziała
     // więc localStorage się nie zaktualizuje i po powrocie z detali do listy
     // znowu zobaczymy wszystkie elementy bez aktywnego filtra, trzeba by
@@ -65,12 +66,19 @@ function List() {
     // na filteredList ale znów, to nie jest najlepsze rozwiązanie, bo
     // jeśli potem chcemy wrócić do all to wetnie nam poprzednie elementy
     // bo przy renederowaniu komponentu List, list jest aktualizowany na wartość
-    // z localStorage więc trzeba by nowe pole "listFiltered" w localStorage i jakoś
+    // z localStorage, więc trzeba by nowe pole "listFiltered" w localStorage i jakoś
     // to zarządzać w zależności od filtra wybierać "list" lub pole "filtered",
     // więc najlepiej przetrzymywać po prostu dodatkowo wartość filter oprócz pola "list" w
     // localStorage i przy renderowaniu komponentu List, ustawić wartość filter
     // a nie defaultowo na "all" podobnie jak ustawianie useState dla list jeśli istnieje wartość
-    // zapisana w localStorage... 
+    // zapisana w localStorage...
+
+    // filteredList dobrze że jest tak umiejscowione bo zawsze przy dowolnym renderze
+    // nie ważne przez co spowodowanym się wywoła, niezależnie czy to dodamy, usuniemy,
+    // czy zmienimy filter (a on się zmienia tylko wtedy gdy zmieniamy selecta i tam wywołujemy
+    // setFilter w onChange, co zmienia stan, zatem powoduje rerender komponentu)
+    // ewentualnie można by useEffect bez dependencies czyli się wywoła za każdym razem
+    // gdy komponent się rerenderuje
     //
     // I lepiej ID robić za pomocą uuid bo jeśli usuniemy element to
     // id może się powtórzyć i będą głupoty, teoretycznie i tak mogą się powtórzyć

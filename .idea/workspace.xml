@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab_06/kolokwium/src/components/List.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_06/kolokwium/src/components/List.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="lab5" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,7 +53,7 @@
     "Node.js.server.js.executor": "Run",
     "Node.js.user.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "lab5",
+    "git-widget-placeholder": "main",
     "javascript.nodejs.core.library.configured.version": "23.3.0",
     "javascript.nodejs.core.library.typings.version": "22.10.1",
     "last_opened_file_path": "C:/Users/radsz/Desktop/Projekt_WDAI",
@@ -236,6 +236,7 @@
       <workItem from="1736281678620" duration="24000" />
       <workItem from="1736282390051" duration="75000" />
       <workItem from="1736291261428" duration="8000" />
+      <workItem from="1736293115534" duration="401000" />
     </task>
     <servers />
   </component>
