@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/Blog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Lab_05/Zadanie_8/src/components/Blog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/Product.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/Product.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/ProductDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/ProductDetails.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/ProductList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/ProductList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/Search.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/Search.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/pages/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/pages/HomePage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +24,7 @@
         <option value="HTML File" />
         <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JSX File" />
       </list>
     </option>
   </component>
@@ -230,6 +234,9 @@
       <workItem from="1736190089859" duration="206000" />
       <workItem from="1736191477881" duration="93000" />
       <workItem from="1736191922645" duration="213000" />
+      <workItem from="1736255786628" duration="7404000" />
+      <workItem from="1736265065631" duration="3727000" />
+      <workItem from="1736274479028" duration="6580000" />
     </task>
     <servers />
   </component>
