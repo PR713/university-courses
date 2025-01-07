@@ -1,0 +1,45 @@
+.list {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.delete-button{
+    width: 60px;
+    background-color: #b6b4b4;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.circle{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: green;
+    color: #fff;
+    display: flex;
+    justify-content: center; /* OX */
+    align-items: center; /* OY */
+}
+
+.square{
+    width: 60px;
+    height: 60px;
+    background-color: #f2525b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rectangle{
+    font-size: 15px;
+    width: 60px;
+    height: 50px;
+    background-color: rgba(19, 181, 254, 0.69);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
