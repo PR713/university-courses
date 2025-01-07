@@ -69,7 +69,8 @@ function List() {
     // to zarządzać w zależności od filtra wybierać "list" lub pole "filtered",
     // więc najlepiej przetrzymywać po prostu dodatkowo wartość filter oprócz pola "list" w
     // localStorage i przy renderowaniu komponentu List, ustawić wartość filter
-    // a nie defaultowo na "all"
+    // a nie defaultowo na "all" podobnie jak ustawianie useState dla list jeśli istnieje wartość
+    // zapisana w localStorage... 
     //
     // I lepiej ID robić za pomocą uuid bo jeśli usuniemy element to
     // id może się powtórzyć i będą głupoty, teoretycznie i tak mogą się powtórzyć
