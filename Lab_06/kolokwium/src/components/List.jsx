@@ -65,7 +65,9 @@ function List() {
     // na filteredList ale znów, to nie jest najlepsze rozwiązanie, bo
     // jeśli potem chcemy wrócić do all to wetnie nam poprzednie elementy
     // bo przy renederowaniu komponentu List, list jest aktualizowany na wartość
-    // z localStorage więc trzeba by nowe pole "listFiltered" w localStorage i jakoś to zarządzać w zależności od filtra wybierać "list" lub pole "filtered", więc najlepiej przetrzymywać po prostu dodatkowo wartość filter oprócz pola "list" w
+    // z localStorage więc trzeba by nowe pole "listFiltered" w localStorage i jakoś
+    // to zarządzać w zależności od filtra wybierać "list" lub pole "filtered",
+    // więc najlepiej przetrzymywać po prostu dodatkowo wartość filter oprócz pola "list" w
     // localStorage i przy renderowaniu komponentu List, ustawić wartość filter
     // a nie defaultowo na "all"
     //
