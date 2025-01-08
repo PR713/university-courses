@@ -22,7 +22,7 @@ doEcho2 = do
 
 
 
-
+-- wykonujemy akcję IO (getLine) i przekazujemy wynik do funkcji czyli argument l1 to wynik getLine więc l1 = getLine i to zwraca następną akcję...
 echo3 :: IO ()
 echo3 =  getLine >>= \l1 -> getLine >>= \l2 -> putStrLn $ l1 ++ l2
 
@@ -65,7 +65,8 @@ twoQuestions = do
   putStr "How old are you? "
   age <- getLine
   print (name,age)
-
+-- <- to złożony operator, pakujemy w kapsułę nieczystości jako akcję (np getLine to akcja IO) i potem to wyciągamy
+-- lub np a <- return "a" 
 
 casualTwoQuestions :: IO ()
 casualTwoQuestions = putStr "What is your name? " >> getLine >>= \name -> putStr "How old are you? " >> getLine >>= \age -> print(name, age)
@@ -74,3 +75,6 @@ casualTwoQuestions = putStr "What is your name? " >> getLine >>= \name -> putStr
 --improved 
 casualTwoQuestionsImproved :: IO ()
 casualTwoQuestionsImproved = putStr "What is your name? " >> getLine >>= \name -> putStr "How old are you? " >> getLine >>= \ageInput -> let age = read ageInput :: Int in print(name, age) -- nie można /nameInput -> let name = read... String >> bo let nie jest operacją monadyczną, defaultowo getLine zwraca string
+
+
+--np getLine' :: IO String przyjmuje na wejściu stan maszyny (świata) i na wyjściu zwraca nowy stan świata i String
