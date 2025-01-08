@@ -17,4 +17,5 @@
  -- więc mamy listę [2] i (:) pobiera to 2 przekazane i listę [2] i wstawia na początek czyli [2,2]
  --
  -- np (+) <$> (^2) <*> (^3) $ 3 bo <$> to inaczej fmap czyli mapuje funkcję ^2 na funkcję potem dodającą wartość
- -- czyli mapujemy, mamy ((^2) z +)  <*> (^3) i z zasługą <*> mamy (^2) + (^3) i przekazane 3 do tego przez $ :)
+ -- czyli mapujemy, mamy ((^2) z +) czyli funckję f = \x -> (+) (x^2) zatem mamy: f <*> (^3) $ 3 i z zasługą <*> mamy
+ -- finalnie g = \x -> (x^2) + (x^3) z przekazaniem 3 do tego przez $ :)
