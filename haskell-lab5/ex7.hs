@@ -19,3 +19,25 @@
  -- np (+) <$> (^2) <*> (^3) $ 3 bo <$> to inaczej fmap czyli mapuje funkcję ^2 na funkcję potem dodającą wartość
  -- czyli mapujemy, mamy ((^2) z +) czyli funckję f = \x -> (+) (x^2) zatem mamy: f <*> (^3) $ 3 i z zasługą <*> mamy
  -- finalnie g = \x -> (x^2) + (x^3) z przekazaniem 3 do tego przez $ :)
+ --
+ -- a fmap przyjmuje tylko jedną funkcję a nie strukturę z funkcjami :)
+ 
+
+
+
+
+
+
+
+newtype Box a = MkBox a deriving Show
+
+instance Applicative Box where
+  pure = MkBox
+  (MkBox f) <*> w = fmap f w
+
+instance Functor Box where
+	fmap f (MkBox x) = MkBox (f x)
+
+
+
+
