@@ -1,0 +1,4 @@
+"0","hist(r2ms, col = 'lightgreen', main=""Funkcja Rastrigina 2D, MS"", "
+"0","     xlab = ""Znaleziona wartość minimum"", ylab = ""Ilość wystąpień"", labels = TRUE,"
+"0","     ylim = c(0,70), xlim = c(0,1)"
+"0","     )"

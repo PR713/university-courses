@@ -1,0 +1,4 @@
+"0","hist(a2prs, main=""Funkcja alpine01a 2D, PRS"", "
+"0","     xlab = ""Znaleziona wartość minimum"", ylab = ""Ilość wystąpień"", labels = TRUE,"
+"0","     ylim = c(0,40), xlim = c(-20,20)"
+"0","     )"
