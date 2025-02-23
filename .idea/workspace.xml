@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c46fdd1-f7ec-4a5c-b31b-ffe00ce197b1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/KursJavaScript/FunctionsAreObjects.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/Product.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/Product.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/ProductDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/ProductDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/ProductList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/KursReactVite/my-react-app9/src/components/ProductList.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +18,9 @@
       <list>
         <option value="TypeScript File" />
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="CSS File" />
         <option value="JSX File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -43,36 +41,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Node.js...js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.App.jsx.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js (1).executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js (2).executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.database.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.index.ts.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.sequelize.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.server.js.executor&quot;: &quot;Run&quot;,
-    &quot;Node.js.user.js.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lab6&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;23.3.0&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.10.1&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/radsz/Desktop/Projekt_WDAI&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\radsz\\Desktop\\WDAI_git\\Aplikacje-Webowe\\Lab_05\\Zadanie_8\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Node.js...js.executor": "Run",
+    "Node.js.App.jsx.executor": "Run",
+    "Node.js.FunctionsAreObjects.js.executor": "Run",
+    "Node.js.database.js (1).executor": "Run",
+    "Node.js.database.js (2).executor": "Run",
+    "Node.js.database.js.executor": "Run",
+    "Node.js.index.ts.executor": "Run",
+    "Node.js.sequelize.js.executor": "Run",
+    "Node.js.server.js.executor": "Run",
+    "Node.js.user.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "JavaScriptCourse",
+    "javascript.nodejs.core.library.configured.version": "23.3.0",
+    "javascript.nodejs.core.library.typings.version": "22.10.1",
+    "last_opened_file_path": "C:/Users/radsz/Desktop/Projekt_WDAI",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "C:\\Users\\radsz\\Desktop\\WDAI_git\\Aplikacje-Webowe\\Lab_05\\Zadanie_8\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\radsz\Desktop\WDAI_git\Aplikacje-Webowe\Lab_05\Zadania_lab5\src\components\efekty" />
@@ -242,6 +241,26 @@
       <workItem from="1736293115534" duration="401000" />
       <workItem from="1736608195695" duration="261000" />
       <workItem from="1736608487142" duration="190000" />
+      <workItem from="1736627446023" duration="459000" />
+      <workItem from="1736710136115" duration="36000" />
+      <workItem from="1736710921249" duration="78000" />
+      <workItem from="1736713087988" duration="32000" />
+      <workItem from="1736943661492" duration="2702000" />
+      <workItem from="1736954252043" duration="29000" />
+      <workItem from="1736954324553" duration="52000" />
+      <workItem from="1737204450924" duration="223000" />
+      <workItem from="1737579039554" duration="265000" />
+      <workItem from="1737579867292" duration="29000" />
+      <workItem from="1737580064148" duration="10000" />
+      <workItem from="1737580537781" duration="23000" />
+      <workItem from="1737580819060" duration="5000" />
+      <workItem from="1737581581941" duration="5000" />
+      <workItem from="1737582661558" duration="9000" />
+      <workItem from="1737582805408" duration="10000" />
+      <workItem from="1738020833183" duration="48000" />
+      <workItem from="1738020887627" duration="169000" />
+      <workItem from="1738021086861" duration="3000" />
+      <workItem from="1740318269516" duration="2590000" />
     </task>
     <servers />
   </component>
