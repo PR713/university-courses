@@ -226,3 +226,136 @@ const sumOfAges = employees.reduce((acc, employee) => {
 console.log(sumOfAges);
 
 
+
+
+console.log('-----------------');
+
+let fun = function(num1, num2){
+    let prod = 1;
+    for ( const num of arguments) {
+        prod *= num;
+    }
+    return prod;
+}
+
+console.log(fun(1,2,3,5));
+
+
+
+console.log('-----------------');
+
+const fun2 = function(...args){
+    return args.reduce((acc, num) => acc * num, 1);
+}
+
+
+console.log(fun2(1,2,3,5));
+
+
+console.log('-----------------');
+
+
+const fun3 = function(multiplier, ...numbers){
+    return numbers.map(num => num * multiplier);
+}
+
+console.log(fun3(3,2,3,5));
+
+
+
+console.log('-----------------');
+
+
+let funWithDefaultParams = function (name, role = 'guest', status = 'active'){
+    console.log(`User: ${name}, Role: ${role}, Status: ${status}`);
+}
+
+funWithDefaultParams('Radek', 'admin', 'inactive');
+funWithDefaultParams('John', 'admin');
+
+
+
+console.log('-----------------');
+
+
+const course = {
+    name: 'JavaScript for Beginners',
+    duration: '4 hours',
+    get details(){
+        return `${this.name} is ${this.duration}`;
+    },
+    set details(value){
+        if (typeof value !== 'string') {
+            throw new Error(`Value ${value} must be a string`);
+        }
+
+        const parts = value.split(' is ');
+        this.name = parts[0];
+        this.duration = parts[1];
+    }
+}
+
+console.log(course.details); //getter, without parentheses due to it has
+//get or set keyword, else we use ()
+course.details = 'JavaScript Pro is 12 hours'; //setter
+console.log(course.details);
+
+try {
+    course.details = 42;
+} catch (e) {
+    console.error(`Caught an error: ${e.message}`);
+}
+
+
+console.log('-----------------');
+
+function display(){
+    for (var i = 0; i < 5; i++){
+        console.log(i);
+    }
+    console.log(i) //if we use let i, we don't have an access there
+}
+
+
+
+console.log('-----------------');
+
+const course2 = {
+    name: 'JavaScript for Beginners',
+    start() {
+        console.log(this.name); //this - that object
+    }
+}
+
+course2.start();
+
+
+//but
+
+function startVideo(){
+    console.log(this); //global object
+}
+
+startVideo(); //and browsers have a window object
+
+
+
+//but when we use arrow function it uses the context from parent
+const course3 = {
+    name: 'ES6 syntax',
+    start: () => {
+        console.log(this.name); //undefined
+    }
+}
+
+
+console.log('-----------------');
+
+function introduce(language) {
+    console.log(`I am ${this.name} and I program in ${language}`);
+}
+
+introduce('JavaScript'); //I am undefined and I program in JavaScript
+const student = {name: 'Radek'};
+const introduction = introduce.bind(student);
+introduction('JavaScript');
