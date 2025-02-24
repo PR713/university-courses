@@ -357,5 +357,19 @@ function introduce(language) {
 
 introduce('JavaScript'); //I am undefined and I program in JavaScript
 const student = {name: 'Radek'};
-const introduction = introduce.bind(student);
+const introduction = introduce.bind(student); //this -> student
 introduction('JavaScript');
+
+
+//or
+
+const student2 = {name: 'Kasia'};
+const newIntroduction = introduce.bind(student2); //this -> student2
+newIntroduction('Python');
+//I am Kasia and I program in Python
+
+
+//but
+const newIntro = introduction.bind(student2); //this -> student, not student2
+newIntro('Java'); //I am Radek and I program in Java
+//because it is already bound to student
