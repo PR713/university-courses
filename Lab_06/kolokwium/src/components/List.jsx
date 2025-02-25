@@ -23,7 +23,8 @@ function List() {
 
     useEffect(() => {
         localStorage.setItem("list", JSON.stringify(list));
-    }, [list]);
+    }, [list]); 
+// lub w addshape i delete shape to robić i wtedy bez useEffecta 
 
 
     useEffect(() => {
