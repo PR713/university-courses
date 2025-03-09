@@ -1,10 +1,10 @@
-CXX = gcc
-CFLAGS = -c17 -Wall
+CC = gcc
+CFLAGS = -std=c17 -Wall -g
 
 all: countdown 
 
-countdown:
-		$(CXX) countdown.c -o countdown
+countdown: countdown.c
+		$(CC) $(CFLAGS) countdown.c -o countdown
 
 clean: 
 		rm -f countdown
