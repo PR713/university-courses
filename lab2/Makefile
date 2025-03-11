@@ -1,3 +1,4 @@
+all: staticLibrary sharedDynamicLibrary
 
 staticLibrary:
 	gcc -c stringlibrary.c
