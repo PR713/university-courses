@@ -2,10 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
+
 def kahan_sum(x):
     suma = np.float32(0.0)
     komp = np.float32(0.0)
     for xi in x:
+
         y = np.float32(xi - komp)
         temp = np.float32(suma + y)
         komp = np.float32((temp - suma) - y)
@@ -23,25 +25,24 @@ errors_e = []
 
 for n in n_values:
     x = np.random.uniform(0, 1, n).astype(np.float32)
-    true_sum = math.fsum(x.tolist())
 
-    sum_a = np.cumsum(x, dtype=np.float64)[-1]
+    true_sum_dp = math.fsum(x.tolist())
 
-    sum_b = np.cumsum(x, dtype=np.float32)[-1]
-
-    sum_c = kahan_sum(x)
+    sum_a = np.cumsum(x, dtype=np.float64)[-1]  # suma w double
+    sum_b = np.cumsum(x, dtype=np.float32)[-1]  # suma w float32
+    sum_c = kahan_sum(x)  # suma metodą Kahana (float32)
 
     x_sorted_asc = np.sort(x)
-    sum_d = np.cumsum(x_sorted_asc, dtype=np.float32)[-1]
+    sum_d = np.cumsum(x_sorted_asc, dtype=np.float32)[-1]  # suma sort. rosnąco (float32)
 
     x_sorted_desc = np.sort(x)[::-1]
-    sum_e = np.cumsum(x_sorted_desc, dtype=np.float32)[-1]
+    sum_e = np.cumsum(x_sorted_desc, dtype=np.float32)[-1]  # suma sort. malejąco (float32)
 
-    err_a = abs(sum_a - true_sum) / abs(true_sum)
-    err_b = abs(sum_b - true_sum) / abs(true_sum)
-    err_c = abs(sum_c - true_sum) / abs(true_sum)
-    err_d = abs(sum_d - true_sum) / abs(true_sum)
-    err_e = abs(sum_e - true_sum) / abs(true_sum)
+    err_a = abs(sum_a - true_sum_dp) / abs(true_sum_dp)
+    err_b = abs(np.float64(sum_b) - true_sum_dp) / abs(true_sum_dp)
+    err_c = abs(np.float64(sum_c) - true_sum_dp) / abs(true_sum_dp)
+    err_d = abs(np.float64(sum_d) - true_sum_dp) / abs(true_sum_dp)
+    err_e = abs(np.float64(sum_e) - true_sum_dp) / abs(true_sum_dp)
 
     errors_a.append(err_a)
     errors_b.append(err_b)
