@@ -1,0 +1,64 @@
+@id=2
+@username="admin"
+@password="Test1234!"
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNfaWQiOiJhZG1pbiJ9.78uYrFMz2fZgSGkgs4mbti-PjyspqHDzhiVQ8TmlWx4
+
+####################################
+# Login
+####################################
+POST http://127.0.0.1:5000/login
+Content-Type: application/json
+
+{
+    "username": {{username}},
+    "password": {{password}}
+}
+
+
+####################################
+# Get all posts
+####################################
+GET http://127.0.0.1:5000/posts
+
+####################################
+# Get post by id
+####################################
+GET http://127.0.0.1:5000/posts/{{id}}
+
+
+####################################
+# Add post
+####################################
+POST http://127.0.0.1:5000/posts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "title": "Adding next",
+    "content": "Some content here"
+}
+
+####################################
+# Edit post
+####################################
+PUT http://127.0.0.1:5000/posts/{{id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "title": "Adding nextxxxxxx",
+    "content": "Some content here"
+}
+
+
+####################################
+# Delete post
+####################################
+DELETE  http://127.0.0.1:5000/posts/{{id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "title": "Adding nextxxxxxx",
+    "content": "Some content here"
+}
