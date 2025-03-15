@@ -10,7 +10,7 @@ void greetMe(){
     char name[100];
     scanf("%99s", name);
     printf("Hello %s! \n", name);
-};
+}
 
 //static
 // gcc -c stringlibrary.c
