@@ -11,13 +11,17 @@ int collatz_cojnecture(int input) {
 
 int test_collatz_convergence(int input, int max_iter, int *steps) {
 
-    int resultInput = input;
+    if (input == 1) {
+        return 0;
+    }
 
-    for (int step = 0; step < max_iter; step++) {
-        resultInput = collatz_cojnecture(resultInput);
-        steps[step] = resultInput;
+    int result_input = input;
 
-        if (resultInput == 1) {
+    for (int step = 1; step <= max_iter; step++) {
+        result_input = collatz_cojnecture(result_input);
+        steps[step - 1] = result_input;
+
+        if (result_input == 1) {
             return step;
         }
     }
