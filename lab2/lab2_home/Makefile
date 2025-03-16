@@ -1,18 +1,27 @@
-all: staticLibrary sharedLibrary
+CC = gcc
+CFLAGS = -std=c17 -Wall -g
+
+
+all: staticLibrary sharedLibrary dynamicLibrary
 
 staticLibrary: #static
-	gcc -c collatzlibrary.c
+	$(CC) $(CFLAGS) -c collatzlibrary.c
 	ar cr libcollatzlibrary.a collatzlibrary.o
-	gcc main.c -o main -L. -lcollatzlibrary
+	$(CC) $(CFLAGS) staticMain.c -o staticMain -L. -lcollatzlibrary
 
 
 sharedLibrary: #shared, dynamically linked
-	gcc -fPIC -c collatzlibrary.c
-	gcc -shared -fPIC -o libsharedcollatzlibrary.so collatzlibrary.o
-	gcc sharedMain.c -o sharedMain -L. -lsharedcollatzlibrary -Wl,-rpath,.
+	$(CC) $(CFLAGS) -fPIC -c collatzlibrary.c
+	$(CC) -shared -fPIC -o libsharedcollatzlibrary.so collatzlibrary.o
+	$(CC) $(CFLAGS) sharedMain.c -o sharedMain -L. -lsharedcollatzlibrary -Wl,-rpath,.
+
+
+dynamicLibrary: #dynamic, dynamically loaded
+	$(CC) $(CFLAGS) -DDYNAMIC_LIB dynamicMain.c -o dynamicMain -ldl -Wl,-rpath,.
+
 
 clean:
-	rm -f *.*o *.a main sharedMain
+	rm -f *.*o *.a staticMain sharedMain dynamicMain
 
 
-.PHONY: clean 
+.PHONY: clean all
