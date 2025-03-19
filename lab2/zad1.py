@@ -3,11 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.linalg import lstsq
 
+
 def create_linear_representation(data, feature_columns):
     """reprezentację liniowa: kolumna jedynek (bias) + wartości cech = 5"""
     X = data[feature_columns].to_numpy()
     bias = np.ones((X.shape[0], 1))
     return np.hstack([bias, X])
+
 
 def create_quadratic_representation(data, feature_columns):
     """reprezentację kwadratowa: bias, cechy (f1, f2, f3, f4) oraz
@@ -26,6 +28,7 @@ def create_quadratic_representation(data, feature_columns):
 
     return np.hstack([bias, X, quadratic_terms])
 
+
 def compute_confusion_matrix(true_labels, predicted_labels):
     """tworzymy macierz pomyłek (TP, TN, FP, FN)."""
     TP = np.sum((true_labels == 1) & (predicted_labels == 1))
@@ -35,15 +38,12 @@ def compute_confusion_matrix(true_labels, predicted_labels):
     return TP, TN, FP, FN
 
 
-
 labels_path = "breast-cancer.labels"
 train_data_path = "breast-cancer-train.dat"
 validate_data_path = "breast-cancer-validate.dat"
 
-
 with open(labels_path, 'r') as f:
     labels = f.read().strip().split("\n")
-
 
 train_data = pd.read_csv(train_data_path, header=None, names=labels)
 validate_data = pd.read_csv(validate_data_path, header=None, names=labels)
@@ -91,7 +91,6 @@ selected_features = ["radius (mean)", "perimeter (mean)", "area (mean)", "symmet
 A_train_quadratic = create_quadratic_representation(train_data, selected_features)
 A_validate_quadratic = create_quadratic_representation(validate_data, selected_features)
 
-
 print("\nWymiary macierzy:")
 print(f"A_train_linear shape: {A_train_linear.shape}")
 print(f"A_train_quadratic shape: {A_train_quadratic.shape}")
@@ -118,6 +117,9 @@ n_features = A_train_linear.shape[1]
 w_linear_reg = np.linalg.solve(A_train_linear.T @ A_train_linear + lambda_reg * np.eye(n_features),
                                A_train_linear.T @ b_train)
 
+A_reg = A_train_linear.T @ A_train_linear + lambda_reg * np.eye(n_features)
+U, S, Vt = np.linalg.svd(A_train_linear)  # dekompozycja SVD dla A_train_linear
+
 print("\nWagi uzyskane metodą SVD (lstsq):")
 print(w_linear_lstsq)
 print("\nWagi uzyskane dla zregularyzowanej reprezentacji liniowej (λ = 0.01):")
@@ -126,9 +128,16 @@ print(w_linear_reg)
 # g) współczynniki uwarunkowania
 cond_linear = np.linalg.cond(A_train_linear.T @ A_train_linear)
 cond_quad = np.linalg.cond(A_train_quadratic.T @ A_train_quadratic)
+cond_linear_reg = np.linalg.cond(A_reg)  # współczynnik uwarunkowania dla liniowej
+# z regularyzacją
+cond_linear_svd = np.max(S) / np.min(S)
 
 print("\nWspółczynnik uwarunkowania (liniowa metoda najmniejszych kwadratów):")
 print(cond_linear)
+print("\nWspółczynnik uwarunkowania (liniowa metoda najmniejszych kwadratów reg):")
+print(cond_linear_reg)
+print("\nWspółczynnik uwarunkowania (liniowa metoda najmniejszych kwadratów SVD):")
+print(cond_linear_svd)
 print("\nWspółczynnik uwarunkowania (kwadratowa metoda najmniejszych kwadratów):")
 print(cond_quad)
 
