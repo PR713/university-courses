@@ -1,0 +1,97 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>602</x><y>14</y><w>147</w><h>105</h></coordinates><panel_attributes>WorldMap
+--
+- width: int;
+- height: int;
+- playerList: List&lt;Person&gt;;
+- itemList: List&lt;Item&gt;;
+
+--
++ move(person);
++ fight(person1, preson2)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>763</x><y>105</y><w>147</w><h>154</h></coordinates><panel_attributes>Person
+--
+- equipment: List&lt;Item&gt;;
+- hp: float;
+- damage: float;
+- experience: float;
+- positionX: int:
+- positionY: int;
+- mana: float;
+--
+- attack(): void;
+- movement(): void;
+- dodge(): void;
+- defence(): void;
+- collectItem(): void;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>49</x><y>203</y><w>147</w><h>98</h></coordinates><panel_attributes>&lt;&lt;AbstractClass&gt;&gt;
+Defence element
+--
+--
+- healthPoints: float;
+- load: int;
+- defencePercent: float;
+- destructionLevel: float;
+--
+- defence(): void;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>532</x><y>196</y><w>147</w><h>105</h></coordinates><panel_attributes>&lt;&lt;AbstractClass&gt;&gt;
+ Weapon
+--
+- damage: float;
+- material: Material;
+- distance: float;
+- speed: float;
+- destructionLevel: float;
+--
+- attack(): void;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>553</x><y>371</y><w>84</w><h>21</h></coordinates><panel_attributes>Sword
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>427</y><w>147</w><h>84</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+Material
+--
+LEATHER,
+WOOD, 
+IRON,
+GOLD, 
+DIAMOND
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>287</x><y>35</y><w>154</w><h>77</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+Item
+--
+- typeOfItem: ItemType;
+- positionX: int;
+- positionY: int;
+- createSet: map&lt;ItemType, Integer&gt;
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>763</x><y>350</y><w>147</w><h>84</h></coordinates><panel_attributes>&lt;&lt;Enum&gt;&gt;
+ItemType
+--
+ATTACK, 
+DEFENCE,
+SPELL, 
+MATERIAL
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>49</x><y>392</y><w>91</w><h>21</h></coordinates><panel_attributes>Shield
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>294</x><y>154</y><w>154</w><h>49</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+Spell
+--
+- effect(Person person): void;
+
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>357</x><y>301</y><w>154</w><h>70</h></coordinates><panel_attributes>Slowness
+--
+- durationTime: float;
+- slownessPercent: float;
+- range: float;
+- damage: float;
+
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>217</x><y>315</y><w>105</w><h>35</h></coordinates><panel_attributes>Healing
+--
+- healingPoints: float;
+
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>434</x><y>56</y><w>343</w><h>147</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;470;190</additional_attributes></element><element><id>Relation</id><coordinates><x>406</x><y>105</y><w>217</w><h>105</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;290;130</additional_attributes></element><element><id>Relation</id><coordinates><x>77</x><y>105</y><w>252</w><h>112</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>340;10;10;140</additional_attributes></element><element><id>Relation</id><coordinates><x>357</x><y>105</y><w>21</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>364</x><y>196</y><w>77</w><h>119</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;90;150</additional_attributes></element><element><id>Relation</id><coordinates><x>266</x><y>196</y><w>105</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>130;10;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>595</x><y>294</y><w>21</w><h>91</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>91</x><y>294</y><w>42</w><h>112</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>40;10;10;140</additional_attributes></element><element><id>Relation</id><coordinates><x>644</x><y>294</y><w>21</w><h>147</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;190</additional_attributes></element><element><id>Relation</id><coordinates><x>434</x><y>77</y><w>420</w><h>287</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;340;140;580;390</additional_attributes></element><element><id>Relation</id><coordinates><x>742</x><y>49</y><w>119</w><h>70</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>150;80;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>434</x><y>21</y><w>182</w><h>35</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;30;240;10</additional_attributes></element></diagram>
