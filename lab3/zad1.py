@@ -45,9 +45,9 @@ basis_labels = [
 
 print("Współczynniki uwarunkowania macierzy Vandermonde’a dla różnych baz:")
 for label, cond in zip(basis_labels, condition_numbers):
-    print(f"{label}: {cond:.2e}")
+    print(f"{label}: {cond:.5e}\n")
 
-print(f"Najlepiej uwarunkowana baza: {basis_labels[best_index]} (Współczynnik: {best_cond:.2e})")
+print(f"Najlepiej uwarunkowana funkcja bazowa: {basis_labels[best_index]} (Współczynnik: {best_cond:.5e})\n")
 
 # Rozwiązanie układu równań w celu znalezienia współczynników wielomianu interpolacyjnego
 coefficients = np.linalg.solve(best_vandermonde, population)
@@ -107,8 +107,8 @@ pop_1990 = horner(coefficients, np.array([best_phi(x_extrapolate)]))[0]
 true_pop_1990 = 248709873
 relative_error_1990 = (abs(pop_1990 - true_pop_1990) / true_pop_1990) * 100
 
-print(f"Populacja 1990 (ekstrapolacja): {pop_1990}")
-print(f"Błąd względny ekstrapolacji: {relative_error_1990}")
+print(f"Populacja 1990 (ekstrapolacja): {pop_1990:.2f}")
+print(f"Błąd względny ekstrapolacji: {relative_error_1990:.2f}%\n")
 
 
 y_values_lagrange = np.array([lagrange_interpolation(x, years, population) for x in x_values])
@@ -185,20 +185,37 @@ plt.show()
 #g)
 population_rounded = np.round(population / 1e6).astype(int) * 1e6
 
+vandermondes_rounded = [np.vander(base(years), increasing=True) for base in base_functions]
+
+# condition_numbers_rounded = [np.linalg.cond(V) for V in vandermondes_rounded]
+#
+# best_index_rounded = np.argmin(condition_numbers_rounded)
+# best_phi_rounded = base_functions[best_index_rounded]
+# best_vandermonde_rounded = vandermondes_rounded[best_index_rounded]
+# best_cond_rounded = condition_numbers_rounded[best_index_rounded]
+#
+# print(f"Najlepiej uwarunkowana funkcja bazowa z zaokrąglonymi danymi {basis_labels[best_index_rounded]}\n (Współczynnik: {best_cond_rounded:.5e})\n")
+#^^^ macierz vandermonda i tak liczymy patrząc na years więc cond nie zmienia się
+
 coefficients_rounded = np.linalg.solve(best_vandermonde, population_rounded)
+
 
 true_population_1990 = 248709873
 pop_rounded_1990 = horner(coefficients_rounded, np.array([best_phi(x_extrapolate)]))[0]
 relative_error_rounded_1990 = np.abs((pop_rounded_1990 - true_population_1990) / true_population_1990) * 100
 
-print(pop_rounded_1990, relative_error_rounded_1990)
+
+print(f"Populacja 1990 (ekstrapolacja z zaokrągleniem): {pop_rounded_1990:.2f}")
+print(f"Błąd względny ekstrapolacji z zaokrągleniem: {relative_error_rounded_1990:.2f}%\n")
+print("Współczynniki wielomianu interpolacyjnego bez zaokrąglenia:")
 print(coefficients)
+print("Współczynniki wielomianu interpolacyjnego z zaokrągleniem:")
 print(coefficients_rounded)
 
 y_values_horner_rounded = horner(coefficients_rounded, best_phi(x_values))
 
 plt.figure(figsize=(12, 6))
-plt.plot(x_values, y_values_horner, label="Interpolacja Hornera z zaokrągleniem do miliona", color='blue')  # Krzywa interpolacyjna
+plt.plot(x_values, y_values_horner_rounded, label="Interpolacja Hornera z zaokrągleniem do miliona", color='blue')  # Krzywa interpolacyjna
 plt.scatter(years, population, color='red', label="Węzły interpolacji", zorder=3)  # Punkty interpolacyjne
 plt.xlabel("Rok")
 plt.ylabel("Populacja")
