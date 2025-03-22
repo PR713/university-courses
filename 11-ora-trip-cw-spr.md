@@ -264,7 +264,7 @@ EXCEPTION
 END;
 ```
 Otrzymamy na standardowym wyjściu następujący komunikat:
-![alt text](<Zrzut ekranu 2025-03-17 201338.png>)
+![alt text](<img1.png>)
 
 <br>
 <br>
@@ -283,7 +283,7 @@ EXCEPTION
 END;
 ```
 Dla odmiany nie obsługujemy wyjątku przez co otrzymujemy błąd na wyjściu:
-![alt text](<Zrzut ekranu 2025-03-19 105141.png>)
+![alt text](<img2.png>)
 <br><br>
 
 
@@ -299,7 +299,7 @@ EXCEPTION
 END;
 ```
 Tutaj nie dostajemy wyjątku, ponieważ dane są poprawne - commitujemy zmiany.
-![alt text](<Zrzut ekranu 2025-03-19 110113.png>)
+![alt text](<img3.png>)
 <br>
 
 ---
@@ -394,9 +394,23 @@ Proponowany zestaw funkcji można rozbudować wedle uznania/potrzeb
 # Zadanie 2  - rozwiązanie
 
 ```sql
+create or replace function f_trip_participants(p_trip_id int) RETURN SYS_REFCURSOR AS v_cursor SYS_REFCURSOR;
+begin
+    open v_cursor for
+    SELECT reservation_id, country, trip_date, trip_name, firstname, lastname, status, trip_id, person_id, no_tickets
+    FROM vw_reservation
+    WHERE trip_id = p_trip_id;
+    RETURN v_cursor;
+end f_trip_participants;
 
--- wyniki, kod, zrzuty ekranów, komentarz ...
-
+create or replace function f_person_reservations(p_person_id int) return sys_refcursor as v_cursor sys_refcursor;
+begin
+    open v_cursor for
+    select reservation_id, country, trip_date, trip_name, firstname, lastname, status, trip_id, person_id, no_tickets
+    from vw_reservation
+    where person_id = p_person_id;
+    return v_cursor;
+end f_person_reservations;
 ```
 
 
