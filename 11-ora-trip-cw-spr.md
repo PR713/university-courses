@@ -283,7 +283,7 @@ EXCEPTION
 END;
 ```
 Dla odmiany nie obsługujemy wyjątku przez co otrzymujemy błąd na wyjściu:
-![alt text](image.png)
+![alt text](<Zrzut ekranu 2025-03-19 105141.png>)
 <br><br>
 
 
@@ -299,7 +299,7 @@ EXCEPTION
 END;
 ```
 Tutaj nie dostajemy wyjątku, ponieważ dane są poprawne - commitujemy zmiany.
-![alt text](image-1.png)
+![alt text](<Zrzut ekranu 2025-03-19 110113.png>)
 <br>
 
 ---
