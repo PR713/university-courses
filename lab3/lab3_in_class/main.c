@@ -37,13 +37,25 @@ void read_the_file_by_512chunks(int fd) {
         
 }
 
+
 void read_starting_with_position(int fd, int offset) {
     lseek(fd, offset, SEEK_SET);
 
     char c;
-    read(fd, &c, 1);
-    printf("%c", c);
+    int i = 0;
+    while (1)
+    {
+        fd = open("./plikV1.txt", O_RDONLY);
+        lseek(fd, i, SEEK_SET);
+        if (read(fd, &c, 1) == 0) {
+            close(fd);
+            break;
+        }
+        printf("%c", c);
+        close(fd);
+        i++;
 
+    }
 }
 
 int main() {
@@ -91,17 +103,17 @@ int main() {
 
     clock_t start_char_with_position = clock();
 
-    // tutaj ma być znak po znaku a nie na raz !!! i za każdym razem open i close
     fd1 = open("./plikV1.txt", O_RDONLY);
-    read_starting_with_position(fd1, 100);
-
+    read_starting_with_position(fd1, 0);
+    close(fd1);
+    
     clock_t end_char_position = clock();
 
     float time2 = (float) (end_char_position - start_char_with_position)/CLOCKS_PER_SEC;
     
-    close(fd1);
+    
 
-    printf("by char: %f\nby chunks: %f\nby char position: %f", time, time1, time2);
+    printf("by char: %f\nby chunks: %f\nby char position: %f\n", time, time1, time2);
 
     return 0;
 }
