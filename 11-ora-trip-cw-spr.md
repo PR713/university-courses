@@ -341,6 +341,8 @@ select
 from RESERVATION r
 join TRIP t on r.TRIP_ID = t.TRIP_ID
 join PERSON p on r.PERSON_ID = p.PERSON_ID;
+```
+```sql
 
 create or replace view vw_trip as
 select
@@ -353,7 +355,8 @@ select
 from TRIP t
 left join RESERVATION r on t.TRIP_ID = r.TRIP_ID and r.STATUS= 'P'
 group by t.trip_id, t.COUNTRY, t.TRIP_DATE, t.TRIP_NAME, t.MAX_NO_PLACES;
-
+```
+```sql
 select t.trip_id, t.trip_name, t.country, t.trip_date, t.max_no_places, count(t.trip_id) as number_left
 from TRIP t left join RESERVATION r on r.trip_id = t.trip_id
 group by t.trip_id, t.trip_name, t.country, t.trip_date, t.max_no_places
@@ -394,23 +397,45 @@ Proponowany zestaw funkcji można rozbudować wedle uznania/potrzeb
 # Zadanie 2  - rozwiązanie
 
 ```sql
-create or replace function f_trip_participants(p_trip_id int) RETURN SYS_REFCURSOR AS v_cursor SYS_REFCURSOR;
-begin
-    open v_cursor for
-    SELECT reservation_id, country, trip_date, trip_name, firstname, lastname, status, trip_id, person_id, no_tickets
-    FROM vw_reservation
-    WHERE trip_id = p_trip_id;
-    RETURN v_cursor;
-end f_trip_participants;
+CREATE OR REPLACE FUNCTION F_TRIP_PARTICIPANTS(P_TRIP_ID INT) 
+RETURN SYS_REFCURSOR 
+AS 
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+    SELECT RESERVATION_ID, COUNTRY, TRIP_DATE, TRIP_NAME, FIRSTNAME, LASTNAME, STATUS, TRIP_ID, PERSON_ID, NO_TICKETS
+    FROM VW_RESERVATION
+    WHERE TRIP_ID = P_TRIP_ID;
+    RETURN V_CURSOR;
+END F_TRIP_PARTICIPANTS;
+```
 
-create or replace function f_person_reservations(p_person_id int) return sys_refcursor as v_cursor sys_refcursor;
-begin
-    open v_cursor for
-    select reservation_id, country, trip_date, trip_name, firstname, lastname, status, trip_id, person_id, no_tickets
-    from vw_reservation
-    where person_id = p_person_id;
-    return v_cursor;
-end f_person_reservations;
+```sql
+
+CREATE OR REPLACE FUNCTION F_PERSON_RESERVATIONS(P_PERSON_ID INT) 
+RETURN SYS_REFCURSOR 
+AS 
+    V_CURSOR SYS_REFCURSOR;
+BEGIN
+    OPEN V_CURSOR FOR
+    SELECT RESERVATION_ID, COUNTRY, TRIP_DATE, TRIP_NAME, FIRSTNAME, LASTNAME, STATUS, TRIP_ID, PERSON_ID, NO_TICKETS
+    FROM VW_RESERVATION
+    WHERE PERSON_ID = P_PERSON_ID;
+    RETURN V_CURSOR;
+END F_PERSON_RESERVATIONS;
+```
+```sql
+
+CREATE OR REPLACE FUNCTION f_available_trips_to(p_country VARCHAR2, p_date_from DATE, p_date_to DATE) RETURN SYS_REFCURSOR AS
+    v_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN v_cursor FOR
+        SELECT trip_id, country, trip_date, trip_name, max_no_places, number_left
+        FROM vw_available_trip
+        WHERE country = p_country
+          AND trip_date BETWEEN p_date_from AND p_date_to;
+    RETURN v_cursor;
+END f_available_trips_to;
 ```
 
 
@@ -451,10 +476,121 @@ Proponowany zestaw procedur można rozbudować wedle uznania/potrzeb
 
 # Zadanie 3  - rozwiązanie
 
+
+
 ```sql
+CREATE OR REPLACE PROCEDURE p_modify_reservation(
+    reservation_id IN NUMBER,
+    no_tickets IN NUMBER
+) AS
+    v_trip_id NUMBER;
+    v_old_no_tickets NUMBER;
+    v_old_status VARCHAR(1);
+    v_new_status VARCHAR(1);
+    v_max_places NUMBER;
+    v_available_places NUMBER;
+BEGIN
 
--- wyniki, kod, zrzuty ekranów, komentarz ...
+    IF no_tickets < 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'The no_tickets have to be greater than 0!');
+    end if;
 
+    SELECT r.TRIP_ID, r.NO_TICKETS, r.STATUS
+    INTO v_trip_id, v_old_no_tickets, v_old_status
+    FROM RESERVATION r
+    WHERE r.reservation_id = p_modify_reservation.reservation_id;
+
+    IF v_trip_id IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Such a reservation does not exist!');
+    END IF;
+
+    SELECT NO_AVAILABLE_PLACES, MAX_NO_PLACES
+    INTO v_available_places, v_max_places
+    FROM VW_TRIP vwt
+    WHERE vwt.TRIP_ID = v_trip_id;
+
+    IF NO_TICKETS > v_available_places + v_old_no_tickets THEN
+        RAISE_APPLICATION_ERROR(-20003, 'There are not that number of available places');
+    END IF;
+
+    IF no_tickets = 0 THEN
+        v_new_status := 'C';
+    ELSIF no_tickets = v_old_no_tickets THEN
+        v_new_status := v_old_status;
+    ELSE
+        v_new_status := 'N'; -- C -> N no_tickets > 0
+    END IF;
+
+    UPDATE RESERVATION
+    SET NO_TICKETS = p_modify_reservation.no_tickets,
+        STATUS = v_new_status
+    WHERE RESERVATION_ID = p_modify_reservation.reservation_id;
+
+    IF V_NEW_STATUS != V_OLD_STATUS THEN
+        INSERT INTO LOG(RESERVATION_ID, LOG_DATE, STATUS, NO_TICKETS)
+        VALUES(p_modify_reservation.reservation_id, SYSDATE, V_NEW_STATUS, NO_TICKETS);
+    END IF;
+
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END;
+
+```
+Teoretycznie jeśli mamy status 'P' to łatwiej byłoby wycofać transakcję, inaczej trzeba by kontrolować ile ktoś musi dopłacić/dostać zwrotu, aczkolwiek jest to wykonalne i można to odnaleźć w logach, po id rezerwacji (ile biletów zostało już opłaconych itp.) .
+<br>
+
+```sql
+CREATE OR REPLACE PROCEDURE p_modify_max_no_places(
+    trip_id IN NUMBER,
+    max_no_places IN NUMBER
+) AS
+    v_no_reserved_places NUMBER;
+    v_trip_exists NUMBER;
+BEGIN
+
+    SELECT COUNT(*) INTO v_trip_exists
+    FROM TRIP t
+    WHERE t.trip_id = p_modify_max_no_places.trip_id;
+
+    IF v_trip_exists = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Trip does not exist');
+    END IF;
+
+    IF p_modify_max_no_places.max_no_places IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20002, 'New number of places cannot be null!');
+    END IF;
+
+    IF p_modify_max_no_places.max_no_places <= 0 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'New number of places have to be greater than 0!');
+    END IF;
+
+
+    SELECT SUM(r.no_tickets)
+    INTO v_no_reserved_places
+    FROM reservation r
+    WHERE r.trip_id = p_modify_max_no_places.trip_id AND status IN ('N', 'P');
+
+    IF (max_no_places < v_no_reserved_places) THEN
+        RAISE_APPLICATION_ERROR(-20004, 'New number of places is less than number of reserved places');
+    END IF;
+
+    UPDATE TRIP
+    SET TRIP.max_no_places = p_modify_max_no_places.max_no_places
+    WHERE TRIP.trip_id = p_modify_max_no_places.trip_id;
+
+    DBMS_OUTPUT.PUT_LINE('Zaktualizowano max_no_places');
+    COMMIT;
+
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('There occurred an unexpected error: ' || SQLERRM);
+        ROLLBACK;
+        RAISE;
+END;
 ```
 
 
