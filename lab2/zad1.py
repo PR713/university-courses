@@ -102,8 +102,13 @@ b_train = np.where(train_data["Malignant/Benign"] == "M", 1, -1)
 b_validate = np.where(validate_data["Malignant/Benign"] == "M", 1, -1)
 
 # e) wagi dla reprezentacji liniowej i kwadratowej
-w_linear, _, _, _ = lstsq(A_train_linear, b_train)
-w_quadratic, _, _, _ = lstsq(A_train_quadratic, b_train)
+w_linear = np.linalg.solve(A_train_linear.T @ A_train_linear,
+                           A_train_linear.T @ b_train)
+
+w_quadratic = np.linalg.solve(
+    A_train_quadratic.T @ A_train_quadratic,
+    A_train_quadratic.T @ b_train)
+
 
 print("\nWagi dla reprezentacji liniowej:")
 print(w_linear)
@@ -111,17 +116,22 @@ print("\nWagi dla reprezentacji kwadratowej:")
 print(w_quadratic)
 
 # f) wagi z użyciem SVD i regularyzacji
-w_linear_lstsq, residuals, rank, s = lstsq(A_train_linear, b_train)
+#svd
+
+w_linear_svd, residuals, rank, singular_values = lstsq(A_train_linear, b_train)
+
+
+#regularyzacja
 lambda_reg = 0.01
 n_features = A_train_linear.shape[1]
 w_linear_reg = np.linalg.solve(A_train_linear.T @ A_train_linear + lambda_reg * np.eye(n_features),
                                A_train_linear.T @ b_train)
 
 A_reg = A_train_linear.T @ A_train_linear + lambda_reg * np.eye(n_features)
-U, S, Vt = np.linalg.svd(A_train_linear)  # dekompozycja SVD dla A_train_linear
 
-print("\nWagi uzyskane metodą SVD (lstsq):")
-print(w_linear_lstsq)
+
+print("\nWagi uzyskane metodą SVD:")
+print(w_linear_svd)
 print("\nWagi uzyskane dla zregularyzowanej reprezentacji liniowej (λ = 0.01):")
 print(w_linear_reg)
 
@@ -130,7 +140,7 @@ cond_linear = np.linalg.cond(A_train_linear.T @ A_train_linear)
 cond_quad = np.linalg.cond(A_train_quadratic.T @ A_train_quadratic)
 cond_linear_reg = np.linalg.cond(A_reg)  # współczynnik uwarunkowania dla liniowej
 # z regularyzacją
-cond_linear_svd = np.max(S) / np.min(S)
+cond_linear_svd = np.max(singular_values) / np.min(singular_values)
 
 print("\nWspółczynnik uwarunkowania (liniowa metoda najmniejszych kwadratów):")
 print(cond_linear)
@@ -142,14 +152,28 @@ print("\nWspółczynnik uwarunkowania (kwadratowa metoda najmniejszych kwadrató
 print(cond_quad)
 
 # h) ocena modeli
-p_linear = A_validate_linear @ w_linear
-pred_linear = np.where(p_linear > 0, 1, -1)
+p_linear = A_validate_linear @ w_linear #w_linear wykorzystuje A_train_linear
+pred_linear = np.where(p_linear > 0, 1, -1) # A * w = b
+
+p_linear_svd = A_validate_linear @ w_linear_svd
+pred_linear_svd = np.where(p_linear_svd > 0, 1, -1)
+
+p_linear_reg = A_validate_linear @ w_linear_reg
+pred_linear_reg = np.where(p_linear_reg > 0, 1, -1)
 
 p_quad = A_validate_quadratic @ w_quadratic
 pred_quad = np.where(p_quad > 0, 1, -1)
 
+
+
 TP_lin, TN_lin, FP_lin, FN_lin = compute_confusion_matrix(b_validate, pred_linear)
 acc_linear = (TP_lin + TN_lin) / (TP_lin + TN_lin + FP_lin + FN_lin)
+
+TP_lin_svd, TN_lin_svd, FP_lin_svd, FN_lin_svd = compute_confusion_matrix(b_validate, pred_linear_svd)
+acc_linear_svd = (TP_lin_svd + TN_lin_svd) / (TP_lin_svd + TN_lin_svd + FP_lin_svd + FN_lin_svd)
+
+TP_lin_reg,TN_lin_reg,FP_lin_reg, FN_lin_reg =compute_confusion_matrix(b_validate, pred_linear_reg)
+acc_linear_reg = (TP_lin_reg + TN_lin_reg) / (TP_lin_reg + TN_lin_reg + FP_lin_reg + FN_lin_reg)
 
 TP_quad, TN_quad, FP_quad, FN_quad = compute_confusion_matrix(b_validate, pred_quad)
 acc_quad = (TP_quad + TN_quad) / (TP_quad + TN_quad + FP_quad + FN_quad)
@@ -157,6 +181,14 @@ acc_quad = (TP_quad + TN_quad) / (TP_quad + TN_quad + FP_quad + FN_quad)
 print("\nReprezentacja liniowa:")
 print(f"Macierz pomyłek: TP = {TP_lin}, TN = {TN_lin}, FP = {FP_lin}, FN = {FN_lin}")
 print(f"Dokładność: {acc_linear * 100:.2f}%\n")
+
+print("\nReprezentacja liniowa SVD:")
+print(f"Macierz pomyłek: TP = {TP_lin_svd}, TN = {TN_lin_svd}, FP = {FP_lin_svd}, FN = {FN_lin_svd}")
+print(f"Dokładność: {acc_linear_svd * 100:.2f}%\n")
+
+print("\nReprezentacja liniowa z regularyzacją:")
+print(f"Macierz pomyłek: TP = {TP_lin_reg}, TN = {TN_lin_reg}, FP = {FP_lin_reg}, FN = {FN_lin_reg}")
+print(f"Dokładność: {acc_linear_reg * 100:.2f}%\n")
 
 print("Reprezentacja kwadratowa:")
 print(f"Macierz pomyłek: TP = {TP_quad}, TN = {TN_quad}, FP = {FP_quad}, FN = {FN_quad}")
