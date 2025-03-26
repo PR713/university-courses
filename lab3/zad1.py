@@ -57,6 +57,7 @@ def horner(poly_coeffs, x_values):
     """Funkcja implementująca schemat Hornera do szybkiego obliczania wartości wielomianu.
     poly_coeffs - współczynniki wielomianu (od najmniejszego stopnia do najwyższego)
     x_values - wartości x, dla których obliczamy wartości wielomianu"""
+    #używamy tutaj x_values jako wartości jednomianów (funkcja bazowa), na tym polega schemat Hornera
     result = np.zeros_like(x_values, dtype=float)
     for i, x in enumerate(x_values):
         value = poly_coeffs[-1]  # Najwyższy współczynnik
