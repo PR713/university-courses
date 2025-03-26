@@ -60,10 +60,10 @@ def horner(poly_coeffs, x_values):
     result = np.zeros_like(x_values, dtype=float)
     for i, x in enumerate(x_values):
         value = poly_coeffs[-1]  # Najwyższy współczynnik
-        for coef in reversed(poly_coeffs[:-1]):
+        for coef in reversed(poly_coeffs[:-1]): #slice
             value = value * x + coef
         result[i] = value
-    return result
+    return result #lista wartości wielomianu dla każdego punktu
 
 
 # Definiujemy przedział [1900, 1990] z krokiem 1 rok
@@ -103,6 +103,7 @@ def lagrange_interpolation(x, x_data, y_data):
 x_extrapolate = 1990
 # Aby wywołać funkcję horner dla pojedynczej wartości, przekazujemy tablicę z jednym elementem:
 pop_1990 = horner(coefficients, np.array([best_phi(x_extrapolate)]))[0]
+#otrzymujemy wartość wielomianu w punkcie x_extrapolate
 
 true_pop_1990 = 248709873
 relative_error_1990 = (abs(pop_1990 - true_pop_1990) / true_pop_1990) * 100
