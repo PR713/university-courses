@@ -553,11 +553,6 @@ BEGIN
     END IF;
 
     COMMIT;
-
-EXCEPTION
-    WHEN OTHERS THEN
-        ROLLBACK;
-        RAISE;
 END;
 
 ```
@@ -605,12 +600,6 @@ BEGIN
 
     DBMS_OUTPUT.PUT_LINE('Zaktualizowano max_no_places');
     COMMIT;
-
-EXCEPTION
-    WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('There occurred an unexpected error: ' || SQLERRM);
-        ROLLBACK;
-        RAISE;
 END;
 ```
 
@@ -640,11 +629,83 @@ Należy przygotować procedury: `p_add_reservation_4`, `p_modify_reservation_sta
 
 
 # Zadanie 4  - rozwiązanie
+### Triggery
+```sql
+CREATE OR REPLACE TRIGGER trg_update_log_no_tickets
+    AFTER UPDATE OF no_tickets
+    ON reservation
+    FOR EACH ROW
+    WHEN (NEW.no_tickets <> OLD.no_tickets)
+BEGIN
+    INSERT INTO log(log_id, reservation_id, log_date, status, no_tickets)
+    VALUES (s_log_seq.nextval, :NEW.reservation_id, SYSDATE, :NEW.status, :NEW.no_tickets);
+end;
+
+```
 
 ```sql
+CREATE OR REPLACE TRIGGER trg_prevent_delete_reservation
+    BEFORE DELETE
+    ON reservation
+    FOR EACH ROW
+BEGIN
+    RAISE_APPLICATION_ERROR(-20001, 'You cannot delete reservation. You can only cancel it.');
+end;
+```
 
--- wyniki, kod, zrzuty ekranów, komentarz ...
 
+### Procedury
+
+```sql
+CREATE OR REPLACE PROCEDURE p_modify_reservation_4(
+    reservation_id IN NUMBER,
+    no_tickets IN NUMBER
+) AS
+    v_trip_id          NUMBER;
+    v_old_no_tickets   NUMBER;
+    v_old_status       VARCHAR(1);
+    v_new_status       VARCHAR(1);
+    v_max_places       NUMBER;
+    v_available_places NUMBER;
+BEGIN
+
+    IF no_tickets < 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'The no_tickets have to be greater than 0!');
+    end if;
+
+    SELECT r.TRIP_ID, r.NO_TICKETS, r.STATUS
+    INTO v_trip_id, v_old_no_tickets, v_old_status
+    FROM RESERVATION r
+    WHERE r.reservation_id = p_modify_reservation_4.reservation_id;
+
+    IF v_trip_id IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Such a reservation does not exist!');
+    END IF;
+
+    SELECT NO_AVAILABLE_PLACES, MAX_NO_PLACES
+    INTO v_available_places, v_max_places
+    FROM VW_TRIP vwt
+    WHERE vwt.TRIP_ID = v_trip_id;
+
+    IF NO_TICKETS > v_available_places + v_old_no_tickets THEN
+        RAISE_APPLICATION_ERROR(-20003, 'There are not that number of available places');
+    END IF;
+
+    IF no_tickets = 0 THEN
+        v_new_status := 'C';
+    ELSIF no_tickets = v_old_no_tickets THEN
+        v_new_status := v_old_status;
+    ELSE
+        v_new_status := 'N'; -- C -> N no_tickets > 0
+    END IF;
+
+    UPDATE RESERVATION
+    SET NO_TICKETS = p_modify_reservation_4.no_tickets,
+        STATUS     = v_new_status
+    WHERE RESERVATION_ID = p_modify_reservation_4.reservation_id;
+
+    COMMIT;
+END;
 ```
 
 
@@ -668,15 +729,127 @@ Oczywiście po wprowadzeniu tej zmiany należy "uaktualnić" procedury modyfikuj
 >UWAGA
 Należy stworzyć nowe wersje tych procedur (np. dodając do nazwy dopisek 5 - od numeru zadania). Poprzednie wersje procedur należy pozostawić w celu  umożliwienia weryfikacji ich poprawności. 
 
-Należy przygotować procedury: `p_add_reservation_5`, `p_modify_reservation_status_5`, `p_modify_reservation_status_5`
+Należy przygotować procedury: `p_add_reservation_5`, `p_modify_reservation_status_5`, `p_modify_reservation_5`
 
 
 # Zadanie 5  - rozwiązanie
 
+### Triggery
+
 ```sql
+CREATE OR REPLACE TRIGGER trg_check_reservation_availability
+    BEFORE INSERT ON reservation
+    FOR EACH ROW
+DECLARE
+    v_available_places NUMBER;
+BEGIN
 
--- wyniki, kod, zrzuty ekranów, komentarz ...
+    SELECT NO_AVAILABLE_PLACES INTO v_available_places
+    FROM VW_TRIP
+    WHERE VW_TRIP.TRIP_ID = :NEW.trip_id;
 
+    IF :NEW.no_tickets > v_available_places THEN
+        RAISE_APPLICATION_ERROR(-20020, 'A lack of places! Available: ' || v_available_places);
+    END IF;
+END;
+```
+
+```sql
+CREATE OR REPLACE TRIGGER trg_change_no_tickets
+    BEFORE UPDATE OF no_tickets ON reservation
+    FOR EACH ROW
+DECLARE
+    old_no_tickets NUMBER;
+    new_no_tickets NUMBER;
+    v_available_places NUMBER;
+BEGIN
+    old_no_tickets := :OLD.no_tickets;
+    new_no_tickets := :NEW.no_tickets;
+
+    SELECT NO_AVAILABLE_PLACES
+    INTO v_available_places
+    FROM VW_TRIP vwt
+    WHERE vwt.TRIP_ID = :NEW.trip_id;
+
+    IF new_no_tickets > v_available_places + old_no_tickets THEN
+        RAISE_APPLICATION_ERROR(-20003, 'There are not that number of available places');
+    END IF;
+end;
+```
+
+
+### Procedury
+
+```sql
+CREATE OR REPLACE PROCEDURE p_add_reservation_5(
+    p_trip_id IN NUMBER,
+    p_person_id IN NUMBER,
+    p_no_tickets IN NUMBER
+) AS
+    v_person_exists NUMBER;
+    v_trip_exists NUMBER;
+BEGIN
+
+    IF p_no_tickets <= 0 THEN
+        RAISE_APPLICATION_ERROR(-20010, 'The number of tickets has to be greater than 0.');
+    END IF;
+
+    SELECT COUNT(*) INTO v_person_exists FROM person WHERE person_id = p_person_id;
+    IF v_person_exists = 0 THEN
+        RAISE_APPLICATION_ERROR(-20011, 'That person does not exist!');
+    END IF;
+
+    SELECT COUNT(*) INTO v_trip_exists FROM trip WHERE trip_id = p_trip_id;
+    IF v_trip_exists = 0 THEN
+        RAISE_APPLICATION_ERROR(-20012, 'The trip does not exist!');
+    END IF;
+
+    INSERT INTO reservation (trip_id, person_id, no_tickets, status)
+    VALUES (p_trip_id, p_person_id, p_no_tickets, 'N');
+
+    COMMIT;
+END;
+```
+
+```sql
+CREATE OR REPLACE PROCEDURE p_modify_reservation_5(
+    reservation_id IN NUMBER,
+    no_tickets IN NUMBER
+) AS
+    v_trip_id          NUMBER;
+    v_old_no_tickets   NUMBER;
+    v_old_status       VARCHAR(1);
+    v_new_status       VARCHAR(1);
+BEGIN
+
+    IF no_tickets < 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'The no_tickets have to be greater than 0!');
+    end if;
+
+    SELECT r.TRIP_ID, r.NO_TICKETS, r.STATUS
+    INTO v_trip_id, v_old_no_tickets, v_old_status
+    FROM RESERVATION r
+    WHERE r.reservation_id = p_modify_reservation_5.reservation_id;
+
+    IF v_trip_id IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Such a reservation does not exist!');
+    END IF;
+
+    IF no_tickets = 0 THEN
+        v_new_status := 'C';
+    ELSIF no_tickets = v_old_no_tickets THEN
+        v_new_status := v_old_status;
+    ELSE
+        v_new_status := 'N'; -- C -> N no_tickets > 0
+    END IF;
+
+    UPDATE RESERVATION
+    SET NO_TICKETS = p_modify_reservation_5.no_tickets,
+        STATUS     = v_new_status
+    WHERE RESERVATION_ID = p_modify_reservation_5.reservation_id;
+
+    COMMIT;
+END;
 ```
 
 ---
