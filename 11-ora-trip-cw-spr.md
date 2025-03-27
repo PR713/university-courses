@@ -356,11 +356,22 @@ from TRIP t
 left join RESERVATION r on t.TRIP_ID = r.TRIP_ID and r.STATUS= 'P'
 group by t.trip_id, t.COUNTRY, t.TRIP_DATE, t.TRIP_NAME, t.MAX_NO_PLACES;
 ```
+
+
 ```sql
-select t.trip_id, t.trip_name, t.country, t.trip_date, t.max_no_places, count(t.trip_id) as number_left
-from TRIP t left join RESERVATION r on r.trip_id = t.trip_id
+create or replace view vw_available_trip
+as
+select t.trip_id,
+       t.trip_name,
+       t.country,
+       t.trip_date,
+       t.max_no_places,
+       t.max_no_places - COALESCE(sum(r.no_tickets), 0) as number_left
+from TRIP t
+         left join RESERVATION r on r.trip_id = t.trip_id and r.status != 'C'
+where t.trip_date > SYSDATE
 group by t.trip_id, t.trip_name, t.country, t.trip_date, t.max_no_places
-having count(t.trip_id) < t.max_no_places
+having t.max_no_places - COALESCE(sum(r.no_tickets), 0) > 0;
 
 ```
 
@@ -428,7 +439,16 @@ END F_PERSON_RESERVATIONS;
 
 CREATE OR REPLACE FUNCTION f_available_trips_to(p_country VARCHAR2, p_date_from DATE, p_date_to DATE) RETURN SYS_REFCURSOR AS
     v_cursor SYS_REFCURSOR;
+    v_exists NUMBER;
 BEGIN
+    SELECT COUNT(*) INTO v_exists
+    FROM TRIP t
+    WHERE t.COUNTRY = p_country AND t.TRIP_DATE BETWEEN p_date_from AND p_date_to;
+
+    IF v_exists = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'There are no trips to this country');
+    END IF;
+
     OPEN v_cursor FOR
         SELECT trip_id, country, trip_date, trip_name, max_no_places, number_left
         FROM vw_available_trip
@@ -438,6 +458,7 @@ BEGIN
 END f_available_trips_to;
 ```
 
+W ostatniej funkcji dodano przykładową kontrolę argumentów przekazanych do funkcji, którą uważamy za niezbędną przy używaniu w funkcji złożonych widoków. Uważamy, że nie jest to potrzebne przy prostych funkcjach.
 
 ---
 # Zadanie 3  - procedury
