@@ -100,7 +100,9 @@ def zadanie2():
     x_eval_uniform = np.linspace(-1, 1, 120)
     x_eval_cheb = -np.cos(np.linspace(0, np.pi, 120))  # Równomierne w θ
     #^ tu defacto powinno być to co theta wyżej tylko n = 120 podane
-    #bo to linspace inclusive start i stop robi krańce
+    #bo to linspace inclusive start i stop robi (krańce) a theta bez krańców j = 1 ... 2n - 1,
+    #pewnie z definicji węzły Czebyszewa to punkty z gęstością większą na krańcach ale bez krańców...
+
     #Lagrange z węzłami równomiernymi (wbudowana funkcja)
     poly_uni = lagrange(x_uniform, y_uniform)
     lagrange_uni = poly_uni(x_eval_uniform) #wartości y
