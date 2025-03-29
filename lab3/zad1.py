@@ -57,6 +57,7 @@ def horner(poly_coeffs, x_values):
     """Funkcja implementująca schemat Hornera do szybkiego obliczania wartości wielomianu.
     poly_coeffs - współczynniki wielomianu (od najmniejszego stopnia do najwyższego)
     x_values - wartości x, dla których obliczamy wartości wielomianu"""
+    #używamy tutaj x_values jako wartości jednomianów (funkcja bazowa), na tym polega schemat Hornera
     result = np.zeros_like(x_values, dtype=float)
     for i, x in enumerate(x_values):
         value = poly_coeffs[-1]  # Najwyższy współczynnik
@@ -72,11 +73,11 @@ y_values_horner = horner(coefficients, best_phi(x_values))
 
 # Tworzenie wykresu
 plt.figure(figsize=(12, 6))
-plt.plot(x_values, y_values_horner, label="Interpolacja Hornera", color='blue')  # Krzywa interpolacyjna
+plt.plot(x_values, y_values_horner, label="Interpolacja jednomianowa z wykorzystaniem schematu Hornera", color='blue')  # Krzywa interpolacyjna
 plt.scatter(years, population, color='red', label="Węzły interpolacji", zorder=3)  # Punkty interpolacyjne
 plt.xlabel("Rok")
 plt.ylabel("Populacja")
-plt.title("Wielomian interpolacyjny Hornera populacji USA")
+plt.title("Interpolacja jednomianowa z wykorzystaniem schematu Hornera dla populacji USA")
 plt.legend()
 plt.grid()
 plt.show()
@@ -216,11 +217,11 @@ print(coefficients_rounded)
 y_values_horner_rounded = horner(coefficients_rounded, best_phi(x_values))
 
 plt.figure(figsize=(12, 6))
-plt.plot(x_values, y_values_horner_rounded, label="Interpolacja Hornera z zaokrągleniem do miliona", color='blue')  # Krzywa interpolacyjna
+plt.plot(x_values, y_values_horner_rounded, label="Interpolacja jednomianowa z wykorzystaniem schematu Hornera z zaokrągleniem do miliona", color='blue')  # Krzywa interpolacyjna
 plt.scatter(years, population, color='red', label="Węzły interpolacji", zorder=3)  # Punkty interpolacyjne
 plt.xlabel("Rok")
 plt.ylabel("Populacja")
-plt.title("Wielomian interpolacyjny Hornera z zaokrągleniem populacji USA")
+plt.title("Interpolacja jednomianowa z wykorzystaniem schematu Hornera z zaokrągleniem populacji USA")
 plt.legend()
 plt.grid()
 plt.show()
