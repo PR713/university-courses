@@ -539,7 +539,7 @@ BEGIN
     ELSIF no_tickets = v_old_no_tickets THEN
         v_new_status := v_old_status;
     ELSE
-        v_new_status := 'N'; -- C -> N no_tickets > 0
+        v_new_status := 'N'; -- C,N,P -> N no_tickets > 0
     END IF;
 
     UPDATE RESERVATION
@@ -696,7 +696,7 @@ BEGIN
     ELSIF no_tickets = v_old_no_tickets THEN
         v_new_status := v_old_status;
     ELSE
-        v_new_status := 'N'; -- C -> N no_tickets > 0
+        v_new_status := 'N'; -- C,N,P -> N no_tickets > 0
     END IF;
 
     UPDATE RESERVATION
@@ -840,7 +840,7 @@ BEGIN
     ELSIF no_tickets = v_old_no_tickets THEN
         v_new_status := v_old_status;
     ELSE
-        v_new_status := 'N'; -- C -> N no_tickets > 0
+        v_new_status := 'N'; -- C,N,P -> N no_tickets > 0
     END IF;
 
     UPDATE RESERVATION
@@ -881,8 +881,28 @@ alter table trip add
 # Zadanie 6  - rozwiązanie
 
 ```sql
+ALTER TABLE trip ADD no_available_places INT NULL;
 
--- wyniki, kod, zrzuty ekranów, komentarz ...
+CREATE OR REPLACE PROCEDURE p_recalculate_available_places
+AS
+    BEGIN
+        UPDATE TRIP t
+        SET no_available_places = t.max_no_places - COALESCE(
+            (SELECT sum(r.no_tickets)
+            FROM RESERVATION r
+            WHERE r.trip_id = t.trip_id
+              AND r.status IN ('N', 'P'))
+            , 0);
+
+        COMMIT;
+
+        DBMS_OUTPUT.PUT_LINE('The available number of places have been recalculated.');
+    end;
+
+
+BEGIN
+    P_RECALCULATE_AVAILABLE_PLACES();
+end;
 
 ```
 
@@ -906,13 +926,157 @@ Należy stworzyć nowe wersje tych widoków/procedur/triggerów (np. dodając do
 
 
 # Zadanie 6a  - rozwiązanie
-
+Należy wyłączyć poprzednie triggery reagujące na zmianę dostępności miejsc. W zad 6b będą nowe wersje tych triggerów.
 ```sql
+create PROCEDURE p_modify_reservation_6a(
+    reservation_id IN NUMBER,
+    no_tickets IN NUMBER
+) AS
+    v_trip_id          NUMBER;
+    v_old_no_tickets   NUMBER;
+    v_old_status       VARCHAR(1);
+    v_new_status       VARCHAR(1);
+    v_max_places       NUMBER;
+    v_available_places NUMBER;
+    v_trip_date DATE;
+BEGIN
 
--- wyniki, kod, zrzuty ekranów, komentarz ...
+    IF no_tickets < 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'The no_tickets have to be greater than 0!');
+    end if;
+
+    SELECT r.TRIP_ID, r.NO_TICKETS, r.STATUS, t.trip_date
+    INTO v_trip_id, v_old_no_tickets, v_old_status, v_trip_date
+    FROM RESERVATION r JOIN TRIP t ON r.TRIP_ID = t.TRIP_ID
+    WHERE r.reservation_id = p_modify_reservation_6a.reservation_id;
+
+    IF v_trip_id IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Such a reservation does not exist!');
+    END IF;
+
+    IF v_trip_date <= SYSDATE THEN
+        RAISE_APPLICATION_ERROR(-20003, 'That trip has already taken place, cannot modify details of reservation!');
+    END IF;
+
+    SELECT NO_AVAILABLE_PLACES, MAX_NO_PLACES
+    INTO v_available_places, v_max_places
+    FROM VW_TRIP vwt
+    WHERE vwt.TRIP_ID = v_trip_id;
+
+    IF NO_TICKETS > v_available_places + v_old_no_tickets THEN
+        RAISE_APPLICATION_ERROR(-20003, 'There are not that number of available places');
+    END IF;
+
+    IF no_tickets = 0 THEN
+        v_new_status := 'C';
+    ELSIF no_tickets = v_old_no_tickets THEN
+        v_new_status := v_old_status;
+        COMMIT;
+    ELSE
+        v_new_status := 'N'; -- C,N,P -> N no_tickets > 0
+    END IF;
+
+    UPDATE RESERVATION
+    SET NO_TICKETS = p_modify_reservation_6a.no_tickets,
+        STATUS     = v_new_status
+    WHERE RESERVATION_ID = p_modify_reservation_6a.reservation_id;
+
+    UPDATE TRIP t
+    SET no_available_places = t.max_no_places - COALESCE(
+            (SELECT sum(r.no_tickets)
+             FROM RESERVATION r
+             WHERE r.trip_id = t.trip_id
+               AND r.status IN ('N', 'P'))
+        , 0)
+    WHERE trip_id = v_trip_id;
+
+    --bez if bo wyżej commit jeśli status się nie zmienił
+    INSERT INTO LOG(RESERVATION_ID, LOG_DATE, STATUS, NO_TICKETS)
+    VALUES (p_modify_reservation_6a.reservation_id, SYSDATE, V_NEW_STATUS, NO_TICKETS);
+
+    COMMIT;
+END;
+/
 
 ```
 
+```sql
+create PROCEDURE p_modify_max_no_places_6a(
+    trip_id IN NUMBER,
+    max_no_places IN NUMBER
+) AS
+    v_no_reserved_places NUMBER;
+    v_trip_exists        NUMBER;
+    v_trip_date DATE;
+BEGIN
+
+    SELECT COUNT(*), t.trip_date
+    INTO v_trip_exists, v_trip_date
+    FROM TRIP t
+    WHERE t.trip_id = p_modify_max_no_places_6a.trip_id
+    GROUP BY t.trip_date;
+    --dla nieistniejącej wycieczki COUNT(*) powoduje że trip_date jest NULL
+    -- i wyjątek nie poleci, jeśli nie użylibyśmy f. agregującem to wtedy
+    -- mamy DATA_NOT_FOUND exception :)
+
+    IF v_trip_exists = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Trip does not exist');
+    END IF;
+
+    IF p_modify_max_no_places_6a.max_no_places IS NULL THEN
+        RAISE_APPLICATION_ERROR(-20002, 'New number of places cannot be null!');
+    END IF;
+
+    IF p_modify_max_no_places_6a.max_no_places <= 0 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'New number of places have to be greater than 0!');
+    END IF;
+
+    IF v_trip_date <= SYSDATE THEN
+        RAISE_APPLICATION_ERROR(-20005, 'Nie można modyfikować wycieczki, która już się odbyła');
+    END IF;
+
+
+    SELECT SUM(r.no_tickets)
+    INTO v_no_reserved_places
+    FROM reservation r
+    WHERE r.trip_id = p_modify_max_no_places_6a.trip_id
+      AND status IN ('N', 'P');
+
+    IF (max_no_places < v_no_reserved_places) THEN
+        RAISE_APPLICATION_ERROR(-20004, 'New number of places is less than number of reserved places');
+    END IF;
+
+    UPDATE TRIP t
+    SET t.max_no_places = p_modify_max_no_places_6a.max_no_places,
+        t.no_available_places = t.max_no_places - COALESCE(
+            (SELECT sum(r.no_tickets)
+            FROM RESERVATION r
+            WHERE r.trip_id = p_modify_max_no_places_6a.trip_id
+              AND r.status IN ('N', 'P'))
+            , 0)
+    WHERE t.trip_id = p_modify_max_no_places_6a.trip_id;
+
+
+    DBMS_OUTPUT.PUT_LINE('Filed max_no_places has been updated');
+    COMMIT;
+END;
+/
+```
+
+```sql
+--- modyfikacja widoku, zakładamy, że dzięki procedurom mamy aktualne dane w bazie:
+
+create or replace view vw_available_trip_6a
+as
+select t.trip_id,
+       t.trip_name,
+       t.country,
+       t.trip_date,
+       t.max_no_places,
+       t.no_available_places
+from TRIP t
+where t.trip_date > SYSDATE and t.no_available_places > 0;
+```
 
 
 ---
@@ -936,7 +1100,7 @@ Należy stworzyć nowe wersje tych widoków/procedur/triggerów (np. dodając do
 
 ```sql
 
--- wyniki, kod, zrzuty ekranów, komentarz ...
+
 
 ```
 
