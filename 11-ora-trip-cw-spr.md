@@ -928,7 +928,7 @@ Należy stworzyć nowe wersje tych widoków/procedur/triggerów (np. dodając do
 # Zadanie 6a  - rozwiązanie
 Należy wyłączyć poprzednie triggery reagujące na zmianę dostępności miejsc. W zad 6b będą nowe wersje tych triggerów.
 ```sql
-create PROCEDURE p_modify_reservation_6a(
+create or replace PROCEDURE p_modify_reservation_6a(
     reservation_id IN NUMBER,
     no_tickets IN NUMBER
 ) AS
@@ -938,7 +938,7 @@ create PROCEDURE p_modify_reservation_6a(
     v_new_status       VARCHAR(1);
     v_max_places       NUMBER;
     v_available_places NUMBER;
-    v_trip_date DATE;
+    v_trip_date        DATE;
 BEGIN
 
     IF no_tickets < 0 THEN
@@ -947,7 +947,8 @@ BEGIN
 
     SELECT r.TRIP_ID, r.NO_TICKETS, r.STATUS, t.trip_date
     INTO v_trip_id, v_old_no_tickets, v_old_status, v_trip_date
-    FROM RESERVATION r JOIN TRIP t ON r.TRIP_ID = t.TRIP_ID
+    FROM RESERVATION r
+             JOIN TRIP t ON r.TRIP_ID = t.TRIP_ID
     WHERE r.reservation_id = p_modify_reservation_6a.reservation_id;
 
     IF v_trip_id IS NULL THEN
@@ -973,7 +974,7 @@ BEGIN
         v_new_status := v_old_status;
         COMMIT;
     ELSE
-        v_new_status := 'N'; -- C,N,P -> N no_tickets > 0
+        v_new_status := 'N';
     END IF;
 
     UPDATE RESERVATION
@@ -985,14 +986,10 @@ BEGIN
     SET no_available_places = t.max_no_places - COALESCE(
             (SELECT sum(r.no_tickets)
              FROM RESERVATION r
-             WHERE r.trip_id = t.trip_id
+             WHERE r.trip_id = v_trip_id
                AND r.status IN ('N', 'P'))
         , 0)
     WHERE trip_id = v_trip_id;
-
-    --bez if bo wyżej commit jeśli status się nie zmienił
-    INSERT INTO LOG(RESERVATION_ID, LOG_DATE, STATUS, NO_TICKETS)
-    VALUES (p_modify_reservation_6a.reservation_id, SYSDATE, V_NEW_STATUS, NO_TICKETS);
 
     COMMIT;
 END;
@@ -1097,12 +1094,84 @@ Należy stworzyć nowe wersje tych widoków/procedur/triggerów (np. dodając do
 
 # Zadanie 6b  - rozwiązanie
 
+```sql
+CREATE OR REPLACE PROCEDURE p_modify_reservation_6b(
+    reservation_id IN NUMBER,
+    no_tickets IN NUMBER
+) AS
+    v_trip_id          NUMBER;
+    v_old_no_tickets   NUMBER;
+    v_old_status       VARCHAR2(1);
+    v_new_status       VARCHAR2(1);
+    v_trip_date        DATE;
+    v_available_places NUMBER;
+    v_max_places       NUMBER;
+BEGIN
+    IF no_tickets < 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'The no_tickets have to be greater than 0!');
+    END IF;
 
+
+    SELECT r.TRIP_ID, r.NO_TICKETS, r.STATUS, t.trip_date
+    INTO v_trip_id, v_old_no_tickets, v_old_status, v_trip_date
+    FROM RESERVATION r
+             JOIN TRIP t ON r.TRIP_ID = t.TRIP_ID
+    WHERE r.reservation_id = p_modify_reservation_6b.reservation_id;
+
+    IF v_trip_date <= SYSDATE THEN
+        RAISE_APPLICATION_ERROR(-20003, 'That trip has already taken place, cannot modify details of reservation!');
+    END IF;
+
+    SELECT NO_AVAILABLE_PLACES, MAX_NO_PLACES
+    INTO v_available_places, v_max_places
+    FROM VW_TRIP vwt
+    WHERE vwt.TRIP_ID = v_trip_id;
+
+    IF NO_TICKETS > v_available_places + v_old_no_tickets THEN
+        RAISE_APPLICATION_ERROR(-20003, 'There are not that number of available places');
+    END IF;
+
+
+    IF no_tickets = 0 THEN
+        v_new_status := 'C';
+    ELSIF no_tickets = v_old_no_tickets THEN
+        v_new_status := v_old_status;
+    ELSE
+        v_new_status := 'N';
+    END IF;
+
+
+    UPDATE reservation
+    SET no_tickets = p_modify_reservation_6b.no_tickets,
+        status     = v_new_status
+    WHERE reservation_id = p_modify_reservation_6b.reservation_id;
+
+    COMMIT;
+END;
+/
+```
 ```sql
 
-
-
+CREATE OR REPLACE TRIGGER tr_reservation_manage_6b
+    AFTER UPDATE ON reservation
+    FOR EACH ROW
+DECLARE
+    v_trip_date DATE;
+    v_max_places NUMBER;
+BEGIN
+    UPDATE TRIP t
+    SET no_available_places = t.max_no_places - COALESCE(
+            (SELECT sum(r.no_tickets)
+             FROM RESERVATION r
+             WHERE r.trip_id = :NEW.trip_id
+               AND r.status IN ('N', 'P'))
+        , 0)
+    WHERE trip_id = :NEW.trip_id;
+END;
+/
 ```
+
+
 
 
 # Zadanie 7 - podsumowanie
@@ -1111,6 +1180,6 @@ Porównaj sposób programowania w systemie Oracle PL/SQL ze znanym ci systemem/j
 
 ```sql
 
--- komentarz ...
+Oracle PL/SQL i MS SQL Server T-SQL różnią się trochę składnią, przede wszystkim z ';' na końcu każdego polecenia oraz dostępnymi funkcjami specyficznymi dla każdego systemu. W PL/SQL bloki kodu są bardziej ustandaryzowane, podczas gdy T-SQL oferuje większą elastyczność w niektórych operacjach. Zarówno PL/SQL, jak i T-SQL wspierają kursory, procedury składowane i triggery, ale różnią się w implementacji zaawansowanych funkcji, takich jak obsługa wyjątków (TRY-CATCH vs WHEN ... THEN). W PL/SQL obowiązkowe są bloki BEGIN-END nawet dla prostych procedur, natomiast w T-SQL można po prostu użyć EXEC. PL/SQL oferuje specjalne konstrukcje jak %TYPE i %ROWTYPE w przeciwieństwie do T-SQL gdzie używa się TABLE variable. DBMS_OUTPUT wymaga specjalnej aktywacji, podczas gdy PRINT w T-SQL działa od razu. PL/SQL używa := do przypisania, T-SQL używa = lub SET z połączeniem z DECLARE.
 
 ```
