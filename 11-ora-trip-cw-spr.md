@@ -1481,8 +1481,5 @@ END;
 
 Porównaj sposób programowania w systemie Oracle PL/SQL ze znanym ci systemem/językiem MS Sqlserver T-SQL
 
-```sql
 
 Oracle PL/SQL i MS SQL Server T-SQL różnią się trochę składnią, przede wszystkim z ';' na końcu każdego polecenia oraz dostępnymi funkcjami specyficznymi dla każdego systemu. W PL/SQL bloki kodu są bardziej ustandaryzowane, podczas gdy T-SQL oferuje większą elastyczność w niektórych operacjach. Zarówno PL/SQL, jak i T-SQL wspierają kursory, procedury składowane i triggery, ale różnią się w implementacji zaawansowanych funkcji, takich jak obsługa wyjątków (TRY-CATCH vs WHEN ... THEN). W PL/SQL obowiązkowe są bloki BEGIN-END nawet dla prostych procedur, natomiast w T-SQL można po prostu użyć EXEC. PL/SQL oferuje specjalne konstrukcje jak %TYPE i %ROWTYPE w przeciwieństwie do T-SQL gdzie używa się TABLE variable. DBMS_OUTPUT wymaga specjalnej aktywacji, podczas gdy PRINT w T-SQL działa od razu. PL/SQL używa := do przypisania, T-SQL używa = lub SET z połączeniem z DECLARE.
-
-```
