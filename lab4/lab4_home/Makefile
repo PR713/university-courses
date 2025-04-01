@@ -14,3 +14,5 @@ main2:
 
 clean:
 	rm -f main1 main2
+
+.PHONY: clean all

@@ -14,4 +14,4 @@ counter:
 clean: 
 	rm -f main counter
 
-PHONY: clean all
+.PHONY: clean all
