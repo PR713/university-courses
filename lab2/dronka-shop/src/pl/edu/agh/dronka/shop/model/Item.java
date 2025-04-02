@@ -1,5 +1,7 @@
 package pl.edu.agh.dronka.shop.model;
 
+import java.util.Map;
+
 public class Item {
 
 	private String name;
@@ -14,7 +16,7 @@ public class Item {
 
 	private boolean polish;
 
-	private String details;
+	private Map<String,Object> details;
 
 	public Item(String name, Category category, int price, int quantity) {
 		this.name = name;
@@ -62,8 +64,12 @@ public class Item {
 		this.polish = polish;
 	}
 
-	public void setDetails(String details){
+	public void setDetails(Map<String, Object> details){
 		this.details = details;
+	}
+
+	public Map<String, Object> getDetails(){
+		return this.details;
 	}
 
 	public boolean isPolish() {

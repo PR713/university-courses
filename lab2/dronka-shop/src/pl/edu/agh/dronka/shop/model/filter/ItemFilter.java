@@ -2,6 +2,8 @@ package pl.edu.agh.dronka.shop.model.filter;
 
 import pl.edu.agh.dronka.shop.model.Item;
 
+import java.util.Map;
+
 public class ItemFilter {
 
 	private Item itemSpec = new Item();
@@ -27,6 +29,18 @@ public class ItemFilter {
 		// applies filter only if the flag (polish) is true)
 		if (itemSpec.isPolish() && !item.isPolish()) {
 			return false;
+		}
+
+        Map<String, Object> details = itemSpec.getDetails();
+
+		if (details != null){
+			for (String s : details.keySet()) {
+                if (details.get(s) instanceof Boolean){
+                    if (!item.getDetails().get(s).equals(details.get(s))) {
+                        return false;
+                    }
+                }
+			}
 		}
 
 		return true;

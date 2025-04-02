@@ -1,13 +1,10 @@
 package pl.edu.agh.dronka.shop.model.provider;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
-import pl.edu.agh.dronka.shop.model.Category;
-import pl.edu.agh.dronka.shop.model.Index;
-import pl.edu.agh.dronka.shop.model.Item;
-import pl.edu.agh.dronka.shop.model.Shop;
-import pl.edu.agh.dronka.shop.model.User;
+import pl.edu.agh.dronka.shop.model.*;
 
 public class ShopProvider {
 
@@ -82,19 +79,27 @@ public class ShopProvider {
                     case BOOKS: {
                         details.put(header.get(5),Integer.parseInt(dataLine[5]));
                         details.put(header.get(6),Boolean.parseBoolean(dataLine[6]));
+                        break;
                     }
                     case ELECTRONICS: {
                         details.put(header.get(5),Boolean.parseBoolean(dataLine[5]));
                         details.put(header.get(6),Boolean.parseBoolean(dataLine[6]));
+                        break;
                     }
                     case MUSIC: {
-                        details.put();
+                        details.put(header.get(5), MusicType.valueOf(dataLine[5].toUpperCase()));
+                        break;
                     }
                     case SPORT: {
                         break;
                     }
                     case FOOD: {
-                        details.put(header.get(5), Date(dataLine[5]));
+                        String[] split = dataLine[5].split("-");
+                        LocalDate date = LocalDate.of(Integer.parseInt(split[0]),
+                                Integer.parseInt(split[1]),
+                                Integer.parseInt(split[2]));
+                        details.put(header.get(5), date);
+                        break;
                     }
 
                 }
@@ -103,7 +108,7 @@ public class ShopProvider {
                 Item item = new Item(name, category, price, quantity);
                 item.setPolish(isPolish);
                 item.setSecondhand(isSecondhand);
-                item.setDetails(details.toString());
+                item.setDetails(details);
                 items.add(item);
 
             }

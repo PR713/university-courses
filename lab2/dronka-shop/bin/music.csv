@@ -1,2 +1,11 @@
-Nazwa,Cena,Ilość,Tanie bo polskie,Używany
-Ciley Myrus - Big Ball of Mud,60,20,TRUE,FALSE
+Nazwa,Cena,Ilość,Tanie bo polskie,Używany,Gatunek
+Ciley Myrus - Big Ball of Mud,60,20,TRUE,FALSE,Pop
+Queen - Bohemian Rapsody,100,40,TRUE,TRUE,ROCK
+Frank Sinatra - My Way,80,30,FALSE,TRUE,JAZZ
+Matt Dusk - Back in Town,75,36,TRUE,FALSE,JAZZ
+Dawid Podsiadło - Małomiasteczkowy,90,50,TRUE,FALSE,POP
+Sanah - Królowa dram,70,25,TRUE,FALSE,POP
+Perfect - Autobiografia,85,40,TRUE,TRUE,ROCK
+Metallica - Master of Puppets,120,35,FALSE,TRUE,ROCK
+Miles Davis - Kind of Blue,110,20,FALSE,FALSE,JAZZ
+Krystyna Prońko - Deszcz w Cisnej,65,30,TRUE,FALSE,JAZZ

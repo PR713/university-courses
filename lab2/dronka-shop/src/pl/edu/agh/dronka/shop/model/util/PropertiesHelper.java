@@ -8,6 +8,7 @@ import pl.edu.agh.dronka.shop.model.Item;
 public class PropertiesHelper {
 
 	public static Map<String, Object> getPropertiesMap(Item item) {
+		System.out.println("fcbeiurghvrietub");
 		Map<String, Object> propertiesMap = new LinkedHashMap<>();
 		
 		propertiesMap.put("Nazwa", item.getName());
@@ -16,7 +17,12 @@ public class PropertiesHelper {
 		propertiesMap.put("Ilość", Integer.toString(item.getQuantity()));
 		propertiesMap.put("Tanie bo polskie", item.isPolish());
 		propertiesMap.put("Używany", item.isSecondhand());
-		
+
+		Map<String, Object> details = item.getDetails();
+		for (String s : details.keySet()) {
+			propertiesMap.put(s, details.get(s));
+		}
+
 		return propertiesMap;
 	}
 }
