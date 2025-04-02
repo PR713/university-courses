@@ -32,10 +32,14 @@ public class ItemFilter {
 		}
 
         Map<String, Object> details = itemSpec.getDetails();
-
+		//System.out.println(itemSpec.getCategory() + " " + item.getCategory());
 		if (details != null){
 			for (String s : details.keySet()) {
+				//System.out.println(s + " " + item.getDetails());
                 if (details.get(s) instanceof Boolean){
+					if (item.getDetails().get(s) == null) {
+						continue; //trzeba by resetować details itemSpec przy 'Powrót' między kategoriami
+					}
                     if (!item.getDetails().get(s).equals(details.get(s))) {
                         return false;
                     }

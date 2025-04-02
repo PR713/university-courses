@@ -88,6 +88,7 @@ public class ShopProvider {
                     }
                     case MUSIC: {
                         details.put(header.get(5), MusicType.valueOf(dataLine[5].toUpperCase()));
+                        details.put(header.get(6), Boolean.parseBoolean(dataLine[6]));
                         break;
                     }
                     case SPORT: {
