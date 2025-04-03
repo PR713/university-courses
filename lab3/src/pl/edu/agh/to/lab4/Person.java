@@ -1,31 +1,12 @@
 package pl.edu.agh.to.lab4;
 
-public class Person {
-    private String firstname;
+public class Person extends AbstractSuspect{
 
-    private String lastname;
-
-    private int age;
-
-    public Person(String firstname, String lastname, int age) {
-        this.age = age;
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String firstname() {
-        return firstname;
-    }
-
-    public String middlename() {
-        return lastname;
+    public Person(String name, String lastname, int age) {
+        super(name, lastname, age);
     }
 
     public String display() {
-        return firstname + " " + lastname;
+        return name + " " + surname;
     }
 }
