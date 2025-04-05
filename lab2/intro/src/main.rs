@@ -1,4 +1,3 @@
-
 fn main() {
     let mut s = String::from("sample text"); // memory alocation 
 
@@ -6,14 +5,11 @@ fn main() {
 
     println!("{}", s);
 
-
     let s1 = String::from("sample");
     let s2 = s1;
 
     println!("\n\n{}", s2);
     //println!("{}", s1); // error, the value is invalid
-
-
 
     let a = 6;
     let b = a;
@@ -21,23 +17,18 @@ fn main() {
     println!("\n\n{}", a);
     println!("{}", b); //copyable
 
-
-
     let s1 = String::from("sample");
     let s2 = s1.clone();
 
     println!("\n\n{}", s2);
     println!("{}", s1); // we have two copies of "sample" text at a heap
 
-
-
     //////////////
-
 
     let n = 5;
 
     process_number(n);
-    process_number(n+1);
+    process_number(n + 1);
 
     let text = String::from("sample");
 
@@ -46,44 +37,28 @@ fn main() {
 
     //borrowing &text is the same as pointer in C/C++, but let s1 = &s (s = string)
     // s1 is a type of &String, the println!("{s1}"); will print s not address of s,
-    //it is dereferenced automatically 
-
+    //it is dereferenced automatically
 
     ///////////////////////////
 
-
-
     let s1 = create_text();
     println!("\n\n{}", s1);
-
-
-
 
     let s1 = String::from("sample text");
     let s2 = process_text1(s1);
     println!("\n\n{}", s2);
 
-
-
-
-
     let s1 = String::from("sample");
-    let s2 = process_text2(&s1);  // lends the s1 value through a reference
+    let s2 = process_text2(&s1); // lends the s1 value through a reference
     println!("\n\n{} -> {}", s1, s2); // both s1 and s2 are valid
 
-
-
     /////////////
-
 
     let mut s1 = String::from("sample text");
     process_text3(&mut s1, 4);
     println!("linia 80\n\n{}", s1);
 
-
     ////
-
-
 
     let mut s = String::from("sample");
     let s1 = &mut s;
@@ -91,26 +66,18 @@ fn main() {
 
     //println!("{}, {}", s1, s2);
 
-
     ///
-
     let mut s = String::from("sample");
     let s1 = &mut s;
     //let s2 = s; //cant move the s because it is borrowed
 
     //println!("{}, {}", s1, s2);
 
-
-
     //let s = generate_ref_to_string();
-    // when functions ends the reference to string created in the body 
+    // when functions ends the reference to string created in the body
     // of that function is deallocated
 
-
-
-
     //////////////////////Correct code exercise
-
 
     let mut x = 100;
     let y = &mut x;
@@ -120,8 +87,6 @@ fn main() {
     assert_eq!(x, 1200);
     println!("x value {}", x);
 
-
-
     let data = "Rust is great!".to_string();
 
     let x = get_char(&data);
@@ -129,11 +94,7 @@ fn main() {
 
     string_uppercase(data);
 
-
-
-
     //////slicing:
-
 
     let s = String::from("string slice demonstration");
 
@@ -141,10 +102,7 @@ fn main() {
 
     println!("{}", s1);
 
-
     ///
-
-
     let s = String::from("string slice demonstration");
 
     let s1 = &s[..12];
@@ -153,7 +111,6 @@ fn main() {
 
     println!("{} {} {}", s1, s2, s3);
 
-
     let mut s = String::from("text that illustrates slices");
     let first = first_word(&s[..]).to_string(); // inaczej mamy
     // błąd bez .to_string() bo tutam mamy pożyczkę na część danych i nie możemy orignału modyfikować
@@ -161,35 +118,41 @@ fn main() {
     s.clear(); //tries to modify text
 
     println!("{first}\n");
-
-
+    // Gdy robimy let s = "Hello" to jest to literał i typ s to &str - wskaźnik na ciąg znaków
+    // a jeśli String::from("Hello") to String
     ///
     assert_eq!(trim_me("Hello!     "), "Hello!");
     assert_eq!(trim_me("  What's up!"), "What's up!");
     assert_eq!(trim_me("   Hola!  "), "Hola!");
 
-
     assert_eq!(compose_me("Hello"), "Hello world!");
     assert_eq!(compose_me("Goodbye"), "Goodbye world!");
 
-
-    assert_eq!(replace_me("I think cars are cool"), "I think balloons are cool");
-    assert_eq!(replace_me("I love to look at cars"), "I love to look at balloons");
+    assert_eq!(
+        replace_me("I think cars are cool"),
+        "I think balloons are cool"
+    );
+    assert_eq!(
+        replace_me("I love to look at cars"),
+        "I love to look at balloons"
+    );
     println!("{}", trim_me(" I think cars...  "));
     println!("{}", trim_me(""));
 
-    //Table slicing TODO
+    //Table slicing:
+
+    let array = [1, 2, 3, 4, 5];
+    let array_slice : &[i32] = &array[2..4];
+    println!("{:?}", array_slice);
 
 } // s is going out of scope, the memory is automatically freed
 // no garbage collector or manual free needed
 
-
-
-fn process_text(s : String) {
+fn process_text(s: String) {
     println!("Processing text: {}", s); //if &String ten s or *s
 }
 
-fn process_number(n : i32) {
+fn process_number(n: i32) {
     println!("Processing number: {}", n)
 }
 
@@ -201,18 +164,18 @@ fn process_text1(s: String) -> String {
     s.to_uppercase()
 }
 
-fn process_text2(s: &String) -> String { // borrow s value and return new string
+fn process_text2(s: &String) -> String {
+    // borrow s value and return new string
     s.to_uppercase()
 }
 
-fn process_text3(s: &mut String, len : usize ) {
+fn process_text3(s: &mut String, len: usize) {
     s.truncate(len)
 }
 
 //fn generate_ref_to_string() -> &String {
 //    &String::from("dangling text")
 //}
-
 
 fn get_char(data: &String) -> char {
     data.chars().last().unwrap()
@@ -225,13 +188,12 @@ fn string_uppercase(mut data: String) {
     println!("{}", data);
 }
 
-
-fn first_word(s : &str) -> &str {
+fn first_word(s: &str) -> &str {
     let bytes = s.as_bytes();
 
     for (i, &item) in bytes.iter().enumerate() {
         if item == b' ' {
-            return &s[..i]
+            return &s[..i];
         }
     }
     s
@@ -244,17 +206,18 @@ fn trim_me(s: &str) -> &str {
     let mut end = s.len();
 
     if end == 0 {
-        return ""
+        return "";
     }
 
     if end == 1 {
         if bytes[0] == b' ' {
-            return ""
+            return "";
         }
-        return &s[start..end]
+        return &s[start..end];
     }
 
-    while start < end - 1 && bytes[start] == b' '{ //if only " " then at the end we return "" empty string
+    while start < end - 1 && bytes[start] == b' ' {
+        //if only " " then at the end we return "" empty string
         start += 1;
     }
 
@@ -264,7 +227,7 @@ fn trim_me(s: &str) -> &str {
     //always start is the boundary, so end - 1 will max be possibly equal to start and won't go below start
 
     if start == end {
-        return ""
+        return "";
     }
 
     &s[start..end]
