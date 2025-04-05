@@ -260,7 +260,8 @@ fn trim_me(s: &str) -> &str {
 
     while end - 1 > start && bytes[end - 1] == b' ' {
         end -= 1;
-    }
+    } //even >= but equality would never cause the end - 1 < start due to first while
+    //always start is the boundary, so end - 1 will max be possibly equal to start and won't go below start
 
     if start == end {
         return ""
