@@ -50,7 +50,12 @@ for label, cond in zip(basis_labels, condition_numbers):
 print(f"Najlepiej uwarunkowana funkcja bazowa: {basis_labels[best_index]} (Współczynnik: {best_cond:.5e})\n")
 
 # Rozwiązanie układu równań w celu znalezienia współczynników wielomianu interpolacyjnego
+# najpierw macierz vandermonde ma taki szkielet wielomianu z wartościami równymi wartościom
+# funkcji bazowych w tych puntkach (wielomian przeskalowany), który potem ważymy
+# za pomocą a_0, ... a_n, V @ w = y, w = [a0, ... a_n]
 coefficients = np.linalg.solve(best_vandermonde, population)
+#^^^ współczynniki a0,..., a_n jakie stoją przy phi(t)^0, przy phi^1, ... phi^8
+
 
 
 def horner(poly_coeffs, x_values):
