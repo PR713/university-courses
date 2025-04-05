@@ -29,6 +29,8 @@ def geometric_mean_distance(points):
     return result
 
 
+
+
 def zadanie1():
     ns = [10, 20, 50]
 
@@ -116,9 +118,9 @@ def zadanie2():
 
     plt.figure(figsize=(12, 6))
 
-    # Funkcja dokładna
+    # Funkcja interpolowana
     plt.plot(x_eval_uniform, f1(x_eval_uniform), 'k-', linewidth=2,
-             label='Funkcja dokładna')
+             label='Funkcja interpolowana')
     plt.plot(x_eval_uniform, lagrange_uni, 'r--', linewidth=1.5,
              label='Lagrange równomierny')
     plt.plot(x_eval_cheb, lagrange_cheb, 'b--', linewidth=1.5,
@@ -130,6 +132,7 @@ def zadanie2():
                 label='Węzły równomierne')
     plt.scatter(x_cheb, y_cheb, c='blue', marker='x', s=50,
                 label='Węzły Czebyszewa')
+
 
     plt.xlabel('x', fontsize=12)
     plt.ylabel('f(x)', fontsize=12)
@@ -199,9 +202,17 @@ def zadanie2():
         y_pred = cs(x_test)
         errors_f2['uniform_cs'].append(np.linalg.norm(y_pred - y_true))
 
-    print(errors_f2['uniform_cs'])
-    print(errors_f2['cheb_lag'])
+
+
+    print(errors_f1['uniform_lag'])
+    print(errors_f1['cheb_lag'])
+    print(errors_f1['uniform_cs'])
+
+    print("f2:")
     print(errors_f2['uniform_lag'])
+    print(errors_f2['cheb_lag'])
+    print(errors_f2['uniform_cs'])
+
 
     ## WYKRESY BŁĘDÓW ##
     # Dla funkcji f1
@@ -209,6 +220,8 @@ def zadanie2():
     plt.plot(ns, errors_f1['uniform_lag'], 'r-', label='Lagrange równomierny')
     plt.plot(ns, errors_f1['cheb_lag'], 'b-', label='Lagrange Czebyszew')
     plt.plot(ns, errors_f1['uniform_cs'], 'g-', label='Cubic spline równomierny')
+
+    plt.yscale('log')
 
     plt.xlabel('Liczba węzłów interpolacji (n)', fontsize=12)
     plt.ylabel('Norma błędu interpolacji', fontsize=12)
@@ -222,6 +235,8 @@ def zadanie2():
     plt.plot(ns, errors_f2['uniform_lag'], 'r-', label='Lagrange równomierny')
     plt.plot(ns, errors_f2['cheb_lag'], 'b-', label='Lagrange Czebyszew')
     plt.plot(ns, errors_f2['uniform_cs'], 'g-', label='Cubic spline równomierny')
+
+    plt.yscale('log')
 
     plt.xlabel('Liczba węzłów interpolacji (n)', fontsize=12)
     plt.ylabel('Norma błędu interpolacji', fontsize=12)
