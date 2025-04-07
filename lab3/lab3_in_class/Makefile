@@ -10,4 +10,4 @@ main:
 clean:
 	rm -f main
 
-PHONY: clean all
+.PHONY: clean all

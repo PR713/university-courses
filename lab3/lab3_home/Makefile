@@ -10,4 +10,4 @@ flipper:
 clean:
 	rm -f flipper
 
-PHONY: clean all 
+.PHONY: clean all
