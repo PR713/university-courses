@@ -1,5 +1,5 @@
 # Rust build files
-/target/
+**/target/
 
 # Rust dependencies
 /Cargo.lock
