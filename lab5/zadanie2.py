@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def f(x):
     return np.sqrt(x)
 
-# Transformacja o wektor T = [-1,0], przekształcamy przedział OX [0,2] do [-1,1]
+# Translacja o wektor T = [-1,0], przekształcamy przedział OX [0,2] do [-1,1]
 # tak że wartości z [-1,1] odpowiadają wartościom w punktach z przedziału [0,2]
 def g(y):
     return np.sqrt(y + 1)  # g(y) = f(y+1)
@@ -56,5 +56,11 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-error = np.sqrt(np.trapezoid((f_vals - P_vals)**2, x_vals))
-print(f"Błąd aproksymacji (L2): {error:.6f}")
+
+# error = np.sqrt(np.trapezoid((f_vals - P_vals)**2, x_vals))
+# print(f"Błąd aproksymacji (L2): {error:.6f}")
+
+error = np.trapezoid(np.abs(f_vals - P_vals), x_vals)
+print(f"Błąd aproksymacji (L1): {error:.6f}")
+#bez np.abs moglibyśmy nawet dostać błąd = 0, jeśli ze względu na znak
+#składniki znosiłyby się... i zgadza się bo wychodzi około 10 razy mniejszy błąd...
