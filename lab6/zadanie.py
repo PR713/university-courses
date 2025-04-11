@@ -17,7 +17,7 @@ def calculate_order(error_list, n_points_list, index):
 #                                                                   ^^^ h_index-1 = 1/n_points_list[index-1]
 
 
-pi_exact = np.pi
+pi_exact = np.pig
 print("Exact value of pi: ", pi_exact)
 
 m_values = np.arange(1, 26)
