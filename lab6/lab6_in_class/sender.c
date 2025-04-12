@@ -5,10 +5,10 @@
 #include <sys/stat.h>
 
 int main() {
+    
     int fd;
-
     fd = open("potok", O_WRONLY);
     write(fd, "Helloworld\n", 12);
-    
+    close(fd);
     return 0;
 }
