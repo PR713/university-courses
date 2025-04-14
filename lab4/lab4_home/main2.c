@@ -7,7 +7,9 @@
 int global = 0;
 
 int main(int argc, char *argv[]){
-    //example: ./main2 .
+    //example: ./main2 . <- child exit code 0
+    // ./main2 abc <- child exit code 2
+    // ./main2 -l <- child exit code 0
     if (argc != 2){
         printf("Incorrect number of arguments!");
         return EXIT_FAILURE;
