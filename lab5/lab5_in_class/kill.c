@@ -3,7 +3,7 @@
 #include <sys/types.h>
 
 //kill i raise, raise czeka, kill wysyła na pid programu
-// o nazwie kill sygnał SIGUSER1
+// o nazwie raise sygnał SIGUSR1
 
 int main(int argc, int *argv[]) {
     if (argc != 2) {
