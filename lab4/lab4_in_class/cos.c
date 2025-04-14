@@ -18,8 +18,6 @@ int main(){
             execv("/bin/ls", av);
         }
     }
-
     printf("%d\n", counter);
     exit(1);
-}// i jest wspólne w pętli i każdy poprzedni blokowany i jak ostatni zrobi całą pętle
-//to mamy print counter
+}
