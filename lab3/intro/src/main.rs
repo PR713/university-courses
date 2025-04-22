@@ -75,8 +75,8 @@ fn main() {
     println!("{:?}", r);
     println!("x: {}, y: {}", r.x, r.y);
 
-    let r1 = Rectangle{x: 10.0, ..r};
-    println!("{:?}", r1); //as spread operator JS
+    let r1 = Rectangle{x: 10.0, ..r};//as spread operator JS
+    println!("{:?}", r1);
 
 
     let mut r3 = Rectangle{x : 5.0, y : 9.0};
