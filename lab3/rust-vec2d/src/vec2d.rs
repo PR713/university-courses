@@ -34,6 +34,11 @@ impl<'a, 'b> Add<&'b Vec2D> for &'a Vec2D {
         //     type Output;
         //     fn add(self, rhs: Rhs) -> Self::Output;
         // }
+        // Add<&'b Vec2D> mówi Rhs czyli prawy argument dodawania
+        // for &'a Vec2D lewy argument
+        // czyli można np impl<'a> Add<Vec2D> for &'a Vec2D
+        // i potem &vec + vec1
+        // lub impl<'b> Add<&'b Vec2D> for Vec2D xD
         Vec2D {
             x: self.x + other.x,
             y: self.y + other.y,
