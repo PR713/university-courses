@@ -14,7 +14,7 @@ public class PersonDataProviderDecorator implements SuspectAggregate{
     public Iterator<AbstractSuspect> iterator() {
         return new Iterator<AbstractSuspect>() { //powoduje implementację Iterator<AbstractSuspect> bo na typach generycznych
             //nie działa to tak - inwariancja, w CompositeIterator bierzemy aggregates typu SuspectAggregate który implementują
-            //providerzy i na tym robimy iterator wspólny
+            //dekoratorzy (dekoratorów przekazujemy) i na nich dwóch robimy iterator wspólny, w pętli robiąc z aggregates(i) .iterator()
             private final Iterator<Person> internalIterator = personDataProvider.getAllCracovCitizens().iterator();
 
             @Override
