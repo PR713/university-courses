@@ -6,7 +6,4 @@ public class Person extends AbstractSuspect{
         super(name, lastname, age);
     }
 
-    public String display() {
-        return name + " " + surname;
-    }
 }

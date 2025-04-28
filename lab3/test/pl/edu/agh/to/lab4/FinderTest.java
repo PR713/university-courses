@@ -29,14 +29,14 @@ public class FinderTest {
     public void testDisplayingNotJailedPrisoner() {
         addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski", "802104543357", 2000, 1));
         suspectFinder.displayAllSuspectsWithName("Jan");
-        assertContentIsDisplayed("Jan Kowalski");
+        assertContentIsDisplayed("Prisoner{name='Jan', surname='Kowalski'}");
     }
 
     @Test
     public void testDisplayingSuspectedPerson() {
         allPersons.add(new Person("Jan", "Kowalski", 20));
         suspectFinder.displayAllSuspectsWithName("Jan");
-        assertContentIsDisplayed("Jan Kowalski");
+        assertContentIsDisplayed("Person{name='Jan', surname='Kowalski'}");
     }
 
     @Test

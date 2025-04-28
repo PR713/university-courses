@@ -33,14 +33,6 @@ public class Prisoner extends AbstractSuspect{
     }
 
 
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
     @Override
     public String toString() {
         return "Prisoner{" +

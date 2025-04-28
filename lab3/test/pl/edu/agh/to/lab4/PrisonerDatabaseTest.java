@@ -10,6 +10,6 @@ public class PrisonerDatabaseTest {
 
     @Test
     public void testThereAreThreeJails() {
-        assertEquals(3, prisonersDatabase.getAllPrisons().size());
+        assertEquals(3, prisonersDatabase.findAll().size());
     }
 }

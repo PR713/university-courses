@@ -26,6 +26,7 @@ public class AbstractSuspect {
     }
 
     public String display() {
-        return name + " " + surname;
+        return "Person{" + "name='" + name + '\'' +
+                ", surname='" + surname + '\'' + '}';
     }
 }
