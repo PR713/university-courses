@@ -8,7 +8,7 @@ public class Person extends AbstractSuspect{
 
     @Override
     boolean canBeAccused() {
-        return false;
+        return getAge() >= 18;
     }
 
 }

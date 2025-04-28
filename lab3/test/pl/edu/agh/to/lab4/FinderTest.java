@@ -11,73 +11,69 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class FinderTest {
     private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-
     private PrintStream originalOut;
+    private PersonDataProvider personDataProvider;
+    private PrisonersDatabase prisonersDatabase;
+    private Finder suspectFinder;
 
-    private Collection<Person> allPersons = new ArrayList<Person>();
+    @Before
+    public void setUp() {
+        originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
 
-    private Map<String, Collection<Prisoner>> allPrisoners = new HashMap<String, Collection<Prisoner>>();
-
-    private Finder suspectFinder = new Finder(allPersons, allPrisoners);
+        personDataProvider = new PersonDataProvider();
+        prisonersDatabase = new PrisonersDatabase();
+        suspectFinder = new Finder(personDataProvider, prisonersDatabase);
+    }
 
     @Test
     public void testDisplayingNotJailedPrisoner() {
-        addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski", "802104543357", 2000, 1));
         suspectFinder.displayAllSuspectsWithName("Jan");
-        assertContentIsDisplayed("Prisoner{name='Jan', surname='Kowalski'}");
+        assertTrue(outContent.toString().contains("Prisoner{name='Jan', surname='Kowalski'}"));
     }
 
     @Test
     public void testDisplayingSuspectedPerson() {
-        allPersons.add(new Person("Jan", "Kowalski", 20));
+        // Jan Kowalski jest dorosły i może być podejrzany
         suspectFinder.displayAllSuspectsWithName("Jan");
-        assertContentIsDisplayed("Person{name='Jan', surname='Kowalski'}");
+        assertTrue(outContent.toString().contains("Person{name='Jan', surname='Kowalski'}"));
     }
 
     @Test
     public void testNotDisplayingTooYoungPerson() {
-        allPersons.add(new Person("Jan", "Kowalski", 15));
-        suspectFinder.displayAllSuspectsWithName("Jan");
-        assertContentIsNotDisplayed("Jan Kowalski");
+        // Tomek Gimbus ma 14 lat i nie może być podejrzany
+        suspectFinder.displayAllSuspectsWithName("Tomek");
+        assertFalse(outContent.toString().contains("Person{name='Tomek', surname='Gimbus'}"));
     }
 
     @Test
     public void testNotDisplayingJailedPrisoner() {
-        allPersons.add(new Person("Jan", "Kowalski", 20));
-        addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski2", "802104543357", 2000, 20));
+        // Adam Future jest obecnie w więzieniu (judgementYear + sentenceDuration >= currentYear)
+        suspectFinder.displayAllSuspectsWithName("Adam");
+        assertFalse(outContent.toString().contains("Prisoner{name='Adam', surname='Future'}"));
+    }
+
+    @Test
+    public void testDisplayLimitedTo10Suspects() {
+        // Dodajmy więcej podejrzanych niż limit 10
+        for (int i = 0; i < 15; i++) {
+            personDataProvider.getAllCracovCitizens().add(new Person("Jan", "Nowak" + i, 25));
+        }
+
         suspectFinder.displayAllSuspectsWithName("Jan");
-        assertContentIsNotDisplayed("Jan Kowalski2");
-    }
+        String output = outContent.toString();
+        int count = output.split("Person\\{name='Jan', surname='").length - 1;
+        count += output.split("Prisoner\\{name='Jan', surname='").length - 1;
 
-    private void assertContentIsDisplayed(String expectedContent) {
-        assertTrue("Application did not contain expected content: " + outContent.toString(), outContent.toString()
-                .contains(expectedContent));
-    }
-
-    private void assertContentIsNotDisplayed(String expectedContent) {
-        assertFalse("Application did contain expected content although it should not: " + outContent.toString(), outContent.toString()
-                .contains(expectedContent));
-    }
-
-    @Before
-    public void redirectSystemOut() {
-        originalOut = System.out;
-        System.setOut(new PrintStream(outContent));
+        assertTrue(count <= 10);
     }
 
     @After
-    public void resetSystemOut() {
+    public void tearDown() {
         System.setOut(originalOut);
-    }
-
-    private void addPrisoner(String category, Prisoner news) {
-        if (!allPrisoners.containsKey(category))
-            allPrisoners.put(category, new ArrayList<Prisoner>());
-        allPrisoners.get(category).add(news);
     }
 }
