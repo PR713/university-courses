@@ -2,11 +2,9 @@ package pl.edu.agh.to.lab4;
 
 import java.util.*;
 
-public class PrisonersDatabase implements SuspectAggregate {
+public class PrisonersDatabase {
 
     private final Map<String, Collection<Prisoner>> prisoners = new HashMap<String, Collection<Prisoner>>();
-
-    private final FlatIterator iterator = new FlatIterator(prisoners);
 
     public PrisonersDatabase() {
 
@@ -51,10 +49,5 @@ public class PrisonersDatabase implements SuspectAggregate {
     @Override
     public String toString() {
         return "PrisonersDatabase{" + "prisoners=" + prisoners + '}';
-    }
-
-    @Override
-    public Iterator<AbstractSuspect> iterator() {
-        return this.iterator;
     }
 }
