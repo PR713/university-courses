@@ -1,0 +1,122 @@
+db.orders.aggregate([
+    {
+      $lookup: {
+        from: "customers",
+        localField: "CustomerID",
+        foreignField: "CustomerID",
+        as: "Customer"
+      }
+    },
+    {
+      $unwind: "$Customer"
+    },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "EmployeeID",
+        foreignField: "EmployeeID",
+        as: "Employee"
+      }
+    },
+    {
+      $unwind: "$Employee"
+    },
+    {
+      $lookup: {
+        from: "orderdetails",
+        localField: "OrderID",
+        foreignField: "OrderID",
+        as: "Orderdetails"
+      }
+    },
+    {
+      $lookup: {
+        from: "shippers",
+        localField: "ShipVia",
+        foreignField: "ShipperID",
+        as: "Shipment.Shipper"
+      }
+    },
+    {
+      $unwind: { path: "$Shipment.Shipper", preserveNullAndEmptyArrays: true }
+    },
+    {
+      $lookup: {
+        from: "products",
+        localField: "Orderdetails.ProductID",
+        foreignField: "ProductID",
+        as: "ProductDetails"
+      }
+    },
+    {
+      $unwind: { path: "$ProductDetails", preserveNullAndEmptyArrays: true }
+    },
+    {
+      $project: {
+        "_id": 1,
+        "OrderID": 1,
+        "Customer": {
+          "CustomerID": "$Customer.CustomerID",
+          "CompanyName": "$Customer.CompanyName",
+          "City": "$Customer.City",
+          "Country": "$Customer.Country"
+        },
+        "Employee": {
+          "EmployeeID": "$Employee.EmployeeID",
+          "FirstName": "$Employee.FirstName",
+          "LastName": "$Employee.LastName",
+          "Title": "$Employee.Title"
+        },
+        "Dates": {
+          "OrderDate": "$OrderDate",
+          "RequiredDate": "$RequiredDate"
+        },
+        "Orderdetails": {
+          $map: {
+            input: "$Orderdetails",
+            as: "detail",
+            in: {
+              "UnitPrice": "$$detail.UnitPrice",
+              "Quantity": "$$detail.Quantity",
+              "Discount": "$$detail.Discount",
+              "Value": { $multiply: ["$$detail.UnitPrice", "$$detail.Quantity", "$$detail.Discount"] },
+              "product": {
+                "ProductID": "$$detail.ProductID",
+                "ProductName": "$ProductDetails.ProductName",
+                "QuantityPerUnit": "$ProductDetails.QuantityPerUnit",
+                "CategoryID": "$ProductDetails.CategoryID",
+                "CategoryName": "$ProductDetails.CategoryName"
+              }
+            }
+          }
+        },
+        "Freight": "$Freight",
+        "OrderTotal": {
+          $sum: {
+            $map: {
+              input: "$Orderdetails",
+              as: "d",
+              in: { $multiply: ["$$d.UnitPrice", "$$d.Quantity"] }
+            }
+          }
+        },
+        "Shipment": {
+          "Shipper": {
+            "ShipperID": "$Shipment.Shipper.ShipperID",
+            "CompanyName": "$Shipment.Shipper.CompanyName"
+          },
+          "ShipName": "$ShipName",
+          "ShipAddress": "$ShipAddress",
+          "ShipCity": "$ShipCity",
+          "ShipCountry": "$ShipCountry"
+        }
+      }
+    },
+    {
+      $merge: {
+        into: "OrderInfo",
+        whenMatched: "merge",
+        whenNotMatched: "insert"
+      }
+    }
+  ])
