@@ -55,7 +55,7 @@ public class Finder {
         }
 
         for (Person p : suspectedPersons) {
-            System.out.println(p.display());
+            System.out.println(p);
         }
     }
 }

@@ -6,4 +6,9 @@ public class Person extends AbstractSuspect{
         super(name, lastname, age);
     }
 
+    @Override
+    boolean canBeAccused() {
+        return false;
+    }
+
 }

@@ -1,15 +1,15 @@
 package pl.edu.agh.to.lab4;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class PrisonersDatabase {
+public class PrisonersDatabase implements SuspectAggregate {
 
     private final Map<String, Collection<Prisoner>> prisoners = new HashMap<String, Collection<Prisoner>>();
 
+    private final FlatIterator iterator = new FlatIterator(prisoners);
+
     public PrisonersDatabase() {
+
         if (!prisoners.containsKey("Wiezienie krakowskie")) {
             prisoners.put("Wiezienie krakowskie", new ArrayList<Prisoner>());
         }
@@ -51,5 +51,10 @@ public class PrisonersDatabase {
     @Override
     public String toString() {
         return "PrisonersDatabase{" + "prisoners=" + prisoners + '}';
+    }
+
+    @Override
+    public Iterator<AbstractSuspect> iterator() {
+        return this.iterator;
     }
 }

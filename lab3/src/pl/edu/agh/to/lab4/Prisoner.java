@@ -34,6 +34,11 @@ public class Prisoner extends AbstractSuspect{
 
 
     @Override
+    boolean canBeAccused() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "Prisoner{" +
                 "name='" + name + '\'' +

@@ -1,6 +1,6 @@
 package pl.edu.agh.to.lab4;
 
-public class AbstractSuspect {
+public abstract class AbstractSuspect {
     protected final String name;
 
     protected final String surname;
@@ -25,7 +25,10 @@ public class AbstractSuspect {
         return surname;
     }
 
-    public String display() {
+    abstract boolean canBeAccused();
+
+    @Override
+    public String toString() {
         return "Person{" + "name='" + name + '\'' +
                 ", surname='" + surname + '\'' + '}';
     }
