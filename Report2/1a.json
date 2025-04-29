@@ -79,7 +79,9 @@ db.orders.aggregate([
               "UnitPrice": "$$detail.UnitPrice",
               "Quantity": "$$detail.Quantity",
               "Discount": "$$detail.Discount",
-              "Value": { $multiply: ["$$detail.UnitPrice", "$$detail.Quantity", "$$detail.Discount"] },
+              "Value": { $multiply: ["$$detail.UnitPrice",
+                                   "$$detail.Quantity",
+                                    {$subtract: [1,"$$detail.Discount"] }]},
               "product": {
                 "ProductID": "$$detail.ProductID",
                 "ProductName": "$ProductDetails.ProductName",
