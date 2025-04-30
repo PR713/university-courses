@@ -110,7 +110,7 @@ db.orders.aggregate([
         Shipment: 1
     }},
     {
-      $out: "Order123Info"
+      $out: "OrderInfo"
     }
   ])
-  
+  //project dajemy na końcu inaczej gubimy dane
