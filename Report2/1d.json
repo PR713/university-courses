@@ -46,7 +46,8 @@ db.orders.aggregate([ //orignalne kolekcje
             _id: { CustomerID: "$CustomerID", Year: "$Year", Month: "$Month"},
             CustomerID: { $first: "$CustomerID"},
             CompanyName: { $first: "$CompanyName"},
-            TotalSale: { $sum: "$TotalSale"}
+            TotalSale: { $sum: "$TotalSale"} //wie z jakie sumować bo wcześniej TotalSale
+            //było z danym CustomerID w $project
         }
     },
 
@@ -66,7 +67,7 @@ db.orders.aggregate([ //orignalne kolekcje
 
     {
         $project: {
-            _id: 0,
+            _id: 1,
             CustomerID: "$_id.CustomerID",
             CompanyName: "$CompanyName",
             Sales: 1
@@ -112,7 +113,7 @@ db.OrderInfo.aggregate([
     },
     {
       $project: {
-        _id: 0,
+        _id: 1,
         CustomerID: "$_id.CustomerID", //wyżej tylko w _id
         CompanyName: "$CompanyName",
         Sales: 1
@@ -127,19 +128,26 @@ db.OrderInfo.aggregate([
 
   db.CustomerInfo.aggregate([
     {
-      $unwind: "$Sales"
+      $unwind: "$Orders"
     },
+
     {
-      $group: {
-        _id: { CustomerID: "$CustomerID", Year: "$Sales.Year", Month: "$Sales.Month" },
-        CustomerID: { $first: "$CustomerID" },
-        CompanyName: { $first: "$CompanyName" },
-        TotalSale: { $sum: "$Sales.Total" }
+      $addFields: {
+        Year: { $year: "$Orders.Dates.OrderDate"},
+        Month: { $month: "$Orders.Dates.OrderDate"}
       }
     },
     {
       $group: {
-        _id: "$CustomerID",
+        _id: { CustomerID: "$CustomerID", Year: "$Year", Month: "$Month" },
+        CustomerID: { $first: "$CustomerID" },
+        CompanyName: { $first: "$CompanyName" },
+        TotalSale: { $sum: "$Orders.OrderTotal" }
+      }
+    },
+    {
+      $group: {
+        _id: {CustomerID: "$CustomerID"},
         CompanyName: { $first: "$CompanyName" },
         Sales: {
           $push: {
@@ -153,7 +161,7 @@ db.OrderInfo.aggregate([
     {
       $project: {
         _id: 0,
-        CustomerID: "$CustomerID",
+        CustomerID: "$_id.CustomerID",
         CompanyName: "$CompanyName",
         Sales: 1
       }

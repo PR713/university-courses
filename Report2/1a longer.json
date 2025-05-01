@@ -69,7 +69,7 @@ db.orders.aggregate([
   {
     $addFields: {
       "Orderdetails.product": {
-        ProductID: "$Product.ProductID",
+        ProductID: "$Product.ProductID", //ze względu na $unwind tablice są rozbijane na osobne dokumenty
         ProductName: "$Product.ProductName",
         QuantityPerUnit: "$Product.QuantityPerUnit",
         CategoryID: "$Product.CategoryID",
