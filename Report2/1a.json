@@ -95,7 +95,7 @@ db.orders.aggregate([
           ShipCountry: "$ShipCountry"
         }}
     }},
-    { $addFields: {
+    { $addFields: { //widzi tylko pojedyncze dokumenty, można przenieść wyżej do group i $sum
         OrderTotal: { $sum: "$Orderdetails.Value" }
     }},
     { $project: {
