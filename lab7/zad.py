@@ -4,36 +4,28 @@ from scipy import integrate
 from scipy.integrate import quad
 from numpy.polynomial.legendre import leggauss
 
-
-# ==========================
-# Funkcje podcałkowe
-# ==========================
-
 def f1(x):
-    """Funkcja podcałkowa: 4/(1+x²).
-    Jej całka na [0,1] to dokładnie π."""
     return 4 / (1 + x ** 2)
 
 
 def f2(x):
-    """Funkcja podcałkowa: √x * log(x).
-    Osobliwość w x=0, ale całka na [0,1] istnieje i wynosi -4/9.
+    """Osobliwość w x=0, ale całka na [0,1] istnieje i wynosi -4/9.
     Teraz działa zarówno dla skalarnych x, jak i tablic NumPy."""
     if isinstance(x, (np.ndarray, list)):
-        # Wersja dla tablic
+        #dla tablic
         with np.errstate(divide='ignore', invalid='ignore'):
             result = np.sqrt(x) * np.log(x)
-            result[x == 0] = 0  # Twarde ustawienie limitu
+            result[x == 0] = 0 #granica z tw. D'Hospitala -> 0
         return result
     else:
-        # Wersja dla pojedynczych wartości
+        #dla pojedynczych wartości
         if x == 0:
             return 0.0
         with np.errstate(divide='ignore', invalid='ignore'):
             return np.sqrt(x) * np.log(x)
 
 
-# Parametry dla trzeciej funkcji
+# Parametry dla f3
 a = 0.001
 b = 0.004
 
@@ -44,7 +36,6 @@ def f3(x):
     return 1 / ((x - 0.3) ** 2 + a) + 1 / ((x - 0.9) ** 2 + b) - 6
 
 
-# Listy funkcji, etykiet i wartości dokładnych
 functions = [f1, f2, f3]
 labels = [
     "∫₀¹ 4/(1+x²) dx (π)",
@@ -53,30 +44,22 @@ labels = [
 ]
 exact_values = [np.pi, -4 / 9, None]  # Dla trzeciej funkcji obliczymy wartość numerycznie
 
-# ==========================
-# Parametry obliczeń
-# ==========================
 
 m_values = np.arange(1, 17)  # Dla metod złożonych (2^m + 1 punktów)
 n_values = np.arange(2, 80)  # Dla kwadratury Gaussa-Legendre'a
 tolerances = np.logspace(0, -14, num=12)  # Tolerancje dla metod adaptacyjnych
 
 
-# ==========================
 # Adaptacyjna metoda trapezów
-# ==========================
-
 def adaptive_trapezoid(f, a, b, tol_abs, max_iter=10000):
     """Adaptacyjna całkowanie metodą trapezów z kontrolą błędu.
-
-    Args:
         f: funkcja podcałkowa (musi obsługiwać pojedyncze wartości)
         a, b: granice całkowania
         tol_abs: tolerancja absolutna błędu
         max_iter: zabezpieczenie przed nieskończoną pętlą
 
-    Returns:
-        tuple: (wartość całki, liczba ewaluacji funkcji)
+    zwraca:
+        (wartość całki, liczba ewaluacji funkcji)
     """
     # Sprawdzenie wartości na granicach
     fa = f(a)
@@ -113,9 +96,6 @@ def adaptive_trapezoid(f, a, b, tol_abs, max_iter=10000):
     return integral, neval
 
 
-# ==========================
-# Główna pętla obliczeń
-# ==========================
 
 for idx, (f, label, exact) in enumerate(zip(functions, labels, exact_values)):
     print(f"\n==== Obliczenia dla: {label} ====")
@@ -125,7 +105,6 @@ for idx, (f, label, exact) in enumerate(zip(functions, labels, exact_values)):
         exact, _ = quad(f, 0, 1, epsrel=1e-14)
         print(f"Wartość dokładna (numerycznie): {exact:.15f}")
 
-    # Inicjalizacja list na wyniki
     n_points, errors_mid, errors_trapz, errors_simps = [], [], [], []
 
     # Metody złożone: punkt środkowy, trapezowa, Simpsona
@@ -174,9 +153,8 @@ for idx, (f, label, exact) in enumerate(zip(functions, labels, exact_values)):
         nevals_gk.append(info['neval'])
         errors_gk.append(err)
 
-    # ==========================
-    # Wizualizacja wyników
-    # ==========================
+
+#wizualizacja
     plt.figure(figsize=(12, 8))
 
     # Metody złożone
