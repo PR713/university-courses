@@ -1,0 +1,170 @@
+db.orders.aggregate([ //orignalne kolekcje
+    {
+        $lookup: {
+            from: "customers",
+            localField: "CustomerID",
+            foreignField: "CustomerID",
+            as: "Customer"
+        }
+    },
+    { $unwind: "$Customer"},
+
+    {
+        $lookup: {
+            from: "orderdetails",
+            localField: "OrderID",
+            foreignField: "OrderID",
+            as: "Orderdetails"
+        }
+    },
+    { $unwind: "$Orderdetails"},
+
+    {
+        $project: {
+            CustomerID: "$Customer.CustomerID",
+            CompanyName: "$Customer.CompanyName",
+            OrderDate: "$OrderDate", //z orders
+            TotalSale: {
+                $multiply: [
+                    "$Orderdetails.UnitPrice",
+                    "$Orderdetails.Quantity",
+                    { $subtract: [1, "$Orderdetails.Discount"]}
+                ]
+            }
+        }
+    },
+
+    {
+        $addFields: {
+            Year: { $year: "$OrderDate"},
+            Month: { $month: "$OrderDate"},
+        }
+    },
+
+    {
+        $group: {
+            _id: { CustomerID: "$CustomerID", Year: "$Year", Month: "$Month"},
+            CustomerID: { $first: "$CustomerID"},
+            CompanyName: { $first: "$CompanyName"},
+            TotalSale: { $sum: "$TotalSale"} //wie z jakie sumować bo wcześniej TotalSale
+            //było z danym CustomerID w $project
+        }
+    },
+
+    {
+        $group: {
+            _id: { CustomerID: "$CustomerID" } ,
+            CompanyName: { $first: "$CompanyName" },
+            Sales: {
+                $push: {
+                    Year: "$_id.Year",
+                    Month: "$_id.Month",
+                    Total: "$TotalSale"
+                }
+            }
+        }
+    },
+
+    {
+        $project: {
+            _id: 1,
+            CustomerID: "$_id.CustomerID",
+            CompanyName: "$CompanyName",
+            Sales: 1
+          }
+    }
+
+])
+
+
+
+//----------------
+
+db.OrderInfo.aggregate([
+    {
+      $unwind: "$Orderdetails"
+    }, //niepotrzebne
+    {
+      $addFields: {
+        Year: { $year: "$Dates.OrderDate" },
+        Month: { $month: "$Dates.OrderDate" }
+      }
+    },
+    {
+      $group: {
+        _id: { CustomerID: "$Customer.CustomerID", Year: "$Year", Month: "$Month" },
+        CustomerID: { $first: "$Customer.CustomerID" },
+        CompanyName: { $first: "$Customer.CompanyName" },
+        TotalSale: { $sum: "$Orderdetails.Value" }
+      }
+    },
+    {
+      $group: {
+        _id: {CustomerID: "$CustomerID"},//z zakresu wyżej dostępny
+        CompanyName: { $first: "$CompanyName" },
+        Sales: {
+          $push: {
+            Year: "$_id.Year",
+            Month: "$_id.Month",
+            Total: "$TotalSale"
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 1,
+        CustomerID: "$_id.CustomerID", //wyżej tylko w _id
+        CompanyName: "$CompanyName",
+        Sales: 1
+      }
+    }
+  ])
+  
+
+
+
+  //------------------ todo ogarnąć : 
+
+  db.CustomerInfo.aggregate([
+    {
+      $unwind: "$Orders"
+    },
+
+    {
+      $addFields: {
+        Year: { $year: "$Orders.Dates.OrderDate"},
+        Month: { $month: "$Orders.Dates.OrderDate"}
+      }
+    },
+    {
+      $group: {
+        _id: { CustomerID: "$CustomerID", Year: "$Year", Month: "$Month" },
+        CustomerID: { $first: "$CustomerID" },
+        CompanyName: { $first: "$CompanyName" },
+        TotalSale: { $sum: "$Orders.OrderTotal" }
+      }
+    },
+    {
+      $group: {
+        _id: {CustomerID: "$CustomerID"},
+        CompanyName: { $first: "$CompanyName" },
+        Sales: {
+          $push: {
+            Year: "$_id.Year",
+            Month: "$_id.Month",
+            Total: "$TotalSale"
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        CustomerID: "$_id.CustomerID",
+        CompanyName: "$CompanyName",
+        Sales: 1
+      }
+    }
+  ])
+  

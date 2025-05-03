@@ -1,0 +1,149 @@
+db.customers.aggregate([
+    {
+      $lookup: {
+        from: "orders",
+        localField: "CustomerID",
+        foreignField: "CustomerID",
+        as: "Orders"
+      }
+    },
+    { $unwind: "$Orders" },
+    {
+      $lookup: {
+        from: "employees",
+        localField: "Orders.EmployeeID",
+        foreignField: "EmployeeID",
+        as: "Employee"
+      }
+    },
+    { $unwind: "$Employee" },
+    {
+      $lookup: {
+        from: "shippers",
+        localField: "Orders.ShipVia",
+        foreignField: "ShipperID",
+        as: "Shipper"
+      }
+    },
+    { $unwind: "$Shipper" },
+    {
+      $lookup: {
+        from: "orderdetails",
+        localField: "Orders.OrderID",
+        foreignField: "OrderID",
+        as: "Details"
+      }
+    },
+    { $unwind: "$Details" },
+    {
+      $lookup: {
+        from: "products",
+        localField: "Details.ProductID",
+        foreignField: "ProductID",
+        as: "Product"
+      }
+    },
+    { $unwind: "$Product" },
+    {
+      $lookup: {
+        from: "categories",
+        localField: "Product.CategoryID",
+        foreignField: "CategoryID",
+        as: "Category"
+      }
+    },
+    { $unwind: "$Category" },
+    {
+      $addFields: {
+        "Details.Value": {
+          $multiply: [
+            "$Details.UnitPrice",
+            "$Details.Quantity",
+            { $subtract: [1, "$Details.Discount"] }
+          ]
+        },
+        "Details.Product": {
+          ProductID: "$Product.ProductID",
+          ProductName: "$Product.ProductName",
+          QuantityPerUnit: "$Product.QuantityPerUnit",
+          CategoryID: "$Category.CategoryID",
+          CategoryName: "$Category.CategoryName"
+        }
+      }
+    },
+    {
+      $group: {
+        _id: {
+          CustomerID: "$CustomerID",
+          OrderID: "$Orders.OrderID"
+        },
+        CompanyName: { $first: "$CompanyName" },
+        City: { $first: "$City" },
+        Country: { $first: "$Country" },
+        Employee: {
+          $first: {
+            EmployeeID: "$Employee.EmployeeID",
+            FirstName: "$Employee.FirstName",
+            LastName: "$Employee.LastName",
+            Title: "$Employee.Title"
+          }
+        },
+        Dates: {
+          $first: {
+            OrderDate: "$Orders.OrderDate",
+            RequiredDate: "$Orders.RequiredDate"
+          }
+        },
+        Freight: { $first: "$Orders.Freight" },
+        Shipment: {
+          $first: {
+            Shipper: {
+              ShipperID: "$Shipper.ShipperID",
+              CompanyName: "$Shipper.CompanyName"
+            },
+            ShipName: "$Orders.ShipName",
+            ShipAddress: "$Orders.ShipAddress",
+            ShipCity: "$Orders.ShipCity",
+            ShipCountry: "$Orders.ShipCountry"
+          }
+        },
+        OrderDetails: { $push: "$Details" },
+        OrderTotal: {
+          $sum: "$Details.Value"
+        }
+      }
+    },
+    {
+      $group: {
+        _id: "$_id.CustomerID",
+        CustomerID: { $first: "$_id.CustomerID" },
+        CompanyName: { $first: "$CompanyName" },
+        City: { $first: "$City" },
+        Country: { $first: "$Country" },
+        Orders: {
+          $push: {
+            OrderID: "$_id.OrderID",
+            Employee: "$Employee",
+            Dates: "$Dates",
+            Freight: "$Freight",
+            Shipment: "$Shipment",
+            Orderdetails: "$OrderDetails",
+            OrderTotal: "$OrderTotal"
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 1,
+        CustomerID: 1,
+        CompanyName: 1,
+        City: 1,
+        Country: 1,
+        Orders: 1
+      }
+    },
+    {
+      $out: "CustomerInfo"
+    }
+  ])
