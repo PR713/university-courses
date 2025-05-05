@@ -313,6 +313,7 @@ db.orders.aggregate([
   ])
 ```
 
+<br><br>
 ### b)
 
 
@@ -467,14 +468,14 @@ db.customers.aggregate([
     }
   ])
 ```
-
+<br><br>
 ### c)
 
 
 ```js
 --  ...
 ```
-
+<br><br>
 ### d)
 
 
@@ -649,7 +650,7 @@ db.OrderInfo.aggregate([
   ])
   
 ```
-
+<br><br>
 ### e)
 
 #### Wstawianie danych: 
@@ -690,7 +691,7 @@ db.orderdetails.insertMany([
 ])
 ```
 
-<br><br><br>
+<br><br><br><br>
 #### Aktualizacja kolekcji OrderInfo i CustomerInfo: 
 
 ```js
@@ -1007,7 +1008,7 @@ db.orders.aggregate([
     }
   ])
 ```
-
+<br><br>
 ### f)
 
 
@@ -1520,7 +1521,6 @@ db.createCollection("trips", {
 ```
 <br><br>
 ##### Indeksy:
-
 ```js
 db.trips.createIndex({ "company.name": 1 });
 db.trips.createIndex({ destination: 1 });
@@ -1768,9 +1768,23 @@ db.trips.insertMany([
 ```
 
 
-
-### Porównanie wairantów: 
-
+<br><br>
+### Porównanie wariantów: 
+1) **Struktura danych**
+    - **Znormalizowany**: Rozbicie na wiele kolekcji (`companies`, `users`, `trips`, `bookings`) z relacjami przez `ObjectId`. 
+    - **Zdenormalizowany**: Wszystkie dane osadzone w jednej kolekcji `trips`.
+<br>
+2) **Wydajność odczytu**  
+   - **Znormalizowany**: Wymaga `$lookup` - wolniejsze zapytania.  
+   - **Zdenormalizowany**: Dane od razu dostępne - szybsze odczyty. 
+<br>
+3) **Aktualizacja danych**  
+   - **Znormalizowany**: Łatwiejsze, zmiana w jednym miejscu .  
+   - **Zdenormalizowany**: Trudniejsze, dane powielone w wielu dokumentach.
+<br>
+4) **Spójność danych**  
+   - **Znormalizowany**: Lepsza spójność, brak duplikatów.  
+   - **Zdenormalizowany**: Ryzyko niespójności, np. różne wersje danych użytkownika (patrz 3)).
 
 ---
 
