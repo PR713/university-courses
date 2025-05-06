@@ -162,12 +162,10 @@ fn main() {
     let x = Some(5);
     let y = 10;
 
-    //let sum = x + y; //i32 + Option<i32> Błąd
+    //let sum = x + y; //Option<i32> + i32 Błąd
 }
 
 enum Option<T> { // T depicts generic type
     Some(T),
     None
 }
-
-///Option
