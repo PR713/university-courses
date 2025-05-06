@@ -57,7 +57,10 @@ impl Chessman {
             | Rook { position, .. }
             | Queen { position, .. }
             | King { position, .. } => *position,
-        };
+        }; //*position oznacza dereferencję bo działamy na referencji (pożyczce)
+        //ale jako że ma Derive(Copy) to możemy przypisać zderefencjonowaną wartość
+        //ona się wtedy kopiuje zamiast przenoszenia, shallow copy
+        //Clone to deep copy .clone()
 
         let color = match self {
             Pawn { color, .. }
