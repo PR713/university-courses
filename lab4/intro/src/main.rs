@@ -156,16 +156,40 @@ fn main() {
     let some_number = Some(5);
     let some_text = Some(String::from("Some value in Option type"));
 
-    //let no_value : Option<i32> = None;
+    let no_value : Option<i32> = None; //trzeba podać explicit
 
 
     let x = Some(5);
     let y = 10;
 
     //let sum = x + y; //Option<i32> + i32 Błąd
+
+    let n = increment(Some(5));
+
+    let n : Option<i32> = Some(5);
+    let n : i32 = n.unwrap();
+
+    let m : Option<String> = Some(String::from("I use Option"));
+    let m : String = m.expect("This always should be a non empty String");
+
+    let argh : Option<String> = None;
+    //let args = argh.unwrap(); //panics
+
+
+    assert_eq!(Some("car").unwrap_or("bike"), "car");
+    assert_eq!(None.unwrap_or("bike"), "bike");
+
+    //lub jeśli mamy trait Default to możne unwrap_or_default od razu wbudowane
 }
 
-enum Option<T> { // T depicts generic type
-    Some(T),
-    None
+// enum Option<T> { // T depicts generic type
+//     Some(T),
+//     None
+// }
+
+fn increment(n : Option<i32>) -> Option<i32>{
+    match n {
+        Some(n) => Some(n + 1),
+        None => None
+    }
 }
