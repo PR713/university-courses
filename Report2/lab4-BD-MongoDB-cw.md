@@ -1,5 +1,6 @@
 # Dokumentowe bazy danych – MongoDB
 
+
 **Imiona i nazwiska autorów:**
 ### Radosław Szepielak, Kacper Wdowiak
 
@@ -195,6 +196,7 @@ W raporcie należy zamieścić kod poleceń oraz uzyskany rezultat, np wynik  p
 
 ### a)
 
+
 ```js
 db.orders.aggregate([
     { $lookup: {
@@ -312,6 +314,7 @@ db.orders.aggregate([
     }
   ])
 ```
+
 
 <br><br>
 ### b)
@@ -468,13 +471,16 @@ db.customers.aggregate([
     }
   ])
 ```
+
 <br><br>
 ### c)
+
 
 
 ```js
 --  ...
 ```
+
 <br><br>
 ### d)
 
@@ -529,6 +535,7 @@ db.orders.aggregate([ //orignalne kolekcje
             CustomerID: { $first: "$CustomerID"},
             CompanyName: { $first: "$CompanyName"},
             TotalSale: { $sum: "$TotalSale"}
+
         }
     },
 
@@ -556,6 +563,7 @@ db.orders.aggregate([ //orignalne kolekcje
     }
 
 ])
+
 
 
 
@@ -605,6 +613,7 @@ db.OrderInfo.aggregate([
 
 
 
+
   ---------------------------
 
   db.CustomerInfo.aggregate([
@@ -650,10 +659,12 @@ db.OrderInfo.aggregate([
   ])
   
 ```
+
 <br><br>
 ### e)
 
 #### Wstawianie danych: 
+
 ```js
 db.orders.insertOne({
     OrderID: 11078,
@@ -689,12 +700,14 @@ db.orderdetails.insertMany([
         Discount: 0
     }
 ])
+
 ```
 
 <br><br><br><br>
 #### Aktualizacja kolekcji OrderInfo i CustomerInfo: 
 
 ```js
+
 db.orders.aggregate([
     { $match: { OrderID: 11078 } },
     { $lookup: {
@@ -803,6 +816,7 @@ db.orders.aggregate([
         whenNotMatched: "insert"
     }}
   ]);
+
 ```
 
 
@@ -1008,8 +1022,10 @@ db.orders.aggregate([
     }
   ])
 ```
+
 <br><br>
 ### f)
+
 
 
 ```js
