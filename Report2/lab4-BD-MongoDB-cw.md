@@ -3122,6 +3122,15 @@ db.trips.insertMany([
   }
 ]);
 ```
+### Wariant 1 - przykładowa operacja:
+
+![Opis alternatywny](./zad2_2.png)
+![Opis alternatywny](./zad2_3.png)
+
+
+### Wariant 2 - przykładowa operacja:
+
+![Opis alternatywny](./zad2_1.png)
 
 
 <br><br>
