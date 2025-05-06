@@ -1384,9 +1384,11 @@ db.orderdetails.insertMany([
 ```
 
 <br><br><br><br>
-#### Aktualizacja kolekcji OrderInfo i CustomerInfo: 
+#### Aktualizacja kolekcji OrderInfo: 
 
 ```js
+db.OrderInfo.createIndex({ OrderID: 1 }, { unique: true })
+
 
 db.orders.aggregate([
     { $match: { OrderID: 11078 } },
@@ -1565,8 +1567,11 @@ db.orders.aggregate([
 ```
 
 <br><br>
+#### Aktualizacja kolekcji CustomerInfo:
 
 ```js
+db.CustomerInfo.createIndex({ CustomerID: 1 }, { unique: true })
+
   db.customers.aggregate([
     { 
       $match: { 
