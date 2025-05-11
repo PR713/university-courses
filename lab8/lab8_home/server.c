@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/msg.h>
-//#include <sys/ipc.h>
 
 #define MSG_MAX_LEN 256
 #define MSG_INIT 1
 #define MSG_TEXT 2
 #define MAX_CLIENTS 5
+#define MSG_SIZE sizeof(message) - sizeof(long)
 
 typedef struct message {
     long mtype;
@@ -40,14 +40,14 @@ int main() {
     }
 
 
-    printf("Serwer uruchomiony. Queue ID: %d\n", server_queue_id);
+    printf("Server is launched. Queue ID: %d\n", server_queue_id);
 
     int client_cnt = 0;
     client_info clients[MAX_CLIENTS];
 
     while(1) {
         message msg;
-        ssize_t received = msgrcv(server_queue_id, &msg, sizeof(message) - sizeof(long), 0, 0);
+        ssize_t received = msgrcv(server_queue_id, &msg, MSG_SIZE, 0, 0);
     
         if (received == -1) {
             perror("msgrcv");
@@ -56,7 +56,7 @@ int main() {
 
         if(msg.mtype == MSG_INIT) {
             if (client_cnt >= MAX_CLIENTS) {
-                fprintf(stderr, "Za dużo klientów!\n");
+                fprintf(stderr, "Too many clients connected!\n");
                 continue;
             }
 
@@ -77,18 +77,18 @@ int main() {
             reply.sender_id = 0;
             snprintf(reply.text, MSG_MAX_LEN, "%d", clients[client_cnt].id);
 
-            msgsnd(client_queue_id, &reply, sizeof(message) - sizeof(long), 0);
+            msgsnd(client_queue_id, &reply, MSG_SIZE, 0);
 
-            printf("Nowy klient [%d] zarejestrowany.\n", clients[client_cnt].id);
+            printf("New client [%d] registered.\n", clients[client_cnt].id);
 
             client_cnt++;
 
         } else if (msg.mtype == MSG_TEXT) {
-            printf("Klient %d wysłał wiadomość: %s\n", msg.sender_id, msg.text);
+            printf("Client %d sent a message: %s\n", msg.sender_id, msg.text);
 
             for (int i = 0; i < client_cnt; i++){
                 if (clients[i].id != msg.sender_id) {
-                    msgsnd(clients[i].queue_id, &msg, sizeof(message) - sizeof(long), 0);
+                    msgsnd(clients[i].queue_id, &msg, MSG_SIZE, 0);
                 }
             }
         }
