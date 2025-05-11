@@ -82,12 +82,13 @@ int main() {
             printf("Nowy klient [%d] zarejestrowany.\n", clients[client_cnt].id);
 
             client_cnt++;
+
         } else if (msg.mtype == MSG_TEXT) {
             printf("Klient %d wysłał wiadomość: %s\n", msg.sender_id, msg.text);
 
             for (int i = 0; i < client_cnt; i++){
                 if (clients[i].id != msg.sender_id) {
-                    msgsnd(clients[i].id, &msg, sizeof(message) - sizeof(long), 0);
+                    msgsnd(clients[i].queue_id, &msg, sizeof(message) - sizeof(long), 0);
                 }
             }
         }
