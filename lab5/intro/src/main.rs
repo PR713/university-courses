@@ -1,3 +1,4 @@
+#[derive(Debug)]
 struct Pair<T> {
     x: T,
     y: T
@@ -54,7 +55,7 @@ impl <T: PartialOrd + Copy> Pair<T> {
 //Napisz funkcję max, która zwróci największą wartość tablicy zawierającej dowolne typy liczbowe.
 //Funkcja powinna zwracać Some(max) lub None w przypadku pustej tablicy.
 
-fn max<T: PartialOrd + Copy> (arr: &[T]) -> T {
+fn max<T: PartialOrd + Copy> (arr: &[T]) -> Option<T> {
     if arr.is_empty() {
         return None;
     }
@@ -73,14 +74,22 @@ fn max<T: PartialOrd + Copy> (arr: &[T]) -> T {
 //(*) Napisz funkcję mean, która wyznaczy średnią arytmentyczną elementów tablicy zawierającej
 //dowolne typy liczbowe.
 
-fn mean(){
+fn mean<T: Into<f64> + Copy> (data: &[T]) -> Option<f64>{
+    if data.is_empty() {
+        return None;
+    }
 
+    let sum: f64 = data.iter().map(|&x| x.into()).sum();
+
+    let count = data.len() as f64;
+
+    Some(sum / count)
 }
 
 //Napisz funkcję dodawanie par liczbowych (struktur typu Pair).
 
-fn add_pairs<T>(p1 : Pair<T>, p2 : Pair<T>) {
-
+fn add_pairs<T: Into<f64> + Copy, U: Into<f64> + Copy>(p1 : Pair<T>, p2 : Pair<U>) -> Pair<f64> {
+    Pair{x: p1.x.into() + p2.x.into(), y: p1.y.into() + p2.y.into()}
 }
 
 fn main() {
@@ -94,4 +103,8 @@ fn main() {
 
     pi.bigger();
     pf.bigger();
+
+    let result = add_pairs(pi, pf);
+
+    println!("{:?}", result);
 }
