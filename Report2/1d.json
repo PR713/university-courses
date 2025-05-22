@@ -67,7 +67,7 @@ db.orders.aggregate([ //orignalne kolekcje
 
     {
         $project: {
-            _id: 1,
+            _id: 0,
             CustomerID: "$_id.CustomerID",
             CompanyName: "$CompanyName",
             Sales: 1

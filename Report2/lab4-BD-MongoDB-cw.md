@@ -87,6 +87,8 @@ stwórz kolekcję  `OrdersInfo`  zawierającą następujące dane o zamówieniac
 ```
 
 
+
+
 # b)
 
 stwórz kolekcję  `CustomerInfo`  zawierającą następujące dane kazdym klencie
@@ -314,7 +316,145 @@ db.orders.aggregate([
     }
   ])
 ```
+Wyniki polecenia `db.OrderInfo.find().limit(2)`:
 
+```js
+[
+  {
+    "_id": 10648,
+    "Customer": {
+      "CustomerID": "RICAR",
+      "CompanyName": "Ricardo Adocicados",
+      "City": "Rio de Janeiro",
+      "Country": "Brazil"
+    },
+    "Dates": {
+      "OrderDate": {"$date": "1997-08-28T00:00:00.000Z"},
+      "RequiredDate": {"$date": "1997-10-09T00:00:00.000Z"}
+    },
+    "Employee": {
+      "EmployeeID": 5,
+      "FirstName": "Steven",
+      "LastName": "Buchanan",
+      "Title": "Sales Manager"
+    },
+    "Freight": 14.25,
+    "OrderID": 10648,
+    "OrderTotal": 372.37499959766865,
+    "Orderdetails": [
+      {
+        "UnitPrice": 21,
+        "Quantity": 15,
+        "Discount": 0,
+        "Value": 315,
+        "product": {
+          "ProductID": 22,
+          "ProductName": "Gustaf's Knäckebröd",
+          "QuantityPerUnit": "24 - 500 g pkgs.",
+          "CategoryID": 5,
+          "CategoryName": "Grains/Cereals"
+        }
+      },
+      {
+        "UnitPrice": 4.5,
+        "Quantity": 15,
+        "Discount": 0.15000000596046448,
+        "Value": 57.37499959766865,
+        "product": {
+          "ProductID": 24,
+          "ProductName": "Guaraná Fantástica",
+          "QuantityPerUnit": "12 - 355 ml cans",
+          "CategoryID": 1,
+          "CategoryName": "Beverages"
+        }
+      }
+    ],
+    "Shipment": {
+      "Shipper": {
+        "ShipperID": 2,
+        "CompanyName": "United Package"
+      },
+      "ShipName": "Ricardo Adocicados",
+      "ShipAddress": "Av. Copacabana, 267",
+      "ShipCity": "Rio de Janeiro",
+      "ShipCountry": "Brazil"
+    }
+  },
+  {
+    "_id": 10546,
+    "Customer": {
+      "CustomerID": "VICTE",
+      "CompanyName": "Victuailles en stock",
+      "City": "Lyon",
+      "Country": "France"
+    },
+    "Dates": {
+      "OrderDate": {"$date": "1997-05-23T00:00:00.000Z"},
+      "RequiredDate": {"$date": "1997-06-20T00:00:00.000Z"}
+    },
+    "Employee": {
+      "EmployeeID": 1,
+      "FirstName": "Nancy",
+      "LastName": "Davolio",
+      "Title": "Sales Representative"
+    },
+    "Freight": 194.72,
+    "OrderID": 10546,
+    "OrderTotal": 2812,
+    "Orderdetails": [
+      {
+        "UnitPrice": 30,
+        "Quantity": 10,
+        "Discount": 0,
+        "Value": 300,
+        "product": {
+          "ProductID": 7,
+          "ProductName": "Uncle Bob's Organic Dried Pears",
+          "QuantityPerUnit": "12 - 1 lb pkgs.",
+          "CategoryID": 7,
+          "CategoryName": "Produce"
+        }
+      },
+      {
+        "UnitPrice": 18,
+        "Quantity": 30,
+        "Discount": 0,
+        "Value": 540,
+        "product": {
+          "ProductID": 35,
+          "ProductName": "Steeleye Stout",
+          "QuantityPerUnit": "24 - 12 oz bottles",
+          "CategoryID": 1,
+          "CategoryName": "Beverages"
+        }
+      },
+      {
+        "UnitPrice": 49.3,
+        "Quantity": 40,
+        "Discount": 0,
+        "Value": 1972,
+        "product": {
+          "ProductID": 62,
+          "ProductName": "Tarte au sucre",
+          "QuantityPerUnit": "48 pies",
+          "CategoryID": 3,
+          "CategoryName": "Confections"
+        }
+      }
+    ],
+    "Shipment": {
+      "Shipper": {
+        "ShipperID": 3,
+        "CompanyName": "Federal Shipping"
+      },
+      "ShipName": "Victuailles en stock",
+      "ShipAddress": "2, rue du Commerce",
+      "ShipCity": "Lyon",
+      "ShipCountry": "France"
+    }
+  }
+]
+```
 
 <br><br>
 ### b)
@@ -471,6 +611,288 @@ db.customers.aggregate([
     }
   ])
 ```
+Wyniki polecenia `db.CustomerInfo.find().limit(1)`:
+```js
+[
+  {
+    "_id": "LETSS",
+    "City": "San Francisco",
+    "CompanyName": "Let's Stop N Shop",
+    "Country": "USA",
+    "CustomerID": "LETSS",
+    "Orders": [
+      {
+        "OrderID": 10579,
+        "Employee": {
+          "EmployeeID": 1,
+          "FirstName": "Nancy",
+          "LastName": "Davolio",
+          "Title": "Sales Representative"
+        },
+        "Dates": {
+          "OrderDate": {"$date": "1997-06-25T00:00:00.000Z"},
+          "RequiredDate": {"$date": "1997-07-23T00:00:00.000Z"}
+        },
+        "Freight": 13.73,
+        "Shipment": {
+          "Shipper": {
+            "ShipperID": 2,
+            "CompanyName": "United Package"
+          },
+          "ShipName": "Let's Stop N Shop",
+          "ShipAddress": "87 Polk St. Suite 5",
+          "ShipCity": "San Francisco",
+          "ShipCountry": "USA"
+        },
+        "Orderdetails": [
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1a33"},
+            "OrderID": 10579,
+            "ProductID": 15,
+            "UnitPrice": 15.5,
+            "Quantity": 10,
+            "Discount": 0,
+            "Value": 155,
+            "Product": {
+              "ProductID": 15,
+              "ProductName": "Genen Shouyu",
+              "QuantityPerUnit": "24 - 250 ml bottles",
+              "CategoryID": 2,
+              "CategoryName": "Condiments"
+            }
+          },
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1a34"},
+            "OrderID": 10579,
+            "ProductID": 75,
+            "UnitPrice": 7.75,
+            "Quantity": 21,
+            "Discount": 0,
+            "Value": 162.75,
+            "Product": {
+              "ProductID": 75,
+              "ProductName": "Rhönbräu Klosterbier",
+              "QuantityPerUnit": "24 - 0.5 l bottles",
+              "CategoryID": 1,
+              "CategoryName": "Beverages"
+            }
+          }
+        ],
+        "OrderTotal": 317.75
+      },
+      {
+        "OrderID": 10719,
+        "Employee": {
+          "EmployeeID": 8,
+          "FirstName": "Laura",
+          "LastName": "Callahan",
+          "Title": "Inside Sales Coordinator"
+        },
+        "Dates": {
+          "OrderDate": {"$date": "1997-10-27T00:00:00.000Z"},
+          "RequiredDate": {"$date": "1997-11-24T00:00:00.000Z"}
+        },
+        "Freight": 51.44,
+        "Shipment": {
+          "Shipper": {
+            "ShipperID": 2,
+            "CompanyName": "United Package"
+          },
+          "ShipName": "Let's Stop N Shop",
+          "ShipAddress": "87 Polk St. Suite 5",
+          "ShipCity": "San Francisco",
+          "ShipCountry": "USA"
+        },
+        "Orderdetails": [
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1b99"},
+            "OrderID": 10719,
+            "ProductID": 18,
+            "UnitPrice": 62.5,
+            "Quantity": 12,
+            "Discount": 0.25,
+            "Value": 562.5,
+            "Product": {
+              "ProductID": 18,
+              "ProductName": "Carnarvon Tigers",
+              "QuantityPerUnit": "16 kg pkg.",
+              "CategoryID": 8,
+              "CategoryName": "Seafood"
+            }
+          },
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1b9a"},
+            "OrderID": 10719,
+            "ProductID": 30,
+            "UnitPrice": 25.89,
+            "Quantity": 3,
+            "Discount": 0.25,
+            "Value": 58.2525,
+            "Product": {
+              "ProductID": 30,
+              "ProductName": "Nord-Ost Matjeshering",
+              "QuantityPerUnit": "10 - 200 g glasses",
+              "CategoryID": 8,
+              "CategoryName": "Seafood"
+            }
+          },
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1b9b"},
+            "OrderID": 10719,
+            "ProductID": 54,
+            "UnitPrice": 7.45,
+            "Quantity": 40,
+            "Discount": 0.25,
+            "Value": 223.5,
+            "Product": {
+              "ProductID": 54,
+              "ProductName": "Tourtière",
+              "QuantityPerUnit": "16 pies",
+              "CategoryID": 6,
+              "CategoryName": "Meat/Poultry"
+            }
+          }
+        ],
+        "OrderTotal": 844.2525
+      },
+      {
+        "OrderID": 10884,
+        "Employee": {
+          "EmployeeID": 4,
+          "FirstName": "Margaret",
+          "LastName": "Peacock",
+          "Title": "Sales Representative"
+        },
+        "Dates": {
+          "OrderDate": {"$date": "1998-02-12T00:00:00.000Z"},
+          "RequiredDate": {"$date": "1998-03-12T00:00:00.000Z"}
+        },
+        "Freight": 90.97,
+        "Shipment": {
+          "Shipper": {
+            "ShipperID": 2,
+            "CompanyName": "United Package"
+          },
+          "ShipName": "Let's Stop N Shop",
+          "ShipAddress": "87 Polk St. Suite 5",
+          "ShipCity": "San Francisco",
+          "ShipCountry": "USA"
+        },
+        "Orderdetails": [
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1d3c"},
+            "OrderID": 10884,
+            "ProductID": 21,
+            "UnitPrice": 10,
+            "Quantity": 40,
+            "Discount": 0.05000000074505806,
+            "Value": 379.9999997019768,
+            "Product": {
+              "ProductID": 21,
+              "ProductName": "Sir Rodney's Scones",
+              "QuantityPerUnit": "24 pkgs. x 4 pieces",
+              "CategoryID": 3,
+              "CategoryName": "Confections"
+            }
+          },
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1d3d"},
+            "OrderID": 10884,
+            "ProductID": 56,
+            "UnitPrice": 38,
+            "Quantity": 21,
+            "Discount": 0.05000000074505806,
+            "Value": 758.0999994054437,
+            "Product": {
+              "ProductID": 56,
+              "ProductName": "Gnocchi di nonna Alice",
+              "QuantityPerUnit": "24 - 250 g pkgs.",
+              "CategoryID": 5,
+              "CategoryName": "Grains/Cereals"
+            }
+          },
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1d3e"},
+            "OrderID": 10884,
+            "ProductID": 65,
+            "UnitPrice": 21.05,
+            "Quantity": 12,
+            "Discount": 0.05000000074505806,
+            "Value": 239.96999981179835,
+            "Product": {
+              "ProductID": 65,
+              "ProductName": "Louisiana Fiery Hot Pepper Sauce",
+              "QuantityPerUnit": "32 - 8 oz bottles",
+              "CategoryID": 2,
+              "CategoryName": "Condiments"
+            }
+          }
+        ],
+        "OrderTotal": 1378.0699989192187
+      },
+      {
+        "OrderID": 10735,
+        "Employee": {
+          "EmployeeID": 6,
+          "FirstName": "Michael",
+          "LastName": "Suyama",
+          "Title": "Sales Representative"
+        },
+        "Dates": {
+          "OrderDate": {"$date": "1997-11-10T00:00:00.000Z"},
+          "RequiredDate": {"$date": "1997-12-08T00:00:00.000Z"}
+        },
+        "Freight": 45.97,
+        "Shipment": {
+          "Shipper": {
+            "ShipperID": 2,
+            "CompanyName": "United Package"
+          },
+          "ShipName": "Let's Stop N Shop",
+          "ShipAddress": "87 Polk St. Suite 5",
+          "ShipCity": "San Francisco",
+          "ShipCountry": "USA"
+        },
+        "Orderdetails": [
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1bc1"},
+            "OrderID": 10735,
+            "ProductID": 61,
+            "UnitPrice": 28.5,
+            "Quantity": 20,
+            "Discount": 0.10000000149011612,
+            "Value": 512.9999991506338,
+            "Product": {
+              "ProductID": 61,
+              "ProductName": "Sirop d'érable",
+              "QuantityPerUnit": "24 - 500 ml bottles",
+              "CategoryID": 2,
+              "CategoryName": "Condiments"
+            }
+          },
+          {
+            "_id": {"$oid": "63a06016bb3b972d6f4e1bc2"},
+            "OrderID": 10735,
+            "ProductID": 77,
+            "UnitPrice": 13,
+            "Quantity": 2,
+            "Discount": 0.10000000149011612,
+            "Value": 23.39999996125698,
+            "Product": {
+              "ProductID": 77,
+              "ProductName": "Original Frankfurter grüne Soße",
+              "QuantityPerUnit": "12 boxes",
+              "CategoryID": 2,
+              "CategoryName": "Condiments"
+            }
+          }
+        ],
+        "OrderTotal": 536.3999991118908
+      }
+    ]
+  }
+]
+```
 
 <br><br>
 ### c)
@@ -478,7 +900,198 @@ db.customers.aggregate([
 
 
 ```js
---  ...
+db.customers.aggregate([
+  {
+    $lookup: {
+      from: "orders",
+      localField: "CustomerID",
+      foreignField: "CustomerID",
+      as: "Orders"
+    }
+  },
+  { $unwind: "$Orders" },
+  {
+    $match: {
+      "Orders.OrderDate": {
+        $gte: ISODate("1997-01-01"),
+        $lt: ISODate("1998-01-01")
+      }
+    }
+  },
+  {
+    $lookup: {
+      from: "orderdetails",
+      localField: "Orders.OrderID",
+      foreignField: "OrderID",
+      as: "Details"
+    }
+  },
+  { $unwind: "$Details" },
+  {
+    $lookup: {
+      from: "products",
+      localField: "Details.ProductID",
+      foreignField: "ProductID",
+      as: "Product"
+    }
+  },
+  { $unwind: "$Product" },
+  {
+    $lookup: {
+      from: "categories",
+      localField: "Product.CategoryID",
+      foreignField: "CategoryID",
+      as: "Category"
+    }
+  },
+  { $unwind: "$Category" },
+  {
+    $match: {
+      "Category.CategoryName": "Confections"
+    }
+  },
+  {
+    $group: {
+      _id: "$CustomerID",
+      CustomerID: { $first: "$CustomerID" },
+      CompanyName: { $first: "$CompanyName" },
+      ConfectionsSale97: {
+        $sum: {
+          $multiply: [
+            "$Details.UnitPrice",
+            "$Details.Quantity",
+            { $subtract: [1, "$Details.Discount"] }
+          ]
+        }
+      }
+    }
+  }
+])
+
+------------------------
+
+db.OrderInfo.aggregate([
+  {
+    $match: {
+      "Orderdetails.product.CategoryName": "Confections",
+      "Dates.OrderDate": {
+        $gte: ISODate("1997-01-01"),
+        $lt: ISODate("1998-01-01")
+      }
+    }
+  },
+  { $unwind: "$Orderdetails" },
+  {
+    $match: {
+      "Orderdetails.product.CategoryName": "Confections"
+    }
+  },
+  {
+    $group: {
+      _id: "$Customer.CustomerID",
+      CustomerID: { $first: "$Customer.CustomerID" },
+      CompanyName: { $first: "$Customer.CompanyName" },
+      ConfectionsSale97: { $sum: "$Orderdetails.Value" }
+    }
+  }
+])
+
+------------------------
+
+db.CustomerInfo.aggregate([
+  { $unwind: "$Orders" },
+  {
+    $match: {
+      "Orders.Dates.OrderDate": {
+        $gte: ISODate("1997-01-01"),
+        $lt: ISODate("1998-01-01")
+      }
+    }
+  },
+  { $unwind: "$Orders.Orderdetails" },
+  {
+    $match: {
+      "Orders.Orderdetails.Product.CategoryName": "Confections"
+    }
+  },
+  {
+    $group: {
+      _id: "$CustomerID",
+      CustomerID: { $first: "$CustomerID" },
+      CompanyName: { $first: "$CompanyName" },
+      ConfectionsSale97: {
+        $sum: "$Orders.Orderdetails.Value"
+      }
+    }
+  }
+])
+
+```
+
+Fragment wyniku, każde polecenia zwraca to samo, w trzecim podejściu różni się tylko kolejność:
+```js
+[
+  {
+    "_id": "MAGAA",
+    "CompanyName": "Magazzini Alimentari Riuniti",
+    "ConfectionsSale97": 1300.0499990858139,
+    "CustomerID": "MAGAA"
+  },
+  {
+    "_id": "PRINI",
+    "CompanyName": "Princesa Isabel Vinhos",
+    "ConfectionsSale97": 126,
+    "CustomerID": "PRINI"
+  },
+  {
+    "_id": "RANCH",
+    "CompanyName": "Rancho grande",
+    "ConfectionsSale97": 199.39999999999998,
+    "CustomerID": "RANCH"
+  },
+  {
+    "_id": "SAVEA",
+    "CompanyName": "Save-a-lot Markets",
+    "ConfectionsSale97": 6351.084993118047,
+    "CustomerID": "SAVEA"
+  },
+  {
+    "_id": "SPECD",
+    "CompanyName": "Spécialités du monde",
+    "ConfectionsSale97": 52.349999999999994,
+    "CustomerID": "SPECD"
+  },
+  {
+    "_id": "SUPRD",
+    "CompanyName": "Suprêmes délices",
+    "ConfectionsSale97": 900.3,
+    "CustomerID": "SUPRD"
+  },
+  {
+    "_id": "FOLIG",
+    "CompanyName": "Folies gourmandes",
+    "ConfectionsSale97": 2232,
+    "CustomerID": "FOLIG"
+  },
+  {
+    "_id": "OCEAN",
+    "CompanyName": "Océano Atlántico Ltda.",
+    "ConfectionsSale97": 96,
+    "CustomerID": "OCEAN"
+  },
+  {
+    "_id": "BSBEV",
+    "CompanyName": "B's Beverages",
+    "ConfectionsSale97": 875,
+    "CustomerID": "BSBEV"
+  },
+  {
+    "_id": "EASTC",
+    "CompanyName": "Eastern Connection",
+    "ConfectionsSale97": 480,
+    "CustomerID": "EASTC"
+  }
+]
 ```
 
 <br><br>
@@ -602,7 +1215,7 @@ db.OrderInfo.aggregate([
     },
     {
       $project: {
-        _id: 1,
+        _id: 0,
         CustomerID: "$_id.CustomerID", //wyżej tylko w _id
         CompanyName: "$CompanyName",
         Sales: 1
@@ -661,6 +1274,73 @@ db.OrderInfo.aggregate([
 ```
 
 <br><br>
+#### Wynik polecenia (jedno z podanych powyżej, wszystkie zwracają taki sam format)
+```js
+{
+  Sales: [
+    {
+      Year: 1997,
+      Month: 1,
+      Total: 224.82999990209936
+    },
+    {
+      Year: 1996,
+      Month: 12,
+      Total: 166
+    },
+    {
+      Year: 1997,
+      Month: 10,
+      Total: 287.8
+    },
+    {
+      Year: 1997,
+      Month: 6,
+      Total: 309.99999884516
+    },
+    {
+      Year: 1997,
+      Month: 8,
+      Total: 1779.1999993890522
+    },
+    {
+      Year: 1997,
+      Month: 4,
+      Total: 525.299996316433
+    },
+    {
+      Year: 1996,
+      Month: 11,
+      Total: 814.4199954867363
+    }
+  ],
+  CustomerID: 'FAMIA',
+  CompanyName: 'Familia Arquibaldo'
+}
+{
+  Sales: [
+    {
+      Year: 1997,
+      Month: 2,
+      Total: 631.6
+    },
+    {
+      Year: 1997,
+      Month: 3,
+      Total: 156.00000000000003
+    },
+    {
+      Year: 1998,
+      Month: 1,
+      Total: 931.5
+    }
+  ],
+  CustomerID: 'CONSH',
+  CompanyName: 'Consolidated Holdings'
+}
+```
+
+<br><br>
 ### e)
 
 #### Wstawianie danych: 
@@ -704,9 +1384,11 @@ db.orderdetails.insertMany([
 ```
 
 <br><br><br><br>
-#### Aktualizacja kolekcji OrderInfo i CustomerInfo: 
+#### Aktualizacja kolekcji OrderInfo: 
 
 ```js
+db.OrderInfo.createIndex({ OrderID: 1 }, { unique: true })
+
 
 db.orders.aggregate([
     { $match: { OrderID: 11078 } },
@@ -818,10 +1500,78 @@ db.orders.aggregate([
   ]);
 
 ```
+<br><br>
 
+#### Wynik polecenia: db.OrderInfo.find({OrderID: 11078}) 
+```js
+{
+  _id: 11078,
+  OrderID: 11078,
+  Customer: {
+    CustomerID: 'ALFKI',
+    CompanyName: 'Alfreds Futterkiste',
+    City: 'Berlin',
+    Country: 'Germany'
+  },
+  Employee: {
+    EmployeeID: 5,
+    FirstName: 'Steven',
+    LastName: 'Buchanan',
+    Title: 'Sales Manager'
+  },
+  Dates: {
+    OrderDate: 2025-04-16T00:00:00.000Z,
+    RequiredDate: 2025-04-23T00:00:00.000Z
+  },
+  Freight: 20,
+  Orderdetails: [
+    {
+      UnitPrice: 18,
+      Quantity: 10,
+      Discount: 0.1,
+      Value: 162,
+      product: {
+        ProductID: 1,
+        ProductName: 'Chai',
+        QuantityPerUnit: '10 boxes x 20 bags',
+        CategoryID: 1,
+        CategoryName: 'Beverages'
+      }
+    },
+    {
+      UnitPrice: 31,
+      Quantity: 5,
+      Discount: 0,
+      Value: 155,
+      product: {
+        ProductID: 10,
+        ProductName: 'Ikura',
+        QuantityPerUnit: '12 - 200 ml jars',
+        CategoryID: 8,
+        CategoryName: 'Seafood'
+      }
+    }
+  ],
+  Shipment: {
+    Shipper: {
+      ShipperID: 2,
+      CompanyName: 'United Package'
+    },
+    ShipName: 'Alfreds Futterkiste',
+    ShipAddress: 'Obere Str. 57',
+    ShipCity: 'Berlin',
+    ShipCountry: 'Germany'
+  },
+  OrderTotal: 317
+}
+```
 
+<br><br>
+#### Aktualizacja kolekcji CustomerInfo:
 
 ```js
+db.CustomerInfo.createIndex({ CustomerID: 1 }, { unique: true })
+
   db.customers.aggregate([
     { 
       $match: { 
@@ -1024,14 +1774,604 @@ db.orders.aggregate([
 ```
 
 <br><br>
+
+#### Wynik polecenia: db.CustomerInfo.find({"Orders.OrderID": 11078})
+```js
+{
+  _id: 'ALFKI',
+  CustomerID: 'ALFKI',
+  CompanyName: 'Alfreds Futterkiste',
+  City: 'Berlin',
+  Country: 'Germany',
+  Orders: [
+    {
+      OrderID: 10835,
+      Employee: {
+        EmployeeID: 1,
+        FirstName: 'Nancy',
+        LastName: 'Davolio',
+        Title: 'Sales Representative'
+      },
+      Dates: {
+        OrderDate: 1998-01-15T00:00:00.000Z,
+        RequiredDate: 1998-02-12T00:00:00.000Z
+      },
+      Freight: 69.53,
+      Shipment: {
+        Shipper: {
+          ShipperID: 3,
+          CompanyName: 'Federal Shipping'
+        },
+        ShipName: "Alfred's Futterkiste",
+        ShipAddress: 'Obere Str. 57',
+        ShipCity: 'Berlin',
+        ShipCountry: 'Germany'
+      },
+      Orderdetails: [
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1cb9'),
+          OrderID: 10835,
+          ProductID: 59,
+          UnitPrice: 55,
+          Quantity: 15,
+          Discount: 0,
+          Value: 825,
+          Product: {
+            ProductID: 59,
+            ProductName: 'Raclette Courdavault',
+            QuantityPerUnit: '5 kg pkg.',
+            CategoryID: 4,
+            CategoryName: 'Dairy Products'
+          }
+        },
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1cba'),
+          OrderID: 10835,
+          ProductID: 77,
+          UnitPrice: 13,
+          Quantity: 2,
+          Discount: 0.20000000298023224,
+          Value: 20.799999922513962,
+          Product: {
+            ProductID: 77,
+            ProductName: 'Original Frankfurter grüne Soße',
+            QuantityPerUnit: '12 boxes',
+            CategoryID: 2,
+            CategoryName: 'Condiments'
+          }
+        }
+      ],
+      OrderTotal: 845.799999922514
+    },
+    {
+      OrderID: 10952,
+      Employee: {
+        EmployeeID: 1,
+        FirstName: 'Nancy',
+        LastName: 'Davolio',
+        Title: 'Sales Representative'
+      },
+      Dates: {
+        OrderDate: 1998-03-16T00:00:00.000Z,
+        RequiredDate: 1998-04-27T00:00:00.000Z
+      },
+      Freight: 40.42,
+      Shipment: {
+        Shipper: {
+          ShipperID: 1,
+          CompanyName: 'Speedy Express'
+        },
+        ShipName: "Alfred's Futterkiste",
+        ShipAddress: 'Obere Str. 57',
+        ShipCity: 'Berlin',
+        ShipCountry: 'Germany'
+      },
+      Orderdetails: [
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1ddd'),
+          OrderID: 10952,
+          ProductID: 6,
+          UnitPrice: 25,
+          Quantity: 16,
+          Discount: 0.05000000074505806,
+          Value: 379.9999997019768,
+          Product: {
+            ProductID: 6,
+            ProductName: "Grandma's Boysenberry Spread",
+            QuantityPerUnit: '12 - 8 oz jars',
+            CategoryID: 2,
+            CategoryName: 'Condiments'
+          }
+        },
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1dde'),
+          OrderID: 10952,
+          ProductID: 28,
+          UnitPrice: 45.6,
+          Quantity: 2,
+          Discount: 0,
+          Value: 91.2,
+          Product: {
+            ProductID: 28,
+            ProductName: 'Rössle Sauerkraut',
+            QuantityPerUnit: '25 - 825 g cans',
+            CategoryID: 7,
+            CategoryName: 'Produce'
+          }
+        }
+      ],
+      OrderTotal: 471.19999970197676
+    },
+    {
+      OrderID: 10692,
+      Employee: {
+        EmployeeID: 4,
+        FirstName: 'Margaret',
+        LastName: 'Peacock',
+        Title: 'Sales Representative'
+      },
+      Dates: {
+        OrderDate: 1997-10-03T00:00:00.000Z,
+        RequiredDate: 1997-10-31T00:00:00.000Z
+      },
+      Freight: 61.02,
+      Shipment: {
+        Shipper: {
+          ShipperID: 2,
+          CompanyName: 'United Package'
+        },
+        ShipName: "Alfred's Futterkiste",
+        ShipAddress: 'Obere Str. 57',
+        ShipCity: 'Berlin',
+        ShipCountry: 'Germany'
+      },
+      Orderdetails: [
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1b4a'),
+          OrderID: 10692,
+          ProductID: 63,
+          UnitPrice: 43.9,
+          Quantity: 20,
+          Discount: 0,
+          Value: 878,
+          Product: {
+            ProductID: 63,
+            ProductName: 'Vegie-spread',
+            QuantityPerUnit: '15 - 625 g jars',
+            CategoryID: 2,
+            CategoryName: 'Condiments'
+          }
+        }
+      ],
+      OrderTotal: 878
+    },
+    {
+      OrderID: 11011,
+      Employee: {
+        EmployeeID: 3,
+        FirstName: 'Janet',
+        LastName: 'Leverling',
+        Title: 'Sales Representative'
+      },
+      Dates: {
+        OrderDate: 1998-04-09T00:00:00.000Z,
+        RequiredDate: 1998-05-07T00:00:00.000Z
+      },
+      Freight: 1.21,
+      Shipment: {
+        Shipper: {
+          ShipperID: 1,
+          CompanyName: 'Speedy Express'
+        },
+        ShipName: "Alfred's Futterkiste",
+        ShipAddress: 'Obere Str. 57',
+        ShipCity: 'Berlin',
+        ShipCountry: 'Germany'
+      },
+      Orderdetails: [
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1e6f'),
+          OrderID: 11011,
+          ProductID: 58,
+          UnitPrice: 13.25,
+          Quantity: 40,
+          Discount: 0.05000000074505806,
+          Value: 503.4999996051192,
+          Product: {
+            ProductID: 58,
+            ProductName: 'Escargots de Bourgogne',
+            QuantityPerUnit: '24 pieces',
+            CategoryID: 8,
+            CategoryName: 'Seafood'
+          }
+        },
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1e70'),
+          OrderID: 11011,
+          ProductID: 71,
+          UnitPrice: 21.5,
+          Quantity: 20,
+          Discount: 0,
+          Value: 430,
+          Product: {
+            ProductID: 71,
+            ProductName: 'Flotemysost',
+            QuantityPerUnit: '10 - 500 g pkgs.',
+            CategoryID: 4,
+            CategoryName: 'Dairy Products'
+          }
+        }
+      ],
+      OrderTotal: 933.4999996051192
+    },
+    {
+      OrderID: 11078,
+      Employee: {
+        EmployeeID: 5,
+        FirstName: 'Steven',
+        LastName: 'Buchanan',
+        Title: 'Sales Manager'
+      },
+      Dates: {
+        OrderDate: 2025-04-16T00:00:00.000Z,
+        RequiredDate: 2025-04-23T00:00:00.000Z
+      },
+      Freight: 20,
+      Shipment: {
+        Shipper: {
+          ShipperID: 2,
+          CompanyName: 'United Package'
+        },
+        ShipName: 'Alfreds Futterkiste',
+        ShipAddress: 'Obere Str. 57',
+        ShipCity: 'Berlin',
+        ShipCountry: 'Germany'
+      },
+      Orderdetails: [
+        {
+          _id: ObjectId('6813aa513d52ef96860fd52c'),
+          OrderID: 11078,
+          ProductID: 1,
+          UnitPrice: 18,
+          Quantity: 10,
+          Discount: 0.1,
+          Value: 162,
+          Product: {
+            ProductID: 1,
+            ProductName: 'Chai',
+            QuantityPerUnit: '10 boxes x 20 bags',
+            CategoryID: 1,
+            CategoryName: 'Beverages'
+          }
+        },
+        {
+          _id: ObjectId('6813aa513d52ef96860fd52d'),
+          OrderID: 11078,
+          ProductID: 10,
+          UnitPrice: 31,
+          Quantity: 5,
+          Discount: 0,
+          Value: 155,
+          Product: {
+            ProductID: 10,
+            ProductName: 'Ikura',
+            QuantityPerUnit: '12 - 200 ml jars',
+            CategoryID: 8,
+            CategoryName: 'Seafood'
+          }
+        }
+      ],
+      OrderTotal: 317
+    },
+    {
+      OrderID: 10643,
+      Employee: {
+        EmployeeID: 6,
+        FirstName: 'Michael',
+        LastName: 'Suyama',
+        Title: 'Sales Representative'
+      },
+      Dates: {
+        OrderDate: 1997-08-25T00:00:00.000Z,
+        RequiredDate: 1997-09-22T00:00:00.000Z
+      },
+      Freight: 29.46,
+      Shipment: {
+        Shipper: {
+          ShipperID: 1,
+          CompanyName: 'Speedy Express'
+        },
+        ShipName: 'Alfreds Futterkiste',
+        ShipAddress: 'Obere Str. 57',
+        ShipCity: 'Berlin',
+        ShipCountry: 'Germany'
+      },
+      Orderdetails: [
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1acb'),
+          OrderID: 10643,
+          ProductID: 28,
+          UnitPrice: 45.6,
+          Quantity: 15,
+          Discount: 0.25,
+          Value: 513,
+          Product: {
+            ProductID: 28,
+            ProductName: 'Rössle Sauerkraut',
+            QuantityPerUnit: '25 - 825 g cans',
+            CategoryID: 7,
+            CategoryName: 'Produce'
+          }
+        },
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1acc'),
+          OrderID: 10643,
+          ProductID: 39,
+          UnitPrice: 18,
+          Quantity: 21,
+          Discount: 0.25,
+          Value: 283.5,
+          Product: {
+            ProductID: 39,
+            ProductName: 'Chartreuse verte',
+            QuantityPerUnit: '750 cc per bottle',
+            CategoryID: 1,
+            CategoryName: 'Beverages'
+          }
+        },
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1acd'),
+          OrderID: 10643,
+          ProductID: 46,
+          UnitPrice: 12,
+          Quantity: 2,
+          Discount: 0.25,
+          Value: 18,
+          Product: {
+            ProductID: 46,
+            ProductName: 'Spegesild',
+            QuantityPerUnit: '4 - 450 g glasses',
+            CategoryID: 8,
+            CategoryName: 'Seafood'
+          }
+        }
+      ],
+      OrderTotal: 814.5
+    },
+    {
+      OrderID: 10702,
+      Employee: {
+        EmployeeID: 4,
+        FirstName: 'Margaret',
+        LastName: 'Peacock',
+        Title: 'Sales Representative'
+      },
+      Dates: {
+        OrderDate: 1997-10-13T00:00:00.000Z,
+        RequiredDate: 1997-11-24T00:00:00.000Z
+      },
+      Freight: 23.94,
+      Shipment: {
+        Shipper: {
+          ShipperID: 1,
+          CompanyName: 'Speedy Express'
+        },
+        ShipName: "Alfred's Futterkiste",
+        ShipAddress: 'Obere Str. 57',
+        ShipCity: 'Berlin',
+        ShipCountry: 'Germany'
+      },
+      Orderdetails: [
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1b68'),
+          OrderID: 10702,
+          ProductID: 3,
+          UnitPrice: 10,
+          Quantity: 6,
+          Discount: 0,
+          Value: 60,
+          Product: {
+            ProductID: 3,
+            ProductName: 'Aniseed Syrup',
+            QuantityPerUnit: '12 - 550 ml bottles',
+            CategoryID: 2,
+            CategoryName: 'Condiments'
+          }
+        },
+        {
+          _id: ObjectId('63a06016bb3b972d6f4e1b69'),
+          OrderID: 10702,
+          ProductID: 76,
+          UnitPrice: 18,
+          Quantity: 15,
+          Discount: 0,
+          Value: 270,
+          Product: {
+            ProductID: 76,
+            ProductName: 'Lakkalikööri',
+            QuantityPerUnit: '500 ml',
+            CategoryID: 1,
+            CategoryName: 'Beverages'
+          }
+        }
+      ],
+      OrderTotal: 330
+    }
+  ]
+}
+```
+
+<br><br>
 ### f)
 
 
 
 ```js
---  ...
-```
+db.orderdetails.updateMany(
+  { OrderID: 11078 },
+  { $inc: { Discount: 0.05 } }
+)
 
+---------------------------
+
+db.orders.aggregate([
+  { $match: { OrderID: 11078 } },
+  { $lookup: {
+        from: "customers",
+        localField: "CustomerID",
+        foreignField: "CustomerID",
+        as: "Customer"
+    }},
+    { $unwind: "$Customer" },
+  { $lookup: {
+        from: "employees",
+        localField: "EmployeeID",
+        foreignField: "EmployeeID",
+        as: "Employee"
+    }},
+    { $unwind: "$Employee" },
+  {
+    $lookup: {
+      from: "orderdetails",
+      localField: "OrderID",
+      foreignField: "OrderID",
+      as: "Orderdetails"
+    }
+  },
+  {
+    $unwind: "$Orderdetails"
+  },
+  { $lookup: {
+        from: "shippers",
+        localField: "ShipVia",
+        foreignField: "ShipperID",
+        as: "Shipper"
+    }},
+    { $unwind: { path: "$Shipper", preserveNullAndEmptyArrays: true } },
+  {
+    $lookup: {
+      from: "products",
+      localField: "Orderdetails.ProductID",
+      foreignField: "ProductID",
+      as: "Product"
+    }
+  },
+  { $unwind: "$Product" },
+  {
+    $lookup: {
+      from: "categories",
+      localField: "Product.CategoryID",
+      foreignField: "CategoryID",
+      as: "Category"
+    }
+  },
+  { $unwind: "$Category" },
+  {
+    $set: {
+      "Orderdetails.product": {
+        ProductID: "$Product.ProductID",
+          ProductName: "$Product.ProductName",
+          QuantityPerUnit: "$Product.QuantityPerUnit",
+          CategoryID: "$Product.CategoryID",
+          CategoryName: "$ProdCat.CategoryName"
+      },
+      "Orderdetails.Value": {
+        $multiply: [
+          "$Orderdetails.UnitPrice",
+          "$Orderdetails.Quantity",
+          { $subtract: [1, "$Orderdetails.Discount"] }
+        ]
+      }
+    }
+  },
+  {
+    $group: {
+      _id: "$OrderID",
+      OrderID: {$first: "$OrderID"},
+      Customer: { $first: {
+          CustomerID: "$Customer.CustomerID",
+          CompanyName: "$Customer.CompanyName",
+          City: "$Customer.City",
+          Country: "$Customer.Country"
+        }},
+        Employee: { $first: {
+          EmployeeID: "$Employee.EmployeeID",
+          FirstName: "$Employee.FirstName",
+          LastName: "$Employee.LastName",
+          Title: "$Employee.Title"
+        }},
+      Dates: {
+        $first: {
+          OrderDate: "$OrderDate",
+          RequiredDate: "$RequiredDate"
+        }
+      },
+      Freight: { $first: "$Freight" },
+      Shipment: { $first: {
+          Shipper: {
+            ShipperID: "$Shipper.ShipperID",
+            CompanyName: "$Shipper.CompanyName"
+          },
+          ShipName: "$ShipName",
+          ShipAddress: "$ShipAddress",
+          ShipCity: "$ShipCity",
+          ShipCountry: "$ShipCountry"
+        }},
+      Orderdetails: { $push: "$Orderdetails" },
+      OrderTotal: { $sum: "$Orderdetails.Value" }
+    }
+  },
+  {
+    $merge: {
+      into: "OrderInfo",
+      on: "OrderID",
+      whenMatched: "replace",
+      whenNotMatched: "insert"
+    }
+  }
+])
+
+
+---------------------------
+
+db.OrderInfo.aggregate([
+  {
+    $group: {
+      _id: "$Customer.CustomerID",
+      CustomerID: { $first: "$Customer.CustomerID" },
+      CompanyName: { $first: "$Customer.CompanyName" },
+      City: { $first: "$Customer.City" },
+      Country: { $first: "$Customer.Country" },
+      Orders: { $push: "$$ROOT" }
+    }
+  },
+  {
+    $unset: ["Orders.Customer"]
+  },
+  {
+    $merge: {
+      into: "CustomerInfo",
+      on: "CustomerID",
+      whenMatched: "replace",
+      whenNotMatched: "insert"
+    }
+  }
+])
+
+```
+Wyniki do f z podejściem z `OrderInfo`:
+<br><br>
+przed:
+![Opis alternatywny](./f2przed.png)
+po:
+![Opis alternatywny](./f2po.png)
+
+Wyniki do f z podejściem z `CustomerInfo`:
+<br><br>
+przed:
+![Opis alternatywny](./f3przed.png)
+po:
+![Opis alternatywny](./3fpo.png)
 
 
 # Zadanie 2 - modelowanie danych
@@ -1782,6 +3122,15 @@ db.trips.insertMany([
   }
 ]);
 ```
+### Wariant 1 - przykładowa operacja:
+
+![Opis alternatywny](./zad2_2.png)
+![Opis alternatywny](./zad2_3.png)
+
+
+### Wariant 2 - przykładowa operacja:
+
+![Opis alternatywny](./zad2_1.png)
 
 
 <br><br>

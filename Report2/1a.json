@@ -99,7 +99,6 @@ db.orders.aggregate([
         OrderTotal: { $sum: "$Orderdetails.Value" }
     }},
     { $project: {
-        _id: 1,
         OrderID: 1,
         Customer: 1,
         Employee: 1,
