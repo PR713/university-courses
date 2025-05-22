@@ -26,13 +26,13 @@ class Program {
             {
                 case "tak":
                     isValidChoice = true;
-                    supplier = createNewSupplier();
+                    supplier = CreateNewSupplier();
                     createdNewSupplier = true;
                     break;
                 case "nie":
                     isValidChoice = true;
-                    showAllSuppliers(productContext);
-                    supplier = findSupplier(productContext);
+                    ShowAllSuppliers(productContext);
+                    supplier = FindSupplier(productContext);
                     break;
             }
 
@@ -49,7 +49,7 @@ class Program {
     }
 
 
-    private static Supplier createNewSupplier()
+    private static Supplier CreateNewSupplier()
     {
         Console.WriteLine("\n\nuzupełnij nazwę dostawcy: ");
         string companyName = Console.ReadLine();
@@ -70,7 +70,7 @@ class Program {
         return supplier;
     }
 
-    private static Supplier findSupplier(ProdContext productContext) {
+    private static Supplier FindSupplier(ProdContext productContext) {
         Console.WriteLine("\n Podaj ID istniejącego dostawcy: ");
         int id = Int32.Parse(Console.ReadLine());
 
@@ -80,7 +80,7 @@ class Program {
         return query.FirstOrDefault();
     }
 
-    private static void showAllSuppliers(ProdContext productContext)
+    private static void ShowAllSuppliers(ProdContext productContext)
     {
       Console.WriteLine("\n Lista wszystkich istniejących dostawców: ");
       foreach (Supplier supplier in productContext.Suppliers)
