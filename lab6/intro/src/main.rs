@@ -1,11 +1,25 @@
 use std::collections::HashMap;
 
 fn words_stats(words: &Vec<String>) -> HashMap<String, i32> {
-    let stats: HashMap<String, i32> = HashMap::new();
+    let mut stats: HashMap<String, i32> = HashMap::new();
 
     for word in words { //bez & bo już mamy pożyczkę w sygnaturze
-        let cnt: Option<&i32> = stats.get(word);
-        //TODO
+        // if let Some(cnt) = stats.get_mut(word) {
+        //     *cnt += 1;
+        // } else {
+        //     stats.insert(word.to_string(), 1);
+        // }
+        //lub:
+
+        let cnt = stats.get_mut(word);
+
+        match cnt {
+            Some(cnt) => *cnt += 1,
+            None => {
+                stats.insert(word.to_string(), 1);
+            }
+        }
+        //lub map.entry(word.to_owned()).or_insert(0) += 1; po prostu xd
     }
 
     stats
@@ -105,4 +119,21 @@ fn main() {
     for (text, number) in &map { // immutable borrow
         println!("{} has {} occurrences", text, number);
     }
+
+
+    //
+    //hash_map_words_stats_poem();
+
+    let entry = map.entry("rust".to_string());
+    let word = "python".to_string();
+    let cnt : &mut i32 = map.entry(word.to_owned()).or_insert(0);
+    *cnt += 1; //lub od razu map.entry... += 1
+    println!("\n {}", cnt);
+
+    println!("{:?}", map);
+    println!("{}", word); //to_owned method cloned that variable :)
+
+    map.entry(word.to_owned()).and_modify(|counter| *counter += 1).or_insert(1);
+
+    
 }
