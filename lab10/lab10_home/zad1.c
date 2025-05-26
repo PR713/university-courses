@@ -28,7 +28,8 @@ void* thread_function(void* args){
     double partial_sum = 0.0;
 
     for (int i = from; i < to; i++) {
-        partial_sum += function(START + i * step) * step;
+        partial_sum += function(START + i * step) * step; //if there were (i+1), that would be the right rectangles method,
+        //but now is left rectangles :D
     }
 
     *(arg->result) = partial_sum;
@@ -56,7 +57,7 @@ int main(int argc, char *argv[]){
 
         clock_t start_time = clock();
 
-        for (int i = 0; i < k; i++){ //the method of left rectangles
+        for (int i = 0; i < k; i++){ 
             int from = i * num_of_intervals / k;
             int to = (i + 1) * num_of_intervals / k;
 
