@@ -1,13 +1,14 @@
 package pl.agh.edu.dp.labirynth;
 
+import java.sql.SQLOutput;
 import java.util.EnumMap;
 import java.util.Map;
 
 public class Room extends MapSite
 {
-    private int roomNumber;
-    private Map<Direction, MapSite> sides;
-    private Map<Direction, Room> neighbours;
+    private final int roomNumber;
+    private final Map<Direction, MapSite> sides;
+    private final Map<Direction, Room> neighbours;
 
 
     public Room(int number){
@@ -38,6 +39,6 @@ public class Room extends MapSite
 
     @Override
     public void Enter(){
-
+        System.out.println("Entering room " + this.roomNumber);
     }
 }

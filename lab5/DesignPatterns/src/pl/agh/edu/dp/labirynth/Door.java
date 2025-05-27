@@ -6,11 +6,15 @@ public class Door extends MapSite {
     private final Direction enter;
     private final Direction exit;
 
-    public Door(Room r1, Direction enter, Room r2, Direction exit) {
+    public Door(Room r1, Direction enterDir, Room r2, Direction exitDir) {
+        if (r1.getNeighbour(enterDir) != r2 || r2.getNeighbour(exitDir) != r1) {
+            throw new IllegalArgumentException("Door directions don't match room adjacency");
+        } //podwójna walidacja w razie czego (CommonWall i tak waliduje)
+
         this.room1 = r1;
         this.room2 = r2;
-        this.enter = enter;
-        this.exit = exit;
+        this.enter = enterDir;
+        this.exit = exitDir;
 
     }
 
