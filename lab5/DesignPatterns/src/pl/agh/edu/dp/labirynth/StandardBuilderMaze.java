@@ -1,5 +1,7 @@
 package pl.agh.edu.dp.labirynth;
 
+import java.util.Map;
+
 public class StandardBuilderMaze implements MazeBuilder {
 
     private final Maze currentMaze;
@@ -71,5 +73,10 @@ public class StandardBuilderMaze implements MazeBuilder {
 
     public Maze getMaze() {
         return currentMaze;
+    }
+
+    @Override
+    public Map<String, Integer> GetCounts() {
+        throw new UnsupportedOperationException("StandardBuilderMaze doesn't support counting");
     }
 }
