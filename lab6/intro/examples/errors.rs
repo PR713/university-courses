@@ -1,4 +1,5 @@
 use std::{fs, io};
+use anyhow::anyhow;
 use reqwest::Error;
 
 struct Rectangle {
@@ -31,6 +32,13 @@ impl Rectangle {
     fn new3(width : f64, height : f64) -> Result<Rectangle, Box<dyn std::error::Error>> {
         if width <= 0.0 || height <= 0.0 {
             return Err("Rectangle cannot have negative width or height".into());
+        } //into konwertuje na wymagany typ
+        Ok(Rectangle { width, height })
+    }
+
+    fn new4(width : f64, height : f64) -> anyhow::Result<Rectangle> {
+        if width <= 0.0 || height <= 0.0 {
+            return Err(anyhow!("Rectangle cannot have negative width or height"));
         }
         Ok(Rectangle { width, height })
     }
@@ -45,12 +53,41 @@ impl Rectangle {
         //gdzie T to albo enum albo typ, więc wprowadzono dyn jako dynamiczny dispatch
         //czyli wywowałanie funkcji w czasie działania programu a nie kompilacji
         // -> trait object, czyli jakiś typ implementujący cechę Error
+
+        //można też dać Result<Rectangle, MyErrors> gdzie MyErrors to enum
+        //zawierający wyszczególnione błędy
+        //thiserror pozwala definiować własne typy (impl Error), szybciej, łatwiej
+        //niż samemu robić enuma MyError impl Debug, Display, Error tylko w thiserror
+        // np robimy #[error("Some text")] - display trait
+        //anyhow do obsługi dowolnych błędów bez tworzenia własnych typów
+
+        //jeśli mamy longer_array<'a, 'b>( a1: a' &[i32], a2: b' &[i32]) -> a' &[i32]
+        //to jeśli funkcja zwróci a2 czyli z 'b to mamy error:
+
+
+        //Ty jako autor funkcji deklarujesz: zwrócę referencję, która żyje tyle co 'a.
+        // Ale jeśli zwrócisz a2, które żyje tylko 'b, to może to być krócej niż 'a, i to już jest nielegalne.
+        // Kompilator nie „wydłuży” lifetime 'b do 'a. Więc:
+        // ✅ Możesz zwrócić a1, bo ono żyje 'a.
+        // ❌ Nie możesz zwrócić a2, chyba że dodasz where 'b: 'a, czyli 'b żyje co najmniej tyle co 'a.
+        // można tego użyć np że appendujemy dwie listy razem i zwracamy pożyczkę do nowej
+
         let s = fs::read_to_string(path)?;
         let mut iter = s.split_whitespace();
         let width : f64 = iter.next().ok_or("Cannot convert string to width".to_string())?.parse()?;
         let height : f64 = iter.next().ok_or("Cannot convert string to height".to_string())?.parse()?;
 
         Rectangle::new3(width, height)
+
+    }
+
+    fn read_from_file1(path : &str) -> anyhow::Result<Rectangle> {
+        let s = fs::read_to_string(path)?;
+        let mut iter = s.split_whitespace();
+        let width : f64 = iter.next().ok_or(anyhow!("Cannot convert string to width"))?.parse()?;
+        let height : f64 = iter.next().ok_or(anyhow!("Cannot convert string to height"))?.parse()?;
+
+        Ok(Rectangle::new4(width, height)?) //Unpack in order to check if there is an error, else we pack it
 
     }
 }
