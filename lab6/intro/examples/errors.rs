@@ -1,3 +1,5 @@
+use std::{fs, io};
+use reqwest::Error;
 
 struct Rectangle {
     width: f64,
@@ -26,10 +28,34 @@ impl Rectangle {
         Ok(Rectangle { width, height })
     }
 
+    fn new3(width : f64, height : f64) -> Result<Rectangle, Box<dyn std::error::Error>> {
+        if width <= 0.0 || height <= 0.0 {
+            return Err("Rectangle cannot have negative width or height".into());
+        }
+        Ok(Rectangle { width, height })
+    }
+
     fn area(&self) -> f64 {
         self.width * self.height
     }
+
+
+    fn read_from_file(path : &str) -> Result<Rectangle, Box<dyn std::error::Error> > {
+        //nie można po prostu Box<Error> bo Error to trait, Box<T>
+        //gdzie T to albo enum albo typ, więc wprowadzono dyn jako dynamiczny dispatch
+        //czyli wywowałanie funkcji w czasie działania programu a nie kompilacji
+        // -> trait object, czyli jakiś typ implementujący cechę Error
+        let s = fs::read_to_string(path)?;
+        let mut iter = s.split_whitespace();
+        let width : f64 = iter.next().ok_or("Cannot convert string to width".to_string())?.parse()?;
+        let height : f64 = iter.next().ok_or("Cannot convert string to height".to_string())?.parse()?;
+
+        Rectangle::new3(width, height)
+
+    }
 }
+
+
 
 const DEFAULT_WIDTH: f64 = 1.0;
 const DEFAULT_HEIGHT: f64 = 1.0;
@@ -40,6 +66,37 @@ impl Default for Rectangle {
         Rectangle{ width : DEFAULT_WIDTH, height : DEFAULT_HEIGHT }
     }
 }
+
+
+
+fn bigger(w1: f64, h1: f64, w2 : f64, h2 : f64) -> Result<Rectangle, String> {
+    let r1 = Rectangle::new(w1, h1);
+    let r2 = Rectangle::new(w2, h2);
+
+    match (r1, r2) {
+        (Ok(rec1), Ok(rec2)) => {
+            if rec1.area() > rec2.area() {
+                Ok(rec1)
+            } else {
+                Ok(rec2)
+            }
+        },
+        _ => Err("Rectangle cannot have negative width or height".to_string())
+    }
+}
+
+
+fn bigger1(w1: f64, h1 : f64, w2 : f64, h2 : f64) -> Result<Rectangle, String> {
+    let r1 = Rectangle::new(w1, h1)?;
+    let r2 = Rectangle::new(w2, h2)?;
+
+    if r1.area() > r2.area() {
+        Ok(r1)
+    } else {
+        Ok(r2)
+    }
+}
+
 
 
 #[cfg(test)]
@@ -150,6 +207,82 @@ mod tests {
         let r = Rectangle::new(1.0, 2.0);
         let rec = r.unwrap_or_default();
         assert!((rec.width - 1.0).abs() < f64::EPSILON && (rec.height - 2.0).abs() < f64::EPSILON);
+    }
+
+
+    //propagacja błędów
+
+    #[test]
+    fn test_bigger() {
+        // given
+        let w1 = 1.0;
+        let h1 = 2.0;
+        let w2 = 3.0;
+        let h2 = 4.0;
+
+        // when
+        let r = bigger(w1, h1, w2, h2);
+
+        // then
+        assert!((r.unwrap().area() - (w2 * h2)).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn test_bigger_err() {
+        // given
+        let w1 = 1.0;
+        let h1 = -2.0; // wrong width
+        let w2 = 3.0;
+        let h2 = 4.0;
+
+        // when
+        let r = bigger(w1, h1, w2, h2);
+
+        // then
+        assert!(r.is_err());
+    }
+
+    #[test]
+    fn test_bigger1() {
+        let w1 = 1.0;
+        let h1 = 2.0;
+        let w2 = 3.0;
+        let h2 = 4.0;
+
+        let r = bigger1(w1, h1, w2, h2);
+
+        assert!((r.unwrap().area() - (w2 * h2)).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn test_bigger1_err(){
+        let w1 = 1.0;
+        let h1 = -2.0;
+        let w2 = 3.0;
+        let h2 = 4.0;
+
+        let r = bigger1(w1, h1, w2, h2);
+
+        assert!(r.is_err());
+    }
+
+
+    // read_from_file
+
+
+    #[test]
+    fn test_read_from_not_existing_file() {
+        // given
+        let path = "not-existing-file.txt";
+
+        // when
+        let r = Rectangle::read_from_file(path);
+
+        // then
+        match r {
+            Err(ref e) if e.is::<std::io::Error>() => println!("ok"),
+            _ => panic!()
+        }
     }
 }
 
