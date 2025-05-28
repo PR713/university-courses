@@ -1,20 +1,15 @@
 package pl.agh.edu.dp.labirynth;
 
-public class EnchantedMazeFactory extends MazeFactory{
+public class EnchantedMazeFactory extends MazeFactory {
+    private static EnchantedMazeFactory instance;
     private final String spell;
 
     private EnchantedMazeFactory(String spell) {
         this.spell = spell;
     }
 
-    @Override
-    public Room createRoom(int number) {
-        return new EnchantedRoom(number, new Spell(this.spell));
-    }
-
-    // Statyczny builder lub po prostu public konstruktor(String spellText)
     public static class Builder {
-        private String spell = "brak zaklęcia";
+        private String spell = "Default Spell";
 
         public Builder withSpell(String spell) {
             this.spell = spell;
@@ -22,8 +17,35 @@ public class EnchantedMazeFactory extends MazeFactory{
         }
 
         public EnchantedMazeFactory build() {
-            return new EnchantedMazeFactory(this.spell);
+            if (instance == null) {
+                synchronized (EnchantedMazeFactory.class) {
+                    if (instance == null) {
+                        instance = new EnchantedMazeFactory(spell);
+                    }
+                }
+            }
+            return instance;
         }
+    }
+
+    public static EnchantedMazeFactory getInstance() {
+        if (instance == null) {
+            synchronized (EnchantedMazeFactory.class) {
+                if (instance == null) {
+                    instance = new EnchantedMazeFactory("Default Spell");
+                }
+            }
+        }
+        return instance;
+    }
+
+    public String getSpell() {
+        return this.spell;
+    }
+
+    @Override
+    public Room createRoom(int number) {
+        return new EnchantedRoom(number, new Spell(this.spell));
     }
 
     @Override
@@ -36,7 +58,10 @@ public class EnchantedMazeFactory extends MazeFactory{
         return new EnchantedDoor(r1, enter, r2, exit);
     }
 
-    private Spell castSpell(String text) {
-        return new Spell(text);
+    // For testing purposes only
+    public static void reset() {
+        synchronized (EnchantedMazeFactory.class) {
+            instance = null;
+        }
     }
 }
