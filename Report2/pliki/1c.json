@@ -1,0 +1,125 @@
+db.customers.aggregate([
+    {
+      $lookup: {
+        from: "orders",
+        localField: "CustomerID",
+        foreignField: "CustomerID",
+        as: "Orders"
+      }
+    },
+    { $unwind: "$Orders" },
+    {
+      $match: {
+        "Orders.OrderDate": {
+          $gte: ISODate("1997-01-01"),
+          $lt: ISODate("1998-01-01")
+        }
+      }
+    },
+    {
+      $lookup: {
+        from: "orderdetails",
+        localField: "Orders.OrderID",
+        foreignField: "OrderID",
+        as: "Details"
+      }
+    },
+    { $unwind: "$Details" },
+    {
+      $lookup: {
+        from: "products",
+        localField: "Details.ProductID",
+        foreignField: "ProductID",
+        as: "Product"
+      }
+    },
+    { $unwind: "$Product" },
+    {
+      $lookup: {
+        from: "categories",
+        localField: "Product.CategoryID",
+        foreignField: "CategoryID",
+        as: "Category"
+      }
+    },
+    { $unwind: "$Category" },
+    {
+      $match: {
+        "Category.CategoryName": "Confections"
+      }
+    },
+    {
+      $group: {
+        _id: "$CustomerID",
+        CustomerID: { $first: "$CustomerID" },
+        CompanyName: { $first: "$CompanyName" },
+        ConfectionsSale97: {
+          $sum: {
+            $multiply: [
+              "$Details.UnitPrice",
+              "$Details.Quantity",
+              { $subtract: [1, "$Details.Discount"] }
+            ]
+          }
+        }
+      }
+    }
+  ])
+  
+  ------------------------
+  
+  db.OrderInfo.aggregate([
+    {
+      $match: {
+        "Orderdetails.product.CategoryName": "Confections",
+        "Dates.OrderDate": {
+          $gte: ISODate("1997-01-01"),
+          $lt: ISODate("1998-01-01")
+        }
+      }
+    },
+    { $unwind: "$Orderdetails" },
+    {
+      $match: {
+        "Orderdetails.product.CategoryName": "Confections"
+      }
+    },
+    {
+      $group: {
+        _id: "$Customer.CustomerID",
+        CustomerID: { $first: "$Customer.CustomerID" },
+        CompanyName: { $first: "$Customer.CompanyName" },
+        ConfectionsSale97: { $sum: "$Orderdetails.Value" }
+      }
+    }
+  ])
+  
+  ------------------------
+  
+  db.CustomerInfo.aggregate([
+    { $unwind: "$Orders" },
+    {
+      $match: {
+        "Orders.Dates.OrderDate": {
+          $gte: ISODate("1997-01-01"),
+          $lt: ISODate("1998-01-01")
+        }
+      }
+    },
+    { $unwind: "$Orders.Orderdetails" },
+    {
+      $match: {
+        "Orders.Orderdetails.Product.CategoryName": "Confections"
+      }
+    },
+    {
+      $group: {
+        _id: "$CustomerID",
+        CustomerID: { $first: "$CustomerID" },
+        CompanyName: { $first: "$CompanyName" },
+        ConfectionsSale97: {
+          $sum: "$Orders.Orderdetails.Value"
+        }
+      }
+    }
+  ])

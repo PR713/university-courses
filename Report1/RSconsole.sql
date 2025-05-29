@@ -540,15 +540,17 @@ BEGIN
     old_no_tickets := :OLD.no_tickets;
     new_no_tickets := :NEW.no_tickets;
 
-    SELECT NO_AVAILABLE_PLACES
+    -- Zakładamy, że kolumna no_available_places jest w tabeli TRIP i jest aktualna
+    SELECT no_available_places
     INTO v_available_places
-    FROM VW_TRIP vwt
-    WHERE vwt.TRIP_ID = :NEW.trip_id;
+    FROM trip
+    WHERE trip_id = :NEW.trip_id;
 
     IF new_no_tickets > v_available_places + old_no_tickets THEN
         RAISE_APPLICATION_ERROR(-20003, 'There are not that number of available places');
     END IF;
-end;
+END;
+
 
 
 ------------------------------------ ZAD 6
@@ -790,22 +792,25 @@ END;
 
 
 CREATE OR REPLACE TRIGGER tr_reservation_manage_6b
-    AFTER UPDATE ON reservation
+    AFTER UPDATE OF no_tickets, status ON reservation
     FOR EACH ROW
-DECLARE
-    v_trip_date DATE;
-    v_max_places NUMBER;
 BEGIN
-    UPDATE TRIP t
-    SET no_available_places = t.max_no_places - COALESCE(
-            (SELECT sum(r.no_tickets)
-             FROM RESERVATION r
-             WHERE r.trip_id = :NEW.trip_id
-               AND r.status IN ('N', 'P'))
-        , 0)
-    WHERE trip_id = :NEW.trip_id;
+    -- odejmujemy stare bilety (jeśli były aktywne)
+    IF :OLD.status IN ('N', 'P') THEN
+        UPDATE trip
+        SET no_available_places = no_available_places + :OLD.no_tickets
+        WHERE trip_id = :OLD.trip_id;
+    END IF;
+
+    -- dodajemy nowe bilety (jeśli są aktywne)
+    IF :NEW.status IN ('N', 'P') THEN
+        UPDATE trip
+        SET no_available_places = no_available_places - :NEW.no_tickets
+        WHERE trip_id = :NEW.trip_id;
+    END IF;
 END;
 /
+
 
 
 
@@ -824,3 +829,139 @@ END;
 SELECT trigger_name, table_name, triggering_event, status
 FROM user_triggers
 ORDER BY table_name, trigger_name;
+
+
+--------------------Triggers testing
+-- Test dla trg_update_log_no_tickets
+
+ALTER TRIGGER trg_prevent_delete_reservation DISABLE;
+ALTER TRIGGER trg_change_no_tickets DISABLE;
+ALTER TRIGGER tr_reservation_manage_6b DISABLE;
+
+SELECT * FROM reservation WHERE reservation_id = 3;
+SELECT * FROM log WHERE reservation_id = 3;
+
+UPDATE reservation SET no_tickets = no_tickets + 1 WHERE reservation_id = 3;
+COMMIT;
+
+SELECT * FROM log WHERE reservation_id = 3 ORDER BY log_date DESC;
+
+ALTER TRIGGER trg_prevent_delete_reservation ENABLE;
+ALTER TRIGGER trg_change_no_tickets ENABLE;
+ALTER TRIGGER tr_reservation_manage_6b ENABLE;
+
+
+
+
+
+
+--test dla trg_prevent_delete_reservation
+
+ALTER TRIGGER trg_update_log_no_tickets DISABLE;
+ALTER TRIGGER trg_change_no_tickets DISABLE;
+ALTER TRIGGER tr_reservation_manage_6b DISABLE;
+
+BEGIN
+    DELETE FROM reservation WHERE reservation_id = 3;
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Expected error: ' || SQLERRM);
+END;
+/
+
+ALTER TRIGGER trg_update_log_no_tickets ENABLE;
+ALTER TRIGGER trg_change_no_tickets ENABLE;
+ALTER TRIGGER tr_reservation_manage_6b ENABLE;
+
+
+
+
+
+
+
+
+--Test dla trg_check_reservation_availability
+
+SELECT * FROM vw_trip WHERE no_available_places < 5;
+SELECT RESERVATION_ID, TRIP_NAME, TRIP_ID, FIRSTNAME, LASTNAME, STATUS, NO_TICKETS FROM VW_RESERVATION where person_id = 1;
+
+BEGIN
+    p_add_reservation_5(
+            p_trip_id => 1,
+            p_person_id => 1,
+            p_no_tickets => 3
+    );
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Expected error: ' || SQLERRM);
+END;
+/
+
+
+
+--test dla trg_change_no_tickets
+
+
+ALTER TRIGGER trg_update_log_no_tickets DISABLE;
+ALTER TRIGGER trg_prevent_delete_reservation DISABLE;
+ALTER TRIGGER tr_reservation_manage_6b DISABLE;
+
+SELECT r.no_tickets, t.no_available_places
+FROM reservation r JOIN trip t ON r.trip_id = t.trip_id
+WHERE r.reservation_id = 1;
+
+BEGIN
+    p_modify_reservation(
+        reservation_id => 1,
+        no_tickets => 5
+    );
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Expected error: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
+
+--test dla poprawnego zwiększenia no_tickets
+ALTER TRIGGER tr_reservation_manage_6b ENABLE;
+
+SELECT r.no_tickets, t.no_available_places
+FROM reservation r JOIN trip t ON r.trip_id = t.trip_id
+WHERE r.reservation_id = 1;
+
+BEGIN
+    p_modify_reservation(
+        reservation_id => 1,
+        no_tickets => 3
+    );
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Unexpected error: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
+
+
+--test z anulowaniem rezerwacji ( tickets ustawione na 0)
+SELECT r.no_tickets, t.no_available_places
+FROM reservation r JOIN trip t ON r.trip_id = t.trip_id
+WHERE r.reservation_id = 3;
+
+BEGIN
+    p_modify_reservation(
+            reservation_id => 3,
+            no_tickets => 0
+    );
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Unexpected error: ' || SQLERRM);
+        ROLLBACK;
+END;
+/
+
+ALTER TRIGGER trg_update_log_no_tickets ENABLE;
+ALTER TRIGGER trg_prevent_delete_reservation ENABLE;
+ALTER TRIGGER tr_reservation_manage_6b ENABLE;
+
+
