@@ -1,0 +1,139 @@
+
+body.dark-mode {
+    background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+    color: #ffffff;
+}
+
+body.light-mode {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #000000;
+}
+
+.dark-mode header,
+.dark-mode footer {
+    background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.light-mode header,
+.light-mode footer {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.dark-mode header {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.light-mode header {
+    background-color: rgba(255, 255, 255, 0.7) !important; /* Półprzezroczyste tło w trybie jasnym */
+}
+
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+    opacity: 0.8;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+.reel {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff 15%, transparent 15%), radial-gradient(circle, #ffffff 15%, transparent 15%);
+    background-size: 20px 20px;
+    background-position: 5px 5px, 25px 25px;
+}
+
+.reel::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background-color: #121212;
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+}
+
+.film-strip {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
+.film-strip div {
+    width: 15px;
+    height: 50px;
+    background-color: #ffffff;
+    border: 2px solid #121212;
+}
+
+.shop-name {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Stylizacja navbaru */
+.navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Cień na navbarze */
+    padding: 0.8rem 1rem;  /* Nieco większe odstępy wewnątrz */
+}
+
+/* Stylizacja przycisku zmiany trybu */
+button.nav-link {
+    font-size: 1.2rem;
+    transition: all 0.3s ease-in-out;
+}
+
+button.nav-link:hover {
+    transform: scale(1.1);  /* Lekki efekt powiększenia przy hover */
+}
+
+
