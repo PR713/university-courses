@@ -5,7 +5,7 @@ all: hospital
 
 
 hospital:
-	${CC} ${CFLAGS} hospital -o hospital.c
+	${CC} ${CFLAGS} hospital.c -o hospital
 
 clean:
 	rm -f hospital
