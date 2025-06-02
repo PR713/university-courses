@@ -1002,3 +1002,48 @@ Poniżej zamieszamy zrzuty ekranu realizacji przez nas powyższego kodu wraz z u
 ![alt text](./zrzuty_ekranu/f\)/f2.png)
 ![alt text](./zrzuty_ekranu/f\)/f3.png)
 ![alt text](./zrzuty_ekranu/f\)/f4.png)
+
+<br><br>
+<br><br>
+
+### g) Porównanie strategii modelowania dziedziczenia w EF Core: Table-Per-Hierarchy (TPH) vs Table-Per-Type (TPT)
+
+W zadaniach **e** i **f** zaprezentowaliśmy dwie różne strategie modelowania dziedziczenia w Entity Framework Core:
+
+---
+
+#### 1. **Table-Per-Hierarchy (TPH)** – zadanie e)
+
+- **Opis**:
+  - Wszystkie klasy dziedziczące z klasy `Company` są przechowywane w jednej wspólnej tabeli `Companies`.
+  - Rozróżnienie typów (`Customer`, `Supplier`) odbywa się za pomocą kolumny dyskryminatora.
+  - W tabeli występują kolumny specyficzne dla wszystkich typów dziedziczących (np. `Discount`, `BankAccountNumber`), nawet jeśli część z nich pozostaje pusta (null).
+
+- **Zalety**:
+  - Lepsza wydajność odczytu – jeden `SELECT` wystarczy do pobrania wszystkich firm bez potrzeby `JOIN`.
+  - Prostota struktury bazy danych – tylko jedna tabela.
+  - Łatwiejsze zarządzanie, gdy mamy małą liczbę typów dziedziczenia
+
+- **Wady**:
+  - Mniejsza zgodność z zasadami normalizacji bazy danych.
+  - Trudniejsza kontrola integralności danych – kolumny mogą być null dla niektórych typów.
+  - Słaba czytelność schematu przy większej liczbie klas pochodnych.
+
+---
+
+#### 2. **Table-Per-Type (TPT)** – zadanie f)
+
+- **Opis**:
+  - Dla każdej klasy dziedziczącej (`Customer`, `Supplier`) tworzona jest osobna tabela (`Customers`, `Suppliers`), która zawiera tylko swoje unikalne kolumny.
+  - Tabela `Companies` zawiera wspólne dane bazowej klasy abstrakcyjnej.
+  - Pobranie pełnych danych konkretnej firmy wymaga złączenia (`JOIN`) z tabelą bazową.
+
+- **Zalety**:
+  - Lepsza normalizacja danych – dane są uporządkowane i logicznie rozdzielone.
+  - Łatwiejsza kontrola typów i spójności danych w tabelach.
+  - Przejrzystość struktury – każda tabela zawiera tylko istotne dane dla danej klasy.
+
+- **Wady**:
+  - Większa złożoność zapytań (JOIN), co może obniżać wydajność.
+  - Większy koszt utrzymania przy częstych migracjach i zmianach schematu.
+  - Dłuższy czas zapisu i odczytu przy dużej liczbie rekordów i typów.
