@@ -147,10 +147,10 @@ class Program {
 
 Poniżej zamieszamy zrzuty ekranu realizacji przez nas powyższego kodu wraz z uzyskanym rezultatem:
 
-![alt text](./Zrzut%20ekranu%202025-05-22%20152502.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20152825.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20153116.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20153648.png)
+![alt text](./zrzuty_ekranu/a\)/Zrzut%20ekranu%202025-05-22%20152502.png)
+![alt text](./zrzuty_ekranu/a\)/Zrzut%20ekranu%202025-05-22%20152825.png)
+![alt text](./zrzuty_ekranu/a\)/Zrzut%20ekranu%202025-05-22%20153116.png)
+![alt text](./zrzuty_ekranu/a\)/Zrzut%20ekranu%202025-05-22%20153648.png)
 
 
 
@@ -442,10 +442,10 @@ class Program {
 }
 
 ```
-![alt text](./Zrzut%20ekranu%202025-05-22%20155000.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20155103.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20155200.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20155224.png)
+![alt text](./zrzuty_ekranu/c\)/Zrzut%20ekranu%202025-05-22%20155000.png)
+![alt text](./zrzuty_ekranu/c\)/Zrzut%20ekranu%202025-05-22%20155103.png)
+![alt text](./zrzuty_ekranu/c\)/Zrzut%20ekranu%202025-05-22%20155200.png)
+![alt text](./zrzuty_ekranu/c\)/Zrzut%20ekranu%202025-05-22%20155224.png)
 
 
 
@@ -826,10 +826,10 @@ public class Supplier : Company
     public string BankAccountNumber { get; set; }
 }
 ```
-![alt text](./Zrzut%20ekranu%202025-05-22%20165513.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20165519.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20165716.png)
-![alt text](./Zrzut%20ekranu%202025-05-22%20165446.png)
+![alt text](./zrzuty_ekranu/e\)/Zrzut%20ekranu%202025-05-22%20165513.png)
+![alt text](./zrzuty_ekranu/e\)/Zrzut%20ekranu%202025-05-22%20165519.png)
+![alt text](./zrzuty_ekranu/e\)/Zrzut%20ekranu%202025-05-22%20165716.png)
+![alt text](./zrzuty_ekranu/e\)/Zrzut%20ekranu%202025-05-22%20165446.png)
 
 
 
