@@ -318,6 +318,16 @@ class Program
     }
 }
 ```
+Poniżej zamieszamy zrzuty ekranu realizacji przez nas powyższego kodu wraz z uzyskanym rezultatem:
+
+![alt text](./zrzuty_ekranu/b\)/b1.png)
+![alt text](./zrzuty_ekranu/b\)/b2.png)
+![alt text](./zrzuty_ekranu/b\)/b3.png)
+![alt text](./zrzuty_ekranu/b\)/b4.png)
+![alt text](./zrzuty_ekranu/b\)/b5.png)
+
+
+
 <br><br>
 
 ### Zadanie c: Zamodelowanie relacji dwustronnej (supplies & is supplied by)
@@ -638,6 +648,17 @@ class Program
     }
 }
 ```
+
+Poniżej zamieszamy zrzuty ekranu realizacji przez nas powyższego kodu wraz z uzyskanym rezultatem:
+
+![alt text](./zrzuty_ekranu/d\)/d1.png)
+![alt text](./zrzuty_ekranu/d\)/d2.png)
+![alt text](./zrzuty_ekranu/d\)/d3.png)
+![alt text](./zrzuty_ekranu/d\)/d4.png)
+![alt text](./zrzuty_ekranu/d\)/d5.png)
+![alt text](./zrzuty_ekranu/d\)/d6.png)
+![alt text](./zrzuty_ekranu/d\)/d7.png)
+
 
 <br><br>
 
@@ -968,4 +989,9 @@ class Program
 }
 ```
 
-Działanie progamu:
+Poniżej zamieszamy zrzuty ekranu realizacji przez nas powyższego kodu wraz z uzyskanym rezultatem:
+
+![alt text](./zrzuty_ekranu/f\)/f1.png)
+![alt text](./zrzuty_ekranu/f\)/f2.png)
+![alt text](./zrzuty_ekranu/f\)/f3.png)
+![alt text](./zrzuty_ekranu/f\)/f4.png)
