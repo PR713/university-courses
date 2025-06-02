@@ -159,6 +159,164 @@ Poniżej zamieszamy zrzuty ekranu realizacji przez nas powyższego kodu wraz z u
 ### Zadanie b: 
 Realizację zadania b) przedstawia kod poniżej:
 ```csharp
+public class Product
+{
+    public int ProductID { get; set; }
+    public String? ProductName { get; set; }
+    public int UnitsInStock { get; set; }
+}
+```
+
+```csharp
+using System.Collections.Generic;
+
+public class Supplier
+{
+    public int SupplierID { get; set; }
+    public string CompanyName { get; set; }
+    public string Street { get; set; }
+    public string City { get; set; }
+
+    public List<Product>? Products { get; set; }
+}
+```
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+
+public class ProdContext : DbContext
+{
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Supplier> Suppliers { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.UseSqlite("Datasource=MyProductDatabase_b.db");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Supplier>()
+            .HasMany(s => s.Products)
+            .WithOne()
+            .HasForeignKey("SupplierID")
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+}
+```
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Podaj nazwę produktu: ");
+        string? prodName = Console.ReadLine();
+
+        Console.WriteLine("Podaj liczbę dostępnych sztuk: ");
+        int quantity = int.Parse(Console.ReadLine());
+
+        ProdContext productContext = new ProdContext();
+        Product product = new Product { ProductName = prodName, UnitsInStock = quantity };
+
+        bool createdNewSupplier = false;
+        bool isValidChoice = false;
+        Supplier? supplier = null;
+
+        do
+        {
+            Console.WriteLine("Czy chcesz dodać nowego dostawcę? (tak/nie)");
+            string? choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "tak":
+                    isValidChoice = true;
+                    supplier = CreateNewSupplier();
+                    createdNewSupplier = true;
+                    break;
+                case "nie":
+                    isValidChoice = true;
+                    ShowAllSuppliers(productContext);
+                    supplier = FindSupplier(productContext);
+                    break;
+                default:
+                    Console.WriteLine("Wybierz: tak / nie");
+                    break;
+            }
+        } while (!isValidChoice);
+
+        if (supplier != null)
+        {
+            if (supplier.Products == null)
+                supplier.Products = new System.Collections.Generic.List<Product>();
+
+            supplier.Products.Add(product);
+
+            if (createdNewSupplier)
+            {
+                productContext.Suppliers.Add(supplier);
+            }
+
+            productContext.SaveChanges();
+            Console.WriteLine("Produkt został zapisany i przypisany do dostawcy.");
+        }
+        else
+        {
+            Console.WriteLine("Nie udało się znaleźć lub utworzyć dostawcy.");
+        }
+    }
+
+    private static Supplier CreateNewSupplier()
+    {
+        Console.WriteLine("Uzupełnij nazwę dostawcy: ");
+        string companyName = Console.ReadLine();
+
+        Console.WriteLine("Uzupełnij miasto: ");
+        string city = Console.ReadLine();
+
+        Console.WriteLine("Uzupełnij ulicę: ");
+        string street = Console.ReadLine();
+
+        Supplier supplier = new Supplier
+        {
+            CompanyName = companyName,
+            City = city,
+            Street = street
+        };
+
+        Console.WriteLine($"\nUtworzono dostawcę: {supplier.CompanyName}");
+        return supplier;
+    }
+
+    private static Supplier? FindSupplier(ProdContext productContext)
+    {
+        Console.WriteLine("Podaj ID istniejącego dostawcy: ");
+        int id = int.Parse(Console.ReadLine());
+
+        foreach (Supplier s in productContext.Suppliers)
+        {
+            if (s.SupplierID == id)
+                return s;
+        }
+
+        return null;
+    }
+
+    private static void ShowAllSuppliers(ProdContext productContext)
+    {
+        Console.WriteLine("Lista wszystkich dostawców:");
+        foreach (Supplier supplier in productContext.Suppliers)
+        {
+            Console.WriteLine($"[{supplier.SupplierID}] {supplier.CompanyName}, {supplier.City}, {supplier.Street}");
+        }
+    }
+}
 ```
 <br><br>
 
@@ -296,6 +454,189 @@ class Program {
 ### Zadanie d:
 Realizację zadania d) przedstawia kod poniżej:
 ```csharp
+public class Product
+{
+    public int ProductID { get; set; }
+    public string? ProductName { get; set; }
+    public int UnitsInStock { get; set; }
+
+    public List<InvoiceProduct>? InvoiceProducts { get; set; }
+}
+```
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+public class Invoice
+{
+    public int InvoiceID { get; set; }
+    public DateTime Date { get; set; }
+
+    public List<InvoiceProduct>? InvoiceProducts { get; set; }
+}
+```
+
+```csharp
+public class InvoiceProduct
+{
+    public int ProductID { get; set; }
+    public Product Product { get; set; }
+
+    public int InvoiceID { get; set; }
+    public Invoice Invoice { get; set; }
+
+    public int Quantity { get; set; }
+}
+```
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+
+public class ProdContext : DbContext
+{
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
+    public DbSet<InvoiceProduct> InvoiceProducts { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Datasource=MyProductDatabase_d.db");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<InvoiceProduct>()
+            .HasKey(ip => new { ip.ProductID, ip.InvoiceID });
+
+        modelBuilder.Entity<InvoiceProduct>()
+            .HasOne(ip => ip.Product)
+            .WithMany(p => p.InvoiceProducts)
+            .HasForeignKey(ip => ip.ProductID);
+
+        modelBuilder.Entity<InvoiceProduct>()
+            .HasOne(ip => ip.Invoice)
+            .WithMany(i => i.InvoiceProducts)
+            .HasForeignKey(ip => ip.InvoiceID);
+    }
+}
+```
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
+class Program
+{
+    static void Main()
+    {
+        using var context = new ProdContext();
+
+        Console.WriteLine("Wybierz akcję:");
+        Console.WriteLine("1 - Dodaj produkt i przypisz do faktury");
+        Console.WriteLine("2 - Pokaż produkty z faktury");
+        Console.WriteLine("3 - Pokaż faktury produktu");
+
+        string? choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            case "1":
+                AddProductToInvoice(context);
+                break;
+            case "2":
+                ShowProductsOfInvoice(context);
+                break;
+            case "3":
+                ShowInvoicesOfProduct(context);
+                break;
+            default:
+                Console.WriteLine("Nieznana opcja.");
+                break;
+        }
+    }
+
+    static void AddProductToInvoice(ProdContext context)
+    {
+        Console.WriteLine("Podaj nazwę produktu:");
+        string? name = Console.ReadLine();
+
+        Console.WriteLine("Podaj ilość dostępnych sztuk:");
+        int stock = int.Parse(Console.ReadLine());
+
+        Product product = new Product { ProductName = name, UnitsInStock = stock };
+        context.Products.Add(product);
+        context.SaveChanges();
+
+        Console.WriteLine("Czy chcesz przypisać do istniejącej faktury? (tak/nie)");
+        string? reuse = Console.ReadLine();
+
+        int invoiceId;
+        if (reuse == "tak")
+        {
+            Console.WriteLine("Podaj ID faktury:");
+            invoiceId = int.Parse(Console.ReadLine());
+        }
+        else
+        {
+            Invoice invoice = new Invoice { Date = DateTime.Now };
+            context.Invoices.Add(invoice);
+            context.SaveChanges();
+            invoiceId = invoice.InvoiceID;
+        }
+
+        Console.WriteLine("Podaj ilość sprzedanych sztuk w tej fakturze:");
+        int quantity = int.Parse(Console.ReadLine());
+
+        InvoiceProduct ip = new InvoiceProduct
+        {
+            ProductID = product.ProductID,
+            InvoiceID = invoiceId,
+            Quantity = quantity
+        };
+
+        context.InvoiceProducts.Add(ip);
+        context.SaveChanges();
+
+        Console.WriteLine($"Dodano produkt do faktury {invoiceId} (ilość: {quantity}).");
+    }
+
+    static void ShowProductsOfInvoice(ProdContext context)
+    {
+        Console.WriteLine("Podaj ID faktury:");
+        int invoiceId = int.Parse(Console.ReadLine());
+
+        var products = context.InvoiceProducts
+            .Include(ip => ip.Product)
+            .Where(ip => ip.InvoiceID == invoiceId)
+            .ToList();
+
+        Console.WriteLine($"Produkty z faktury {invoiceId}:");
+        foreach (var ip in products)
+        {
+            Console.WriteLine($"- {ip.Product.ProductName}, sprzedano: {ip.Quantity} szt.");
+        }
+    }
+
+    static void ShowInvoicesOfProduct(ProdContext context)
+    {
+        Console.WriteLine("Podaj ID produktu:");
+        int productId = int.Parse(Console.ReadLine());
+
+        var invoices = context.InvoiceProducts
+            .Include(ip => ip.Invoice)
+            .Where(ip => ip.ProductID == productId)
+            .ToList();
+
+        Console.WriteLine($"Faktury z udziałem produktu {productId}:");
+        foreach (var ip in invoices)
+        {
+            Console.WriteLine($"- Faktura ID: {ip.InvoiceID}, data: {ip.Invoice.Date}, ilość: {ip.Quantity}");
+        }
+    }
+}
 ```
 
 <br><br>
@@ -500,4 +841,131 @@ public class Supplier : Company
 Realizację zadania f) przedstawia kod poniżej:
 
 ```csharp
+public abstract class Company
+{
+    public int CompanyID { get; set; }
+    public string CompanyName { get; set; }
+    public string Street { get; set; }
+    public string City { get; set; }
+    public string ZipCode { get; set; }
+}
 ```
+
+```csharp
+public class Customer : Company
+{
+    public float Discount { get; set; }
+}
+```
+
+```csharp
+public class Supplier : Company
+{
+    public string BankAccountNumber { get; set; }
+}
+```
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+
+public class CompanyContext : DbContext
+{
+    public DbSet<Company> Companies { get; set; }
+    public DbSet<Supplier> Suppliers { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Datasource=MyProductDatabase_f.db");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Company>().ToTable("Companies");
+        modelBuilder.Entity<Supplier>().ToTable("Suppliers");
+        modelBuilder.Entity<Customer>().ToTable("Customers");
+    }
+}
+
+```
+
+```csharp
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        using var context = new CompanyContext();
+
+        Console.WriteLine("Dodaj firmę jako: supplier czy customer?");
+        string? type = Console.ReadLine();
+
+        Console.WriteLine("Podaj nazwę firmy:");
+        string name = Console.ReadLine();
+
+        Console.WriteLine("Ulica:");
+        string street = Console.ReadLine();
+
+        Console.WriteLine("Miasto:");
+        string city = Console.ReadLine();
+
+        Console.WriteLine("Kod pocztowy:");
+        string zip = Console.ReadLine();
+
+        if (type == "supplier")
+        {
+            Console.WriteLine("Podaj numer konta bankowego:");
+            string account = Console.ReadLine();
+
+            Supplier supplier = new Supplier
+            {
+                CompanyName = name,
+                Street = street,
+                City = city,
+                ZipCode = zip,
+                BankAccountNumber = account
+            };
+
+            context.Suppliers.Add(supplier);
+            context.SaveChanges();
+
+            Console.WriteLine("\nDostawcy:");
+            foreach (var s in context.Suppliers)
+            {
+                Console.WriteLine($"[{s.CompanyID}] {s.CompanyName}, {s.City}, {s.Street}, {s.ZipCode}, Konto: {s.BankAccountNumber}");
+            }
+        }
+        else if (type == "customer")
+        {
+            Console.WriteLine("Podaj wartość rabatu (np. 0.1 dla 10%):");
+            float discount = float.Parse(Console.ReadLine());
+
+            Customer customer = new Customer
+            {
+                CompanyName = name,
+                Street = street,
+                City = city,
+                ZipCode = zip,
+                Discount = discount
+            };
+
+            context.Customers.Add(customer);
+            context.SaveChanges();
+
+            Console.WriteLine("\nKlienci:");
+            foreach (var c in context.Customers)
+            {
+                Console.WriteLine($"[{c.CompanyID}] {c.CompanyName}, {c.City}, {c.Street}, {c.ZipCode}, Rabat: {c.Discount * 100}%");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Nieznany typ firmy.");
+        }
+    }
+}
+```
+
+Działanie progamu:
