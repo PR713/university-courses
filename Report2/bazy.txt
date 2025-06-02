@@ -1,0 +1,169 @@
+Relacyjna baza Oracle
+Java + Spring Boot + Hibernate
+Księgarnia online
+
+
+
+
+
+
+--------------
+mongorestore --nsInclude='north0.*' "C:\Users\radsz\Downloads\north0"
+//jeśli podkatalog o nazwie north0 w north0
+
+
+-----pdf2
+db.orders.aggregate(  
+    {  
+        $match : { }  
+    },  
+
+{
+	$addFields: {
+			Shippment : {
+					"ShipCountry": "$ShipCountry",  
+    					"ShipName": "$ShipName",  
+    					"ShipPostalCode": "$ShipPostalCode",  
+    					"ShipRegion": "null",
+				    }
+		    }
+   },  
+
+  
+   //customers  
+    {  
+        $lookup : {  
+            from: "customers",  
+            localField: "CustomerID",  
+            foreignField: "CustomerID",  
+            as: "Customer"  
+        }  
+  
+   },  
+   {  
+        $unwind : "$Customer"  
+   },  
+   {  
+        $project : {  
+            "Customer._id": 0,  
+            "Customer.ContactName": 0,  
+            "Customer.ContactTitle": 0,  
+            "Customer.City": 0,  
+//             "Customer.Country": 0,  
+            "Customer.Address": 0,  
+            "Customer.PostalCode": 0,  
+            "Customer.Region": 0,  
+            "Customer.Phone": 0,  
+            "Customer.Fax": 0  
+        }  
+    },  
+  
+    //employees  
+    {  
+        $lookup : {  
+            from: "employees",  
+                localField: "EmployeeID",  
+                foreignField: "EmployeeID",  
+                as: "Employee"  
+        }  
+    },  
+    {  
+        $unwind : "$Employee"  
+    },  
+    {  
+        $project : {  
+            "Employee._id": 0,  
+            "Employee.Title": 0,  
+            "Employee.TitleOfCourtesy": 0,  
+            "Employee.BirthDate": 0,  
+            "Employee.HireDate": 0,  
+            "Employee.Address": 0,  
+            "Employee.PostalCode": 0,  
+            "Employee.City": 0,  
+            "Employee.Region": 0,  
+            "Employee.Country": 0,  
+            "Employee.HomePhone": 0,  
+            "Employee.Extension": 0,  
+            "Employee.Photo": 0,  
+            "Employee.Notes": 0,  
+            "Employee.ReportsTo": 0,  
+            "Employee.PhotoPath": 0  
+        }  
+    },  
+    //shippers  
+    {  
+        $lookup : {  
+            from: "shippers",  
+            localField: "ShipVia",  
+            foreignField: "ShipperID",  
+            as: "Shipper"  
+        }  
+    },  
+    {  
+        $unwind : "$Shipper"  
+    },  
+    {  
+        $project : {  
+            "Shipper._id": 0,  
+            "Shipper.Phone": 0  
+  
+        }  
+    },  
+    //orderdetails  
+    {  
+        $lookup : {  
+            from: "orderdetails_tmp",  
+            localField: "OrderID",  
+            foreignField: "OrderID",  
+            as: "Orderdetails"  
+        }  
+    },  
+    {  
+        $project : {  
+              "Orderdetails._id": 0,  
+              "Orderdetails.OrderID": 0  
+  
+        }  
+    },  
+    {  
+        $project : {  
+              "CustomerID": 0,  
+              "EmployeeID": 0,  
+              "ShipVia": 0,
+	      "ShipAddress": 0,  
+	"ShipCity": 0,  
+    "ShipCountry": 0,  
+    "ShipName": 0,  
+    "ShipPostalCode": 0,  
+    "ShipRegion": 0,  
+        }  
+   },
+
+   {  
+    $out : "orders_tmp"  
+   }  
+  
+)
+
+
+----
+oraz {
+  "$project": {
+    "drogi": {
+      "$filter": {
+        "input": "$produkty",
+        "as": "produkt",
+        "cond": { "$gt": [ "$$produkt.cena", 100 ] }
+      }
+    }
+  }
+}
+Tutaj:
+
+$produkty to pole w dokumencie (jeden $)
+
+$$produkt to zmienna w ramach $filter (dwa $$) (może być też zmienną w $map)
+
+
+
+--------------------------------------------
