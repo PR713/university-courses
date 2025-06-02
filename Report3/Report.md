@@ -4,10 +4,10 @@
 
 ## Część 1:
 Poniżej przedstawiamy zrzuty ekranu wykonania pracy podczas zajęć:
-![alt text](./Zrzut%20ekranu%202025-05-16%20141402.png)
-![alt text](./Zrzut%20ekranu%202025-05-16%20141415.png)
-![alt text](./Zrzut%20ekranu%202025-05-16%20143727.png)
-![alt text](./Zrzut%20ekranu%202025-05-16%20143821.png)
+![alt text](./zrzuty_ekranu/part1/Zrzut%20ekranu%202025-05-16%20141402.png)
+![alt text](./zrzuty_ekranu/part1/Zrzut%20ekranu%202025-05-16%20141415.png)
+![alt text](./zrzuty_ekranu/part1/Zrzut%20ekranu%202025-05-16%20143727.png)
+![alt text](./zrzuty_ekranu/part1/Zrzut%20ekranu%202025-05-16%20143821.png)
 
 
 <br><br>
@@ -441,6 +441,10 @@ class Program {
     }
 }
 
+
+
+Poniżej zamieszamy zrzuty ekranu realizacji przez nas powyższego kodu wraz z uzyskanym rezultatem:
+
 ```
 ![alt text](./zrzuty_ekranu/c\)/Zrzut%20ekranu%202025-05-22%20155000.png)
 ![alt text](./zrzuty_ekranu/c\)/Zrzut%20ekranu%202025-05-22%20155103.png)
@@ -819,6 +823,9 @@ class Program
     }
 }
 ```
+
+
+Poniżej zamieszamy zrzuty ekranu realizacji przez nas powyższego kodu wraz z uzyskanym rezultatem:
 
 ```csharp
 public class Supplier : Company
