@@ -1,0 +1,40 @@
+pb1_sync <= pb1_sync(0) & pb1, to nie jest koniunkcja logiczna (and), tylko operator konkatenacji w VHDL (& = "dołącz do, przesunięcie").
+
+signal left_val : unsigned(3 downto 0) := (others => '0');
+Tworzy 4-bitowy sygnał typu unsigned, inicjalizowany do zera. Przechowuje licznik zwiększany przyciskiem pb1. Reprezentuje wartość wyświetlaną na hex0.
+
+signal selected_val : unsigned(3 downto 0) := (others => '0');
+Drugi 4-bitowy licznik, inicjalizowany do zera. Służy do zapamiętywania wartości z left_val po naciśnięciu pb2. Wartość ta jest wyświetlana na hex1.
+
+constant DEBOUNCE_TIME : integer := 50000;
+Stała definiująca opóźnienie dla filtrowania drgań styków. Wartość 50000 oznacza liczbę cykli zegara, przez które stan przycisku musi być stabilny. Pomaga w eliminacji fałszywych detekcji.
+
+signal pb1_db_cnt : integer range 0 to DEBOUNCE_TIME := 0;
+Licznik do debouncowania przycisku pb1, rozpoczyna się od zera. Liczy kolejne cykle zegara, gdy przycisk jest wciśnięty. Gdy osiągnie DEBOUNCE_TIME, uznajemy przycisk za rzeczywiście wciśnięty.
+
+signal pb2_db_cnt : integer range 0 to DEBOUNCE_TIME := 0;
+Analogiczny licznik dla przycisku pb2. Też zaczyna od zera i zlicza cykle przy naciśnięciu. Służy do stabilizacji stanu przycisku.
+
+signal pb1_db : std_logic := '1';
+Przefiltrowany (zdębąsowany) stan przycisku pb1. Inicjalnie w stanie wysokim, czyli nieaktywnym. Będzie zmieniany po spełnieniu warunku zliczenia.
+
+signal pb2_db : std_logic := '1';
+Tak samo dla pb2. Trzyma stan po filtracji. Używany do wykrywania zbocza opadającego.
+
+signal pb1_prev : std_logic := '1';
+Przechowuje poprzedni przefiltrowany stan przycisku pb1. Pomaga w wykrywaniu zbocza (zmiany z '1' na '0'). Dzięki temu można zareagować tylko raz na naciśnięcie.
+
+signal pb2_prev : std_logic := '1';
+Przechowuje poprzedni stan przycisku pb2. Działa identycznie jak pb1_prev, ale dla drugiego przycisku. Zapobiega wielokrotnemu reagowaniu na jedno naciśnięcie.
+
+signal pb1_sync : std_logic_vector(1 downto 0) := "11";
+Dwubitowy rejestr synchronizujący dla pb1. Zapewnia stabilność sygnału wejściowego względem zegara. Pozwala uniknąć metastabilności.
+
+signal pb2_sync : std_logic_vector(1 downto 0) := "11";
+Analogiczny dwubitowy rejestr dla pb2. Synchronizuje przycisk z zegarem. Też minimalizuje problemy z asynchronicznymi sygnałami.
+
+function to_7seg(n : unsigned(3 downto 0)) return std_logic_vector is
+Deklaruje funkcję konwertującą 4-bitową liczbę na kod 7-segmentowy. Przyjmuje jako parametr n i zwraca 7-bitowy wektor logiczny. Używana do sterowania wyświetlaczem.
+
+
+Debouncing działa tak, że jeśli pb1_sync(1) ma wartość '0' (czyli pb1 też) przez 50000 kolejnych cykli zegara, to uznajemy to za stabilne wciśnięcie przycisku. Jeśli w trakcie pojawi się '1', resetujemy licznik i zaczynamy od nowa. Gdy licznik dojdzie do 50000, pb1_db ustawiamy na '0', co oznacza, że sygnał jest czysty i przycisk jest wciśnięty.
