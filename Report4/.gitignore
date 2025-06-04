@@ -1,0 +1,4 @@
+db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/*
+
+!db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/bin/
+!db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/bin/**
