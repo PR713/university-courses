@@ -36,3 +36,5 @@ Analogiczny dwubitowy rejestr dla pb2. Synchronizuje przycisk z zegarem. Też mi
 function to_7seg(n : unsigned(3 downto 0)) return std_logic_vector is
 Deklaruje funkcję konwertującą 4-bitową liczbę na kod 7-segmentowy. Przyjmuje jako parametr n i zwraca 7-bitowy wektor logiczny. Używana do sterowania wyświetlaczem.
 
+
+Debouncing działa tak, że jeśli pb1_sync(1) ma wartość '0' (czyli pb1 też) przez 50000 kolejnych cykli zegara, to uznajemy to za stabilne wciśnięcie przycisku. Jeśli w trakcie pojawi się '1', resetujemy licznik i zaczynamy od nowa. Gdy licznik dojdzie do 50000, pb1_db ustawiamy na '0', co oznacza, że sygnał jest czysty i przycisk jest wciśnięty.
