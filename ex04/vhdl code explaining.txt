@@ -38,3 +38,5 @@ Deklaruje funkcję konwertującą 4-bitową liczbę na kod 7-segmentowy. Przyjmu
 
 
 Debouncing działa tak, że jeśli pb1_sync(1) ma wartość '0' (czyli pb1 też) przez 50000 kolejnych cykli zegara, to uznajemy to za stabilne wciśnięcie przycisku. Jeśli w trakcie pojawi się '1', resetujemy licznik i zaczynamy od nowa. Gdy licznik dojdzie do 50000, pb1_db ustawiamy na '0', co oznacza, że sygnał jest czysty i przycisk jest wciśnięty.
+
+Toggle do migania 3 krotnego przy wyborze wartości z menu :).

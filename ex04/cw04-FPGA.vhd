@@ -4,11 +4,11 @@ use ieee.numeric_std.all;
 
 entity cw04FPGA is
     port (
-        clk     : in  std_logic;                     -- zegar (np. 50 MHz)
-        pb1     : in  std_logic;                     -- przycisk lewy (aktywny w '0')
-        pb2     : in  std_logic;                     -- przycisk prawy (aktywny w '0')
-        hex0    : out std_logic_vector(6 downto 0);  -- wyœwietlacz lewy
-        hex1    : out std_logic_vector(6 downto 0)   -- wyœwietlacz prawy
+        clk     : in  std_logic;                     
+        pb1     : in  std_logic;                     
+        pb2     : in  std_logic;                     
+        hex0    : out std_logic_vector(6 downto 0);  -- wyswietlacz lewy
+        hex1    : out std_logic_vector(6 downto 0)   -- wyswietlacz prawy
     );
 end entity;
 
@@ -16,8 +16,8 @@ architecture rtl of cw04FPGA is
     signal left_val     : unsigned(3 downto 0) := (others => '0');
     signal selected_val : unsigned(3 downto 0) := (others => '0');
     
-    -- Sygna³y do debouncingu
-    constant DEBOUNCE_TIME : integer := 50000;
+
+    constant DEBOUNCE_TIME : integer := 100000;
     signal pb1_db_cnt : integer range 0 to DEBOUNCE_TIME := 0;
     signal pb2_db_cnt : integer range 0 to DEBOUNCE_TIME := 0;
     signal pb1_db     : std_logic := '1';
@@ -25,9 +25,14 @@ architecture rtl of cw04FPGA is
     signal pb1_prev   : std_logic := '1';
     signal pb2_prev   : std_logic := '1';
     
-    -- Rejestry synchronizuj¹ce
+
     signal pb1_sync   : std_logic_vector(1 downto 0) := "11";
     signal pb2_sync   : std_logic_vector(1 downto 0) := "11";
+    
+    signal blink_clock_cycles_cnt : integer range 0 to 25175000 := 0;
+    signal blink_toggle : std_logic := '1';
+    signal blink_count   : integer range 0 to 5 := 0;
+    signal blink_active  : std_logic := '0';
 
     function to_7seg(n : unsigned(3 downto 0)) return std_logic_vector is
         variable seg : std_logic_vector(6 downto 0);
@@ -52,12 +57,12 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-            -- Synchronizacja wejœæ (2-stopniowa)
+
             pb1_sync <= pb1_sync(0) & pb1;
             pb2_sync <= pb2_sync(0) & pb2;
             
-            -- Debouncing PB1
-            if pb1_sync(1) = '0' then  -- Przycisk wciœniêty (aktywny w '0')
+
+            if pb1_sync(1) = '0' then 
                 if pb1_db_cnt < DEBOUNCE_TIME then
                     pb1_db_cnt <= pb1_db_cnt + 1;
                 else
@@ -68,8 +73,8 @@ begin
                 pb1_db <= '1';
             end if;
             
-            -- Debouncing PB2
-            if pb2_sync(1) = '0' then  -- Przycisk wciœniêty (aktywny w '0')
+          
+            if pb2_sync(1) = '0' then  
                 if pb2_db_cnt < DEBOUNCE_TIME then
                     pb2_db_cnt <= pb2_db_cnt + 1;
                 else
@@ -80,11 +85,11 @@ begin
                 pb2_db <= '1';
             end if;
             
-            -- Wykrywanie zbocza opadaj¹cego (przejœcie z '1' na '0')
+           
             pb1_prev <= pb1_db;
             pb2_prev <= pb2_db;
             
-            -- Logika dla PB1 (zwiêkszanie wartoœci)
+        
             if pb1_db = '0' and pb1_prev = '1' then
                 if left_val = "1001" then
                     left_val <= (others => '0');
@@ -93,13 +98,32 @@ begin
                 end if;
             end if;
             
-            -- Logika dla PB2 (zapisywanie wartoœci)
+            
             if pb2_db = '0' and pb2_prev = '1' then
                 selected_val <= left_val;
+                blink_active <= '1';
+                blink_count <= 0; --liczba mrugniec
+                blink_clock_cycles_cnt <= 0;
             end if;
+            
+            
+            if blink_active = '1' then
+				if blink_clock_cycles_cnt < 1000000 then 
+					blink_clock_cycles_cnt <= blink_clock_cycles_cnt + 1;
+				else
+					blink_clock_cycles_cnt <= 0;
+					blink_toggle <= not blink_toggle;
+					blink_count <= blink_count + 1;
+					
+					if blink_count = 5 then
+						blink_active <= '0';
+						blink_toggle <= '1';
+					end if;
+				end if;
+			end if;
         end if;
     end process;
 
     hex0 <= to_7seg(left_val);
-    hex1 <= to_7seg(selected_val);
+    hex1 <= to_7seg(selected_val) when blink_toggle = '1' else "1111111";
 end rtl;
