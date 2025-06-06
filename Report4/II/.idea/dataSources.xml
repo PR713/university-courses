@@ -30,7 +30,7 @@ C:/Users/radsz/Desktop/BazyDanychOracle/Report4/untitled/src/main/resources/hibe
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="RadoslawSzepielakDatabase_II@127.0.0.1" uuid="b19daec3-442d-468e-8c8b-4a3eb07710d9">
+    <data-source source="LOCAL" name="RadoslawSzepielakDatabase_I@127.0.0.1" uuid="b19daec3-442d-468e-8c8b-4a3eb07710d9">
       <driver-ref>derby.remote</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.apache.derby.jdbc.ClientDriver</jdbc-driver>

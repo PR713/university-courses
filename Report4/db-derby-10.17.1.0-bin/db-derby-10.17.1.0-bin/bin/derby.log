@@ -1,8 +1,34 @@
-Mon Jun 02 20:29:28 CEST 2025 : Apache Derby Network Server - 10.17.1.0 - (1913217) started and ready to accept connections on port 1527
+Fri Jun 06 14:14:43 CEST 2025 : Apache Derby Network Server - 10.17.1.0 - (1913217) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Mon Jun 02 20:29:52 CEST 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0197-31e7-dbf6-00000ef1bca0 
+Fri Jun 06 14:14:49 CEST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0197-452a-337b-00000ef1bca0 
 on database directory C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin\RadoslawSzepielakDatabase_II with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
+Loaded from file:/C:/Users/radsz/Desktop/BazyDanychOracle/Report4/db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=21.0.5+9-LTS-239
+user.dir=C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Jun 06 16:13:03 CEST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance 374fc0db-0197-452a-337b-00000ef1bca0 
+on database directory C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin\RadoslawSzepielakDatabase with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
+Loaded from file:/C:/Users/radsz/Desktop/BazyDanychOracle/Report4/db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=21.0.5+9-LTS-239
+user.dir=C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Jun 06 16:14:13 CEST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance 247b4177-0197-452a-337b-00000ef1bca0 
+on database directory C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin\RadoslawSzepielakDatabase_I with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
 Loaded from file:/C:/Users/radsz/Desktop/BazyDanychOracle/Report4/db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.5+9-LTS-239
