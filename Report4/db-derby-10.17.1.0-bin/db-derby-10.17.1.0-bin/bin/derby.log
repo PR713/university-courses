@@ -1,7 +1,320 @@
-Fri Jun 06 14:14:43 CEST 2025 : Apache Derby Network Server - 10.17.1.0 - (1913217) started and ready to accept connections on port 1527
+Fri Jun 06 23:29:37 CEST 2025 : Apache Derby Network Server - 10.17.1.0 - (1913217) started and ready to accept connections on port 1527
+Fri Jun 06 23:29:45 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] Cleanup action starting
+java.sql.SQLException: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+Caused by: ERROR XJ004: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	... 17 more
+============= begin nested exception, level (1) ===========
+ERROR XJ004: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Fri Jun 06 23:29:45 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] (DATABASE = RadosławSzepielak_IV), (DRDAID = {1}), Database 'RadosławSzepielak_IV' not found.
 ----------------------------------------------------------------
-Fri Jun 06 14:14:49 CEST 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0197-452a-337b-00000ef1bca0 
+Fri Jun 06 23:30:11 CEST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0197-4726-3ae5-00000ef135f8 
+on database directory C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin\RadoslawSzepielakDatabase_I with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
+Loaded from file:/C:/Users/radsz/Desktop/BazyDanychOracle/Report4/db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=21.0.5+9-LTS-239
+user.dir=C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+Fri Jun 06 23:38:39 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] Cleanup action starting
+java.sql.SQLException: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+Caused by: ERROR XJ004: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	... 17 more
+============= begin nested exception, level (1) ===========
+ERROR XJ004: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Fri Jun 06 23:38:39 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] (DATABASE = RadosławSzepielak_IV), (DRDAID = {5}), Database 'RadosławSzepielak_IV' not found.
+Fri Jun 06 23:38:51 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] Cleanup action starting
+java.sql.SQLException: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+Caused by: ERROR XJ004: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	... 17 more
+============= begin nested exception, level (1) ===========
+ERROR XJ004: Database 'RadosławSzepielak_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Fri Jun 06 23:38:51 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] (DATABASE = RadosławSzepielak_IV), (DRDAID = {6}), Database 'RadosławSzepielak_IV' not found.
+Fri Jun 06 23:39:24 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] Cleanup action starting
+java.sql.SQLException: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+Caused by: ERROR XJ004: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	... 17 more
+============= begin nested exception, level (1) ===========
+ERROR XJ004: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Fri Jun 06 23:39:24 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] (DATABASE = RadosławSzepielakDatabase_IV), (DRDAID = {7}), Database 'RadosławSzepielakDatabase_IV' not found.
+Fri Jun 06 23:39:27 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] Cleanup action starting
+java.sql.SQLException: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+Caused by: ERROR XJ004: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	... 17 more
+============= begin nested exception, level (1) ===========
+ERROR XJ004: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Fri Jun 06 23:39:27 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] (DATABASE = RadosławSzepielakDatabase_IV), (DRDAID = {8}), Database 'RadosławSzepielakDatabase_IV' not found.
+Fri Jun 06 23:40:01 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] Cleanup action starting
+java.sql.SQLException: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+Caused by: ERROR XJ004: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	... 17 more
+============= begin nested exception, level (1) ===========
+ERROR XJ004: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Fri Jun 06 23:40:01 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] (DATABASE = RadosławSzepielakDatabase_IV), (DRDAID = {9}), Database 'RadosławSzepielakDatabase_IV' not found.
+----------------------------------------------------------------
+Fri Jun 06 23:40:04 CEST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance 6ebdc076-0197-4726-3ae5-00000ef135f8 
 on database directory C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin\RadoslawSzepielakDatabase_II with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
 Loaded from file:/C:/Users/radsz/Desktop/BazyDanychOracle/Report4/db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -13,9 +326,9 @@ os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Fri Jun 06 16:13:03 CEST 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance 374fc0db-0197-452a-337b-00000ef1bca0 
-on database directory C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin\RadoslawSzepielakDatabase with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
+Fri Jun 06 23:41:33 CEST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance 1e2700f9-0197-4726-3ae5-00000ef135f8 
+on database directory C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin\RadoslawSzepielakDatabase_IV with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
 Loaded from file:/C:/Users/radsz/Desktop/BazyDanychOracle/Report4/db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.5+9-LTS-239
@@ -25,16 +338,53 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Fri Jun 06 16:14:13 CEST 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance 247b4177-0197-452a-337b-00000ef1bca0 
-on database directory C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin\RadoslawSzepielakDatabase_I with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
-Loaded from file:/C:/Users/radsz/Desktop/BazyDanychOracle/Report4/db-derby-10.17.1.0-bin/db-derby-10.17.1.0-bin/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=21.0.5+9-LTS-239
-user.dir=C:\Users\radsz\Desktop\BazyDanychOracle\Report4\db-derby-10.17.1.0-bin\db-derby-10.17.1.0-bin\bin
-os.name=Windows 11
-os.arch=amd64
-os.version=10.0
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
+Fri Jun 06 23:42:32 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] Cleanup action starting
+java.sql.SQLException: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:115)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+Caused by: ERROR XJ004: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	... 17 more
+============= begin nested exception, level (1) ===========
+ERROR XJ004: Database 'RadosławSzepielakDatabase_IV' not found.
+	at org.apache.derby.shared.common.error.StandardException.newException(StandardException.java:299)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(SQLExceptionFactory.java:170)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:75)
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(SQLExceptionFactory.java:141)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:225)
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Util.java:220)
+	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(EmbedConnection.java:3208)
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(EmbedConnection.java:767)
+	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(EmbedConnection.java:437)
+	at org.apache.derby.iapi.jdbc.InternalDriver.getNewEmbedConnection(InternalDriver.java:629)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:295)
+	at org.apache.derby.iapi.jdbc.InternalDriver.connect(InternalDriver.java:921)
+	at org.apache.derby.jdbc.EmbeddedDriver.connect(EmbeddedDriver.java:125)
+	at org.apache.derby.impl.drda.Database.makeConnection(Database.java:253)
+	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(DRDAConnThread.java:1474)
+	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(DRDAConnThread.java:1424)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(DRDAConnThread.java:3378)
+	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(DRDAConnThread.java:1208)
+	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(DRDAConnThread.java:1008)
+	at org.apache.derby.impl.drda.DRDAConnThread.run(DRDAConnThread.java:298)
+============= end nested exception, level (1) ===========
+Cleanup action completed
+Fri Jun 06 23:42:33 CEST 2025 Thread[#24,DRDAConnThread_2,5,main] (DATABASE = RadosławSzepielakDatabase_IV), (DRDAID = {16}), Database 'RadosławSzepielakDatabase_IV' not found.
