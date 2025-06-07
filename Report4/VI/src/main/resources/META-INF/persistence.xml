@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             version="3.0">
+    <persistence-unit name="my-jpa-unit">
+        <class>org.example.Product</class>
+        <class>org.example.Invoice</class>
+        <class>org.example.InvoiceProduct</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:derby://127.0.0.1/KacperWdowiakDatabase_VI;create=true"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
