@@ -8,6 +8,18 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <signal.h>
+
+#define BUFFER_SIZE 256
+int sockfd = -1;
+char username[32];
+
+void handle_exit(int sig) {
+    write(sockfd, "STOP", 4);
+    close(sockfd);
+    printf("\nDisconnected.\n");
+    exit(0);
+}
 
 int main(int argc, char *argv[]) {
 
@@ -16,8 +28,15 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int fd = -1;
-    if((fd=socket(AF_INET, SOCK_STREAM,0)) == -1){
+
+    strncpy(username, argv[1], sizeof(username));
+    const char *server_ip = argv[2];
+    int port = atoi(argv[3]);
+
+    signal(SIGINT, handle_exit);
+
+
+    if((sockfd=socket(AF_INET, SOCK_STREAM,0)) == -1){
         perror("Error creating socket");
     }
 
@@ -26,9 +45,13 @@ int main(int argc, char *argv[]) {
     addr.sin_port = atoi(argv[3]);
     addr.sin_addr.s_addr = inet_addr(argv[2]);
     
-    if(connect(fd, (struct sockaddr *)&addr, sizeof(struct sockaddr)) == -1) {
+    if(connect(sockfd, (struct sockaddr *)&addr, sizeof(struct sockaddr)) == -1) {
         perror("Error connecting to server");
     }
+
+
+
+    
 
     char buff[20];
     int to_send = sprintf(buff, "HELLO from: %zu", getpid());
@@ -37,6 +60,7 @@ int main(int argc, char *argv[]) {
         perror("Error sending msg to server");
     }
 
+    signal(SIGINT, handle_exit);
     
     while (1) {
         pid_t pid = fork();
