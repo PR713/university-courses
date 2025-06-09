@@ -1,4 +1,5 @@
 //SOCK_STREAM
+//./client Radek 127.0.0.5 12345
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

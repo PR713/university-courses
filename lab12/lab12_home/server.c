@@ -1,4 +1,5 @@
 //SOCK_STREAM
+//./server 12345
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,15 +18,6 @@
 #define MAX_NAME 32
 #define BUFFER_SIZE 256
 #define ALIVE_INTERVAL 10
-
-typedef enum {
-    CMD_LIST,
-    CMD_TOALL,
-    CMD_TOONE,
-    CMD_STOP,
-    CMD_INVALID
-} CommandType;
-
 
 typedef struct {
     int sockfd;
