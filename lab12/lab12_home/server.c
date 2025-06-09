@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
 #include <time.h>
 #include <signal.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <sys/time.h>
 #include <fcntl.h>
 
 #define MAX_CLIENTS 10
@@ -69,16 +71,17 @@ void handle_client_message(int i) {
             }
         }
         write(clients[i].sockfd, list, strlen(list));
-    } else if (strncmp(buffer, "2ALL", 5) == 0) {
+    } else if (strncmp(buffer, "2ALL", 4) == 0) {
         char msg[BUFFER_SIZE];
         snprintf(msg, sizeof(msg), "[%s] %s", clients[i].name, buffer + 5);
         broadcast_message(msg, clients[i].sockfd);
-    } else if (strncmp(buffer, "2ONE", 5) == 0) {
+    } else if (strncmp(buffer, "2ONE", 4) == 0) {
         char target[MAX_NAME];
-        sscanf(buffer + 5, "%s", target);
-        char *msg_start = strchr(buffer + 5, ' ');
+        sscanf(buffer + 5, "%s", target); //%s czyta jeden wyraz (do białego znaku np ' ')
+        char *msg_start = strchr(buffer + 5, ' '); //szuka pierwsze wystąpienie ' ' od 5. indeksu
+        //np 2ONE Radek treść, R to 5 indeks
         if (!msg_start) return;
-        msg_start++;
+        msg_start++; //od znalezionej spacji znak w przód
 
         char msg[BUFFER_SIZE];
         snprintf(msg, sizeof(msg), "[%s -> %s] %s", clients[i].name, target, msg_start);
@@ -146,6 +149,45 @@ int main(int argc, char *argv[]) {
             if (clients[i].sockfd > 0) {
                 FD_SET(clients[i].sockfd, &read_fds);
                 if (clients[i].sockfd > max_fd) max_fd = clients[i].sockfd;
+            }
+        }
+
+        struct timeval timeout = {1, 0}; // 1s timeout for select
+        int activity = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
+        //select() is now observing fd's from 0 to max_fd
+        if (FD_ISSET(server_socket, &read_fds)) {
+            int new_socket = accept(server_socket, (struct sockaddr*)&client_addr, &client_len);
+            char name[MAX_NAME];
+            read(new_socket, name, MAX_NAME);
+            int added = 0;
+            for (int i = 0; i < MAX_CLIENTS; i++) {
+                if (clients[i].sockfd == 0) {
+                    clients[i].sockfd = new_socket;
+                    strncpy(clients[i].name, name, MAX_NAME);
+                    clients[i].last_alive = time(NULL);
+                    printf("New client: %s\n", name);
+                    added = 1;
+                    break;
+                }
+            }
+            if (!added) {
+                write(new_socket, "Server full\n", 12);
+                close(new_socket);
+            }
+        }
+
+        for (int i = 0; i < MAX_CLIENTS; i++) {
+            if (clients[i].sockfd > 0 && FD_ISSET(clients[i].sockfd, &read_fds)) {
+                handle_client_message(i);
+            }
+        }
+
+        // Ping & remove inactive clients
+        time_t now = time(NULL);
+        for (int i = 0; i < MAX_CLIENTS; i++) {
+            if (clients[i].sockfd > 0 && now - clients[i].last_alive > ALIVE_INTERVAL) {
+                write(clients[i].sockfd, "PING", 4);
+                clients[i].last_alive = now - ALIVE_INTERVAL / 2;
             }
         }
     }

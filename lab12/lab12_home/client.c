@@ -1,17 +1,17 @@
 //SOCK_STREAM
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <unistd.h>
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
+#include <string.h>
+#include <unistd.h>
+#include <signal.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <signal.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <pthread.h>
 
 #define BUFFER_SIZE 256
-int sockfd = -1;
+int sockfd;
 char username[32];
 
 void handle_exit(int sig) {
@@ -19,6 +19,21 @@ void handle_exit(int sig) {
     close(sockfd);
     printf("\nDisconnected.\n");
     exit(0);
+}
+
+void* receive_thread(void* arg) {
+    char buffer[BUFFER_SIZE];
+    while (1) {
+        memset(buffer, 0, sizeof(buffer));
+        int bytes = read(sockfd, buffer, sizeof(buffer));
+        if (bytes <= 0) break;
+        if (strncmp(buffer, "PING", 4) == 0) {
+            write(sockfd, "ALIVE", 5);
+        } else {
+            printf("%s\n", buffer);
+        }
+    }
+    return NULL;
 }
 
 int main(int argc, char *argv[]) {
@@ -42,43 +57,27 @@ int main(int argc, char *argv[]) {
 
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
-    addr.sin_port = atoi(argv[3]);
+    addr.sin_port = htons(port);
     addr.sin_addr.s_addr = inet_addr(argv[2]);
     
     if(connect(sockfd, (struct sockaddr *)&addr, sizeof(struct sockaddr)) == -1) {
         perror("Error connecting to server");
     }
 
+    write(sockfd, username, strlen(username));
 
-    char buff[20];
-    int to_send = sprintf(buff, "HELLO from: %zu", getpid());
+    pthread_t recv_thread;
+    pthread_create(&recv_thread, NULL, receive_thread, NULL);
 
-    if (write(sockfd, buff, to_send + 1) == -1) {
-        perror("Error sending msg to server");
-    }
-
-    signal(SIGINT, handle_exit);
-    
+    char buffer[BUFFER_SIZE];
     while (1) {
-        pid_t pid = fork();
-        char buff[100];
-
-        if (pid == 0) {
-            while (1) {
-                fgets("Enter a message: %s", buff, STDIN_FILENO);
-                write(sockfd, buff, 100);
-            }
-            return 0;
+        fgets(buffer, sizeof(buffer), stdin);
+        buffer[strcspn(buffer, "\n")] = 0;
+        if (strncmp(buffer, "STOP", 4) == 0) {
+            handle_exit(0);
         }
-
-        while(1) {
-            read(sockfd, buff, 100);
-            printf("Message from other client \'%s'\\n");
-        }
+        write(sockfd, buffer, strlen(buffer));
     }
-
-    shutdown(sockfd, SHUT_RDWR);
-    close(sockfd);
 
     return 0;
 }
