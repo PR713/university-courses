@@ -35,6 +35,74 @@ Client clients[MAX_CLIENTS] = {0};
 
 int server_socket;
 
+void broadcast_message(const char *msg, int exclude_fd) {
+    for (int i = 0; i < MAX_CLIENTS; i++) {
+        if (clients[i].sockfd > 0 && clients[i].sockfd != exclude_fd) {
+            write(clients[i].sockfd, msg, strlen(msg));
+        }
+    }
+}
+
+
+void remove_client(int i) {
+    close(clients[i].sockfd);
+    printf("Client '%s' disconnected.\n", clients[i].name);
+    clients[i].sockfd = 0;
+    clients[i].name[0] = '\0';
+}
+
+
+void handle_client_message(int i) {
+    char buffer[BUFFER_SIZE] = {0};
+    int bytes = read(clients[i].sockfd, buffer, sizeof(buffer));
+    if (bytes <= 0) {
+        remove_client(i);
+        return;
+    }
+
+    if (strncmp(buffer, "LIST", 4) == 0) {
+        char list[BUFFER_SIZE] = "Clients:\n";
+        for (int j = 0; j < MAX_CLIENTS; j++) {
+            if (clients[j].sockfd > 0) {
+                strcat(list, clients[j].name);
+                strcat(list, "\n");
+            }
+        }
+        write(clients[i].sockfd, list, strlen(list));
+    } else if (strncmp(buffer, "2ALL", 5) == 0) {
+        char msg[BUFFER_SIZE];
+        snprintf(msg, sizeof(msg), "[%s] %s", clients[i].name, buffer + 5);
+        broadcast_message(msg, clients[i].sockfd);
+    } else if (strncmp(buffer, "2ONE", 5) == 0) {
+        char target[MAX_NAME];
+        sscanf(buffer + 5, "%s", target);
+        char *msg_start = strchr(buffer + 5, ' ');
+        if (!msg_start) return;
+        msg_start++;
+
+        char msg[BUFFER_SIZE];
+        snprintf(msg, sizeof(msg), "[%s -> %s] %s", clients[i].name, target, msg_start);
+
+        for (int j = 0; j < MAX_CLIENTS; j++) {
+            if (clients[j].sockfd > 0 && strcmp(clients[j].name, target) == 0) {
+                write(clients[j].sockfd, msg, strlen(msg));
+                break;
+            }
+        }
+    } else if (strncmp(buffer, "STOP", 4) == 0) {
+        remove_client(i);
+    } else if (strncmp(buffer, "ALIVE", 5) == 0) {
+        clients[i].last_alive = time(NULL);
+    }
+}
+
+void signal_handler(int sig) {
+    close(server_socket);
+    printf("\nServer shutdown.\n");
+    exit(0);
+}
+
+
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -69,31 +137,19 @@ int main(int argc, char *argv[]) {
     fd_set read_fds;
 
 
-    //todo
-
-
-
-
     while (1) {
-        pid_t pid = fork();
-        char buff[100];
-        int client_fd;
+        FD_ZERO(&read_fds);
+        FD_SET(server_socket, &read_fds);
+        int max_fd = server_socket;
 
-        if (pid == 0) {
-            while (1) {
-                client_fd = accept(fd, (struct sockaddr *)&addr, sizeof(struct sockaddr));
+        for (int i = 0; i < MAX_CLIENTS; i++) {
+            if (clients[i].sockfd > 0) {
+                FD_SET(clients[i].sockfd, &read_fds);
+                if (clients[i].sockfd > max_fd) max_fd = clients[i].sockfd;
             }
-            return 0;
-        }
-
-        while(1) {
-            read(client_fd, buff, 100);
-            printf("Message from client \'%s'\\n");
         }
     }
 
-    shutdown(fd, SHUT_RDWR);
-    close(fd);
 
     return 0;
 }

@@ -50,13 +50,10 @@ int main(int argc, char *argv[]) {
     }
 
 
-
-    
-
     char buff[20];
     int to_send = sprintf(buff, "HELLO from: %zu", getpid());
 
-    if (write(fd, buff, to_send + 1) == -1) {
+    if (write(sockfd, buff, to_send + 1) == -1) {
         perror("Error sending msg to server");
     }
 
@@ -69,19 +66,19 @@ int main(int argc, char *argv[]) {
         if (pid == 0) {
             while (1) {
                 fgets("Enter a message: %s", buff, STDIN_FILENO);
-                write(fd, buff, 100);
+                write(sockfd, buff, 100);
             }
             return 0;
         }
 
         while(1) {
-            read(fd, buff, 100);
+            read(sockfd, buff, 100);
             printf("Message from other client \'%s'\\n");
         }
     }
 
-    shutdown(fd, SHUT_RDWR);
-    close(fd);
+    shutdown(sockfd, SHUT_RDWR);
+    close(sockfd);
 
     return 0;
 }
