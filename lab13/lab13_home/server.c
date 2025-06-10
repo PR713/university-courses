@@ -1,4 +1,4 @@
-//SOCK_STREAM
+//SOCK_DGRAM
 //./server 12345
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,6 +13,7 @@
 #include <sys/types.h>
 #include <sys/time.h>
 #include <fcntl.h>
+#include <pthread.h>
 
 #define MAX_CLIENTS 10
 #define MAX_NAME 32
@@ -20,8 +21,8 @@
 #define ALIVE_INTERVAL 10
 
 typedef struct {
-    int sockfd;
     char name[MAX_NAME];
+    struct sockaddr_in client_addr;
     time_t last_alive;
 } Client;
 
@@ -29,16 +30,16 @@ Client clients[MAX_CLIENTS] = {0};
 
 int server_socket;
 
-void broadcast_message(const char *msg, int exclude_fd) {
+void broadcast_message(const char *msg, struct sockaddr_in exclude_addr) {
     for (int i = 0; i < MAX_CLIENTS; i++) {
-        if (clients[i].sockfd > 0 && clients[i].sockfd != exclude_fd) {
-            write(clients[i].sockfd, msg, strlen(msg));
+        if (&clients[i].client_addr != NULL && &clients[i].client_addr != &exclude_addr) {
+            sendto(server_socket, msg, NULL, (struct sockaddr*)&clients[i].client_addr, sizeof(struct sockaddr*));
         }
     }
 }
 
 
-void remove_client(int i) {
+void remove_client(int i) { //usunąć sockfd wszędzie i usuwać po prostu clientów na podstawie ip i portu
     close(clients[i].sockfd);
     printf("Client '%s' disconnected.\n", clients[i].name);
     clients[i].sockfd = 0;
@@ -46,7 +47,7 @@ void remove_client(int i) {
 }
 
 
-void handle_client_message(int i) {
+void handle_client(int i) {
     char buffer[BUFFER_SIZE] = {0};
     int bytes = read(clients[i].sockfd, buffer, sizeof(buffer));
     if (bytes <= 0) {
@@ -108,71 +109,32 @@ int main(int argc, char *argv[]) {
     signal(SIGINT, signal_handler);
 
     int port = atoi(argv[1]);
-    struct sockaddr_in client_addr;
+    struct sockaddr_in server_addr, client_addr;
     socklen_t client_len = sizeof(client_addr);
+    socklen_t server_len = sizeof(server_addr);
 
     server_socket = -1;
-    if ((server_socket = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+    if ((server_socket = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
         perror("Error creating socket");
     }
 
-    struct sockaddr_in addr;
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = inet_addr("127.0.0.5");
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(port);
+    server_addr.sin_addr.s_addr = inet_addr("127.0.0.5");
 
-    if (bind(server_socket, (struct sockaddr *)&addr, sizeof(struct sockaddr)) == -1) {
+    if (bind(server_socket, (struct sockaddr *)&server_addr, &server_len) == -1) {
         perror("Error binding");
     }
-
-    listen(server_socket, MAX_CLIENTS);
 
     printf("Server started on port %d\n", port);
 
     fd_set read_fds;
 
-
+    pthread_t recv_thread;
+    pthread_create(&recv_thread, NULL, handle_client, NULL);
+    
     while (1) {
-        FD_ZERO(&read_fds);
-        FD_SET(server_socket, &read_fds);
-        int max_fd = server_socket;
-
-        for (int i = 0; i < MAX_CLIENTS; i++) {
-            if (clients[i].sockfd > 0) {
-                FD_SET(clients[i].sockfd, &read_fds);
-                if (clients[i].sockfd > max_fd) max_fd = clients[i].sockfd;
-            }
-        }
-
-        struct timeval timeout = {1, 0}; // 1s timeout for select
-        int activity = select(max_fd + 1, &read_fds, NULL, NULL, &timeout);
-        //select() is now observing fd's from 0 to max_fd
-        if (FD_ISSET(server_socket, &read_fds)) {
-            int new_socket = accept(server_socket, (struct sockaddr*)&client_addr, &client_len);
-            char name[MAX_NAME];
-            read(new_socket, name, MAX_NAME);
-            int added = 0;
-            for (int i = 0; i < MAX_CLIENTS; i++) {
-                if (clients[i].sockfd == 0) {
-                    clients[i].sockfd = new_socket;
-                    strncpy(clients[i].name, name, MAX_NAME);
-                    clients[i].last_alive = time(NULL);
-                    printf("New client: %s\n", name);
-                    added = 1;
-                    break;
-                }
-            }
-            if (!added) {
-                write(new_socket, "Server full\n", 12);
-                close(new_socket);
-            }
-        }
-
-        for (int i = 0; i < MAX_CLIENTS; i++) {
-            if (clients[i].sockfd > 0 && FD_ISSET(clients[i].sockfd, &read_fds)) {
-                handle_client_message(i);
-            }
-        }
+        
 
         // Ping & remove inactive clients
         time_t now = time(NULL);

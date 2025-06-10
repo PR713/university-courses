@@ -4,6 +4,7 @@
         "stdio.h": "c",
         "unistd.h": "c",
         "un.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "inet.h": "c"
     }
 }
