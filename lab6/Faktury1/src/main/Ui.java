@@ -6,6 +6,8 @@ import java.util.Calendar;
 
 import dokumenty.WydrukFaktury;
 import dokumenty.WydrukSkróconyFaktury;
+import magazyn.Kategoria;
+import magazyn.Podkategoria;
 import magazyn.Towar;
 import dokumenty.Faktura;
 
@@ -120,6 +122,50 @@ public class Ui {
 
 		drukarka = Konfiguracja.getInstance().getWydrukFaktury();
 		drukarka.drukujFakture(f12);
+
+
+		System.out.println("\n--- DRZEWO KATEGORII TOWARÓW ---");
+		Towar laptop = new Towar(3500, "Laptop Gamingowy");
+		Towar monitor = new Towar(1200, "Monitor Ultrawide");
+		Towar klawiatura = new Towar(300, "Klawiatura Mechaniczna");
+		Towar myszka = new Towar(150, "Myszka Bezprzewodowa");
+		Towar sluchawki = new Towar(200, "Słuchawki z mikrofonem");
+		Towar graPrzygodowa = new Towar(200, "Gra Przygodowa XYZ");
+		Towar graStrategiczna = new Towar(180, "Gra Strategiczna ABC");
+
+		Podkategoria elektronika = new Podkategoria("Elektronika");
+
+		Podkategoria komputery = new Podkategoria("Komputery");
+
+		Kategoria laptopy = new Kategoria("Laptopy");
+
+		laptopy.addTowar(laptop);
+
+		Kategoria akcesoriaPC = new Kategoria("Akcesoria PC");
+
+		akcesoriaPC.addTowar(monitor);
+		akcesoriaPC.addTowar(klawiatura);
+		akcesoriaPC.addTowar(myszka);
+
+		komputery.add(laptopy);
+		komputery.add(akcesoriaPC);
+
+		Kategoria audio = new Kategoria("Audio");
+		audio.addTowar(sluchawki);
+
+		Podkategoria gry = new Podkategoria("Gry i Oprogramowanie");
+
+		Kategoria gryPC = new Kategoria("Gry PC");
+
+		gryPC.addTowar(graPrzygodowa);
+		gryPC.addTowar(graStrategiczna);
+		gry.add(gryPC);
+
+		elektronika.add(komputery);
+		elektronika.add(audio);
+		elektronika.add(gry);
+
+		elektronika.print("");
 	}
 
 }
