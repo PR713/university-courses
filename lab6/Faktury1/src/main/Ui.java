@@ -1,30 +1,29 @@
 package main;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Calendar;
 
 import dokumenty.WydrukFaktury;
+import dokumenty.WydrukSkróconyFaktury;
 import magazyn.Towar;
 import dokumenty.Faktura;
 
 //ZEWNETRZNY RABAT
 import rabatlosowy.LosowyRabat;
-import rabaty.Konfiguracja;
-import rabaty.ObliczCenePoRabacie;
-import rabaty.ObliczCenePoRabacieKwotowym;
-import rabaty.ObliczCenePoRabacieProcentowym;
+import rabaty.*;
 
 
 public class Ui {
 
 	public static void main(String[] args) {
 		Calendar teraz=Calendar.getInstance();
-		WydrukFaktury wydruk = new WydrukFaktury();		// dodane w punkcie 7
-		
+		WydrukFaktury wydruk = new WydrukSkróconyFaktury();		// dodane w punkcie 7
+
 		//Tworzymy towary
 		Towar t1=new Towar(10,"buty");
 		Towar t2=new Towar(2,"skarpety");
-		
+
 		//I przykladowa fakture
 		Faktura f=new Faktura(teraz.getTime(),"Fido");
 		f.dodajPozycje(t1,10);
@@ -75,15 +74,52 @@ public class Ui {
 		Faktura f5 = new Faktura(teraz.getTime(), "Fido");
 		f5.dodajPozycje(t1, 3);
 		f5.dodajPozycje(t2, 5);
-
+		//konstruktor pobiera konfiguracja.getObliczanieRabatu w momencie tworzenia instancji Faktury
 		System.out.println("Faktura z rabatem procentowym (5%):");
 		wydruk.drukujFakture(f5);
 ///////////////////////////////////////////////////////////////////////////////////
 
 
+
+
 		//TEST ZEWN. rabatu
 		LosowyRabat lr=new LosowyRabat();
 		System.out.println(lr.losujRabat());
+
+
+
+		// ADAPTER
+
+		ObliczCenePoRabacie strategiaLosowa = new AdapterLosowyRabat();
+		Faktura f6 = new Faktura(teraz.getTime(), "Fido");
+		f6.setObliczCenePoRabacie(strategiaLosowa);
+		f6.dodajPozycje(t1, 3);
+
+
+		// TEMPLATE METHOD
+		konfiguracja.setObliczanieRabatu(new ObliczCenePoRabacieProcentowym(0));
+		Towar t12 = new Towar(100, "Dysk SSD");
+		Towar t22 = new Towar(250, "Pamięć RAM 16GB");
+
+		// Tworzenie faktury
+		Faktura f12 = new Faktura(new Date(), "Jan Kowalski");
+		f12.dodajPozycje(t12, 2); // 2 * 100 = 200
+		f12.dodajPozycje(t22, 1); // 1 * 250 = 250
+
+		System.out.println("FORMAT STANDARDOWY:");
+		WydrukFaktury drukarka = Konfiguracja.getInstance().getWydrukFaktury();
+		drukarka.drukujFakture(f12);
+
+		System.out.println("\n");
+
+		System.out.println("ZMIANA KONFIGURACJI na format skrócony");
+		Konfiguracja.getInstance().setWydrukFaktury(new WydrukSkróconyFaktury());
+		//analogicznie można ustawić strategię rabatu i potem getObliczanieRabatu(), albo tylko dla pojedynczego nadal użyć:
+		f12.setObliczCenePoRabacie(new ObliczCenePoRabacieKwotowym(10));
+		f12.dodajPozycje(t12, 1); // 1 * (100-10) = 90
+
+		drukarka = Konfiguracja.getInstance().getWydrukFaktury();
+		drukarka.drukujFakture(f12);
 	}
 
 }
