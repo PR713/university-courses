@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
     signal(SIGINT, signal_handler);
 
     int port = atoi(argv[1]);
-    struct sockaddr_in server_addr, client_addr;
+    struct sockaddr_in client_addr;
     socklen_t client_len = sizeof(client_addr);
 
     server_socket = -1;
@@ -168,7 +168,8 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        for (int i = 0; i < MAX_CLIENTS; i++) {
+        for (int i = 0; i < MAX_CLIENTS; i++) { //możemy robić handle -> a tam read bo na pewno coś jest,
+            //select() zapewnia, zamiast bezsensownego fork() albo pthread_create()...
             if (clients[i].sockfd > 0 && FD_ISSET(clients[i].sockfd, &read_fds)) {
                 handle_client_message(i);
             }
