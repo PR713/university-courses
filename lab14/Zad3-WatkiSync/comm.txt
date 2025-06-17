@@ -1,0 +1,13 @@
+można też użyć wait i post ale to POSIX, a tutaj semop to System V :)
+(semafory działają w komunikacji międzyprocesowej ale również na wątkach w obrębie jednego procesu)
+
+można również zrobić to z mutexami & cond var ale trzeba na wątkach,
+lock, unlock, cond(), ... ze sprawdzaniem wartości jak w hospital.c
+(na wątkach lub IPC ale pthread_mutexattr_setpshared()...)
+
+
+różnice między semaforami a mutexami:
+semafor nie wymusza, że odblokowuje go ten sam wątek, który go zablokował — czyli brak jest ścisłego właściciela.
+ To może prowadzić do błędów, jeśli nie jest się tego świadomym, ale jak używamy cond_wait() 
+to wątek robi unlock dopóki nie dostanie signal albo broadcast wtedy robi lock, ogółem można zamiennie stosować
+choć mutexy bardziej zaawansowane narzędzie, semafory proste liczniki
