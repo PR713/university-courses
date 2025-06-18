@@ -77,24 +77,41 @@ sol_ref = solve_ivp(lambda t, z: lotka_volterra(t, z, alpha1, beta1, alpha2, bet
 
 
 # Wykresy
-def plot_population():
-    plt.figure(figsize=(20, 15))
+def plot_population_separate():
+    plt.figure(figsize=(20, 10))
+
+    # Wykres dla ofiar
+    plt.subplot(2, 1, 1)
     methods = [(sol_explicit, 'Euler jawny', '-'), (sol_implicit, 'Euler niejawny', '--'),
                (sol_semi_implicit, 'Euler półjawny', '-.'), (sol_rk4, 'RK4', ':'),
                ((sol_ref.y[0], sol_ref.y[1]), 'Referencyjny', 'k')]
     for sol, label, style in methods:
         if isinstance(sol, tuple):
             plt.plot(t_points, sol[0], style, label=f'Ofiary ({label})')
-            plt.plot(t_points, sol[1], style, label=f'Drapieżniki ({label})')
         else:
             plt.plot(t_points, sol[:, 0], style, label=f'Ofiary ({label})')
-            plt.plot(t_points, sol[:, 1], style, label=f'Drapieżniki ({label})')
     plt.xlabel('Czas')
-    plt.ylabel('Populacja')
-    plt.title('Populacje w czasie')
+    plt.ylabel('Populacja ofiar')
+    plt.title('Populacja ofiar w czasie')
     plt.legend()
     plt.grid()
+
+    # Wykres dla drapieżników
+    plt.subplot(2, 1, 2)
+    for sol, label, style in methods:
+        if isinstance(sol, tuple):
+            plt.plot(t_points, sol[1], style, label=f'Drapieżniki ({label})')
+        else:
+            plt.plot(t_points, sol[:, 1], style, label=f'Drapieżniki ({label})')
+    plt.xlabel('Czas')
+    plt.ylabel('Populacja drapieżników')
+    plt.title('Populacja drapieżników w czasie')
+    plt.legend()
+    plt.grid()
+
+    plt.tight_layout()
     plt.show()
+
 
 def plot_phase():
     plt.figure(figsize=(8, 8))
@@ -110,7 +127,7 @@ def plot_phase():
     plt.grid()
     plt.show()
 
-plot_population()
+plot_population_separate()
 plot_phase()
 
 print("Punkty stacjonarne:")
