@@ -1,1 +1,1 @@
-# Haskell
+# Kurs akademicki z języka Haskell
