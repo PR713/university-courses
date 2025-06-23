@@ -29,7 +29,6 @@ public class Main {
         if (!hole.fits(large_sqpeg_adapter)) System.out.println("false"); // false
 
 
-
         //
 
         File file = new File("./src/main/resources/text");
