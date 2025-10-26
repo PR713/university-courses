@@ -1,2 +1,11 @@
+
+=== END OF algorithms-and-data-structures ===
+=== END OF digital-technique ===
+=== END OF ms-prs-fem-projects ===
+=== END OF numerical-methods-labs ===
+=== END OF object-oriented-design ===
+=== END OF operating-systems ===
+=== END OF oracle-nosql-dotnet-hibernate ===
 === END OF t-sql-exercises ===
 === END OF haskell-practise ===
+=== END OF rust-practise ===
