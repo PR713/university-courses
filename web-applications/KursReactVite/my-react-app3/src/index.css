@@ -1,0 +1,31 @@
+
+.welcome-message{
+    font-size: 2.5em;
+    background-color: hsl(120, 100%, 42%);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0;
+}
+
+.login-prompt {
+    font-size: 2.5em;
+    background-color: hsl(0, 76%, 38%);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0;
+}
+
+
+
+/*.student{*/
+/*    font-family: Arial, sans-serif;*/
+/*    font-size: 2em;*/
+/*    padding: 10px;*/
+/*    border: 1px solid hsla(0, 0%, 50%, 0.8);*/
+/*}*/
+
+/*.student p{*/
+/*    margin: 0;*/
+/*}*/

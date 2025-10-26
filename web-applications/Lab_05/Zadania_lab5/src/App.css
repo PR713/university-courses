@@ -1,0 +1,26 @@
+body {
+    background-color: #fdf9f9;
+    font-family: monospace;
+    margin-left: 100px;
+}
+
+button {
+    background-color: white;
+    border: 3px solid #4c79cd;
+    border-radius: 5px;
+}
+
+button:disabled{
+    color: #797777;
+}
+
+button:hover{
+    background-color: #f4f2f2;
+}
+
+input {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 2px solid black;
+}

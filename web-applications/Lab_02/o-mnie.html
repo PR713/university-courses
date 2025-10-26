@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O mnie</title>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+<body onload="timer()">
+    <div id="container">
+        <div id="nav-menu">
+            <nav class="option"><a href="index.html">Home</a></nav>
+            <nav class="option"><a href="galeria.html">Galeria</a></nav>
+            <nav class="option"><a href="o-mnie.html">O mnie</a></nav>
+        </div>
+        <section class="section">
+            <div class="zegar"></div>
+            <script src="zegar.js"></script>
+            <h2 class="h2_2 open-sans-bold">O autorze słów kilka...</h2>
+            <p class="p">Cześć! Nazywam się Radek i lubię podróżować!
+                Od kilku lat odkrywam świat, poznając nowe kultury, kuchnie i miejsca
+                pełne niesamowitych historii. Moje podróże to dla mnie nie tylko sposób
+                na ucieczkę od codzienności, ale przede wszystkim szansa na rozwój i zdobywanie
+                nowych doświadczeń. Moim celem jest odwiedzenie każdego kontynentu i dzielenie się
+                swoimi wrażeniami z innymi. Jeśli masz jakieś pytania śmiało pisz!</p>
+
+        </section>
+        <form id="emailform" novalidate>
+            <h3 id="formh2">Formularz kontaktowy :)</h3>
+            <label for="email">Adres e-mail:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit">Wyślij</button>
+            <p id="email-error-message"></p>
+            <div id="selecting">
+                <select id="subject" name="subject" required>
+                    <option value="" disabled selected>Wybierz temat</option>
+                    <option value="wspolpraca">Współpraca</option>
+                    <option value="polecenie">Polecenie miejsc</option>
+                    <option value="wyjazdy">Wspólne wyjazdy</option>
+                    <option value="inne">Inne</option>
+                </select>
+            </div>
+            <textarea id="message" name="message" rows="4" cols="50" required placeholder="Wpisz swoją wiadomość tutaj..."></textarea>
+            <p id="text-error-message"></p>
+        </form>
+        <script src="forms.js"></script>
+        <footer>Radosław Szepielak 2024 &copy; Wszelkie prawa zastrzeżone</footer>
+
+    </div>
+
+</body>
+</html>
