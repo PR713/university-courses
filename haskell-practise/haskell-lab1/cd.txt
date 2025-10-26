@@ -1,0 +1,2 @@
+cd C:\Users\radsz\Desktop\Haskell_lab    WIN
+cd C:/Users/radsz/Desktop/Haskell_lab    GNU
