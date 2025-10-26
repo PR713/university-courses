@@ -9,3 +9,4 @@
 === END OF t-sql-exercises ===
 === END OF haskell-practise ===
 === END OF rust-practise ===
+=== END OF web-applications ===
