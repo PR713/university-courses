@@ -1,0 +1,48 @@
+<diagram program="umletino" version="15.1"><zoom_level>6</zoom_level><help_text>Space for diagram notesdd</help_text><element><id>UMLClass</id><coordinates><x>204</x><y>181</y><w>126</w><h>60</h></coordinates><panel_attributes>Person
+--
+- firstname: str
+- lastname: str
+- age: int
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>666</x><y>229</y><w>126</w><h>60</h></coordinates><panel_attributes>Prisoner
+--
+- name: final str
+- surname: final str
+- pesel: final str
+- sentenceDuration: final int
+- judgementYear: final int
+--
++ czyMoglbyEwentualnieBycPodejrzanym : boolean
++ getCurrentYear: int
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>48</x><y>115</y><w>126</w><h>60</h></coordinates><panel_attributes>PrisonerDataProvider
+--
+- prisoners :final Map&lt;String, Collection&lt;Prisoner&gt;&gt;
+--
++ czyMoglbyEwentualnieBycPodejrzanym : boolean
++ getCurrentYear: int
+--
+- addPrisoner: void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>366</x><y>247</y><w>186</w><h>60</h></coordinates><panel_attributes>PersonDatabase
+--
+- cracovCitizens :final Collection&lt;Person&gt;
+--
++ czyMoglbyEwentualnieBycPodejrzanym : boolean
++ getCurrentYear: int
+--
+- addPrisoner: void
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>168</x><y>433</y><w>126</w><h>60</h></coordinates><panel_attributes>Finder
+--
+- allPersons: final Collection&lt;Person&gt;
+- allPrisoners: final Map&lt;String, Collection&lt;Prisoner&gt;&gt;
+--
++ displayAllSuspectWithName(String name): void
+--
+- addPrisoner: void
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>324</x><y>235</y><w>54</w><h>24</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;70;20</additional_attributes></element><element><id>Relation</id><coordinates><x>168</x><y>109</y><w>510</w><h>132</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>830;200;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>252</x><y>235</y><w>66</w><h>210</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>90;10;10;330</additional_attributes></element><element><id>Relation</id><coordinates><x>294</x><y>235</y><w>384</w><h>264</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>620;10;10;420</additional_attributes></element><element><id>Relation</id><coordinates><x>282</x><y>301</y><w>120</w><h>144</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>180;10;10;220</additional_attributes></element><element><id>Relation</id><coordinates><x>156</x><y>169</y><w>78</w><h>276</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;110;440</additional_attributes></element></diagram>
