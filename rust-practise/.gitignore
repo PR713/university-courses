@@ -1,0 +1,23 @@
+# Rust build files
+**/target/
+
+# Rust dependencies
+/Cargo.lock
+
+# Rust IDE configuration files (e.g., for RustRover, IntelliJ)
+.idea/
+/.vscode/
+
+# Optional: If you want to exclude the Rust documentation folder
+/doc/
+
+# Optional: Exclude binary files
+*.exe
+*.dll
+*.dylib
+*.so
+
+# Rust generated files for specific platforms
+*.rlib
+*.o
+*.a
