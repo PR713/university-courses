@@ -1,0 +1,2 @@
+void printMessage();
+void greetMe();

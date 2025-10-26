@@ -1,0 +1,4 @@
+można też użyć wait i post ale to POSIX, a tutaj semop to System V :)
+
+można również zrobić to z mutexami & cond var ale trzeba na wątkach,
+lock, unlock, cond(), ... ze sprawdzaniem wartości jak w hospital.c

@@ -1,0 +1,14 @@
+code .
+
+Ctrl+Shift+B // to samo co Ctrl+~ (terminal) i wpisanie 'make'
+(gdb) break 8
+(gdb) run
+(gdb) print count
+(gdb) continue //następna iteracja
+(gdb) print count
+(gdb) next // następna linia
+(gdb) delete 1
+(gdb) quit
+
+tar cvzf SzepielakRadoslaw-cw01.tar.gz lab1_home
+
