@@ -1,0 +1,266 @@
+---
+title: "Projekt zaliczeniowy"
+author: "Radosław Szepielak, Kamil Życzkowski"
+output:
+word_document: default
+pdf_document: default
+---
+
+# Wstęp
+Algorytmy:\
+* PRS\
+* MS\
+
+Funkcje:\
+* Alpine01\
+* Rastrigin\
+
+# WYNIKI
+
+``` {r echo=FALSE}
+a2ms <- as.vector(read.csv("./data/alpine012Dms.csv"))$x
+a2prs <- as.vector(read.csv("./data/alpine012Dprs.csv"))$x
+a10ms <- as.vector(read.csv("./data/alpine0110Dms.csv"))$x
+a10prs <- as.vector(read.csv("./data/alpine0110Dprs.csv"))$x
+a20ms <- as.vector(read.csv("./data/alpine0120Dms.csv"))$x
+a20prs <- as.vector(read.csv("./data/alpine0120Dprs.csv"))$x
+r2ms <- as.vector(read.csv("./data/rastrigin2Dms.csv"))$x
+r2prs <- as.vector(read.csv("./data/rastrigin2Dprs.csv"))$x
+r10ms <- as.vector(read.csv("./data/rastrigin10Dms.csv"))$x
+r10prs <- as.vector(read.csv("./data/rastrigin10Dprs.csv"))$x
+r20ms <- as.vector(read.csv("./data/rastrigin20Dms.csv"))$x
+r20prs <- as.vector(read.csv("./data/rastrigin20Dprs.csv"))$x
+```
+
+## Funkcja Alpine01 2D
+### MS
+* Średnia: `r mean(a2ms)`
+* Mediana: `r median(a2ms)`
+* Wartość najmniejsza: `r min(a2ms)`
+* Wartość największa: `r max(a2ms)`
+* Dolny kwartyl: `r quantile(a2ms, 0.25)`
+* Górny kwartyl: `r quantile(a2ms, 0.75)`
+
+### PRS
+* Średnia: `r mean(a2prs)`
+* Mediana: `r median(a2prs)`
+* Wartość najmniejsza: `r min(a2prs)`
+* Wartość największa: `r max(a2prs)`
+* Dolny kwartyl: `r quantile(a2prs, 0.25)`
+* Górny kwartyl: `r quantile(a2prs, 0.75)`
+
+
+## Funkcja Alpine01, 10D
+### MS
+* Średnia: `r mean(a10ms)`
+* Mediana: `r median(a10ms)`
+* Wartość najmniejsza: `r min(a10ms)`
+* Wartość największa: `r max(a10ms)`
+* Dolny kwartyl: `r quantile(a10ms, 0.25)`
+* Górny kwartyl: `r quantile(a10ms, 0.75)`
+
+### PRS
+* Średnia: `r mean(a10prs)`
+* Mediana: `r median(a10prs)`
+* Wartość najmniejsza: `r min(a10prs)`
+* Wartość największa: `r max(a10prs)`
+* Dolny kwartyl: `r quantile(a10prs, 0.25)`
+* Górny kwartyl: `r quantile(a10prs, 0.75)`
+
+## Funkcja Alpine01, 20D
+### MS
+* Średnia: `r mean(a20ms)`
+* Mediana: `r median(a20ms)`
+* Wartość najmniejsza: `r min(a20ms)`
+* Wartość największa: `r max(a20ms)`
+* Dolny kwartyl: `r quantile(a20ms, 0.25)`
+* Górny kwartyl: `r quantile(a20ms, 0.75)`
+
+### PRS
+* Średnia: `r mean(a20prs)`
+* Mediana: `r median(a20prs)`
+* Wartość najmniejsza: `r min(a20prs)`
+* Wartość największa: `r max(a20prs)`
+* Dolny kwartyl: `r quantile(a20prs, 0.25)`
+* Górny kwartyl: `r quantile(a20prs, 0.75)`
+
+## Funkcja Rastrigina, 2D
+### MS
+* Średnia: `r mean(r2ms)`
+* Mediana: `r median(r2ms)`
+* Wartość najmniejsza: `r min(r2ms)`
+* Wartość największa: `r max(r2ms)`
+* Dolny kwartyl: `r quantile(r2ms, 0.25)`
+* Górny kwartyl: `r quantile(r2ms, 0.75)`
+
+### PRS
+* Średnia: `r mean(r2prs)`
+* Mediana: `r median(r2prs)`
+* Wartość najmniejsza: `r min(r2prs)`
+* Wartość największa: `r max(r2prs)`
+* Dolny kwartyl: `r quantile(r2prs, 0.25)`
+* Górny kwartyl: `r quantile(r2prs, 0.75)`
+
+## Funkcja Rastrigina, 10D
+### MS
+* Średnia: `r mean(r10ms)`
+* Mediana: `r median(r10ms)`
+* Wartość najmniejsza: `r min(r10ms)`
+* Wartość największa: `r max(r10ms)`
+* Dolny kwartyl: `r quantile(r10ms, 0.25)`
+* Górny kwartyl: `r quantile(r10ms, 0.75)`
+
+### PRS
+* Średnia: `r mean(r10prs)`
+* Mediana: `r median(r10prs)`
+* Wartość najmniejsza: `r min(r10prs)`
+* Wartość największa: `r max(r10prs)`
+* Dolny kwartyl: `r quantile(r10prs, 0.25)`
+* Górny kwartyl: `r quantile(r10prs, 0.75)`
+
+## Funkcja Rastrigina, 20D
+### MS
+* Średnia: `r mean(r20ms)`
+* Mediana: `r median(r20ms)`
+* Wartość najmniejsza: `r min(r20ms)`
+* Wartość największa: `r max(r20ms)`
+* Dolny kwartyl: `r quantile(r20ms, 0.25)`
+* Górny kwartyl: `r quantile(r20ms, 0.75)`
+
+### PRS
+* Średnia: `r mean(r20prs)`
+* Mediana: `r median(r20prs)`
+* Wartość najmniejsza: `r min(r20prs)`
+* Wartość największa: `r max(r20prs)`
+* Dolny kwartyl: `r quantile(r20prs, 0.25)`
+* Górny kwartyl: `r quantile(r20prs, 0.75)`
+
+## Histogramy
+```{r echo=FALSE}
+hist(a2ms, col = 'lightblue', main="Funkcja Alpine01 2D, MS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,70), xlim = c(0,1.2e-6)
+     )
+```
+
+```{r echo=FALSE}
+hist(a2prs,  col = 'lightblue', main="Funkcja Alpine01 2D, PRS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,80), xlim = c(0,0.6e-1)
+     )
+```
+
+```{r echo=FALSE}
+hist(a10ms, col = 'lightblue', main="Funkcja Alpine01 10D, MS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,100), xlim = c(0, 2.6e-3)
+     )
+```
+
+```{r echo=FALSE}
+hist(a10prs,  col = 'lightblue', main="Funkcja Alpine01 10D, PRS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,25), xlim = c(0,10)
+     )
+```
+
+```{r echo=FALSE}
+hist(a20ms, col = 'lightblue', main="Funkcja Alpine01 20D, MS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,30), xlim = c(0,2e-2)
+     )
+```
+
+```{r echo=FALSE}
+hist(a20prs, col = 'lightblue', main="Funkcja Alpine01 20D, PRS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,25), xlim = c(15,30)
+     )
+```
+
+```{r echo=FALSE}
+hist(r2ms, col = 'lightgreen', main="Funkcja Rastrigina 2D, MS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,70), xlim = c(0,1)
+     )
+```
+
+```{r echo=FALSE}
+hist(r2prs,  col = 'lightgreen', main="Funkcja Rastrigina 2D, PRS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,40), xlim = c(0,5)
+     )
+```
+
+```{r echo=FALSE}
+hist(r10ms,  col = 'lightgreen', main="Funkcja Rastrigina 10D, MS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,40), xlim = c(0,40)
+     )
+```
+
+```{r echo=FALSE}
+hist(r10prs,  col = 'lightgreen', main="Funkcja Rastrigina 10D, PRS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,30), xlim = c(40,100)
+     )
+```
+
+```{r echo=FALSE}
+hist(r20ms, col = 'lightgreen', main="Funkcja Rastrigina 20D, MS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,30), xlim = c(30,100)
+     )
+```
+
+```{r echo=FALSE}
+hist(r20prs,  col = 'lightgreen',, main="Funkcja Rastrigina 20D, PRS", 
+     xlab = "Znaleziona wartość minimum", ylab = "Ilość wystąpień", labels = TRUE,
+     ylim = c(0,40), xlim = c(160,260)
+     )
+```
+
+# Wykresy pudełkowe
+
+```{r echo=FALSE}
+boxplot(a2ms,a2prs,  col = "lightblue", main = "Funkcja Alpine01, 2D", names = c("MS", "PRS"), ylab = "Wartość")
+boxplot(a10ms,a10prs, col = "lightblue", main = "Funkcja Alpine01, 10D", names = c("MS", "PRS"), ylab = "Wartość")
+boxplot(a20ms,a20prs, col = "lightblue", main = "Funkcja Alpine01, 20D", names = c("MS", "PRS"), ylab = "Wartość")
+boxplot(r2ms,r2prs, col = "lightgreen", main = "Funkcja Rastrigina, 2D", names = c("MS", "PRS"), ylab = "Wartość")
+boxplot(r10ms,r10prs, col = "lightgreen", main = "Funkcja Rastrigina, 10D", names = c("MS", "PRS"), ylab = "Wartość")
+boxplot(r20ms,r20prs, col = "lightgreen", main = "Funkcja Rastrigina, 20D", names = c("MS", "PRS"), ylab = "Wartość")
+```
+
+## T testy
+
+Dla hipotezy zerowej zakładającej równość średnich.
+
+#### Funkcja Alpine01, 2D
+```{r echo=FALSE}
+t.test(x = a2prs, y = a2ms, paired = TRUE)
+```
+#### Funkcja Alpine01, 10D
+```{r echo=FALSE}
+t.test(x = a10prs, y = a10ms, paired = TRUE)
+```
+#### Funkcja Alpine01, 20D
+```{r echo=FALSE}
+t.test(x = a20prs, y = a20ms, paired = TRUE)
+```
+#### Funkcja Rastrigina, 2D
+```{r echo=FALSE}
+t.test(x = r2prs, y = r2ms, paired = TRUE)
+```
+#### Funkcja Rastrigina, 10D
+```{r echo=FALSE}
+t.test(x = r10prs, y = r10ms, paired = TRUE)
+```
+#### Funkcja Rastrigina, 20D
+```{r echo=FALSE}
+t.test(x = r20prs, y = r20ms, paired = TRUE)
+```
+
+### Wniosek:
+
+Dla wszystkich testów hipoteza zerowa jest odrzucana z 
+blisko zerowym prawdopodobieństwem popełnienia błędu pierwszego rodzaju na korzyść hipotezy alternatywnej.

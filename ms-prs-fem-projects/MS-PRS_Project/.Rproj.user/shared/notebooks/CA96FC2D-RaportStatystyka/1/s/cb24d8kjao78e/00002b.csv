@@ -1,0 +1,4 @@
+"0","hist(a10ms, col = 'lightblue', main=""Funkcja Alpine01 10D, MS"", "
+"0","     xlab = ""Znaleziona wartość minimum"", ylab = ""Ilość wystąpień"", labels = TRUE,"
+"0","     ylim = c(0,100), xlim = c(0, 2.6e-3)"
+"0","     )"
