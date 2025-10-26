@@ -1,1 +1,2 @@
 === END OF t-sql-exercises ===
+=== END OF haskell-practise ===
